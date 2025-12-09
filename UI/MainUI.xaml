@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
             <Image Source="/Images/Back.png" Grid.Column="0"/>
             <Label Name="AccountName" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=AccName}" 
-                   Grid.Column="1" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                   Grid.Column="1" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
             <!-- <Image Name="AccountImage" Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/Liara.jpg}" 
                    Grid.Column="4"/> -->
             <Ellipse Name="AvatarEllipse" Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -32,5 +32,6 @@
                 </Ellipse.Fill>
             </Ellipse>
         </Grid>
+        <Frame Grid.Row="1" Name="MainContentFrame" Source="/Shows/ShowsMain.xaml"/>
     </Grid>
 </Page>
