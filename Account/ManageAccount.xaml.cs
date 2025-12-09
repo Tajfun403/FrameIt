@@ -1,6 +1,4 @@
-﻿using FrameIt.Account;
-using FrameIt.General;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -13,16 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FrameIt.UI;
-
-/// <summary>
-/// Interaction logic for MainUI.xaml
-/// </summary>
-public partial class MainUI : Page
+namespace FrameIt.Account
 {
-    public MainUI()
+    /// <summary>
+    /// Interaction logic for ManageAccount.xaml
+    /// </summary>
+    public partial class ManageAccount : Page
     {
-        InitializeComponent();
-        NavigationManager.Init(this);
+        public ManageAccount()
+        {
+            InitializeComponent();
+        }
     }
 }

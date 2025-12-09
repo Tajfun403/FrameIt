@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FrameIt.Account;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,16 +13,34 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FrameIt.General
+
+namespace FrameIt.General;
+
+/// <summary>
+/// Interaction logic for NavigationHeader.xaml
+/// </summary>
+public partial class NavigationHeader : UserControl
 {
-    /// <summary>
-    /// Interaction logic for NavigationHeader.xaml
-    /// </summary>
-    public partial class NavigationHeader : UserControl
+    public NavigationHeader()
     {
-        public NavigationHeader()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        AccountManager.OnUserChanged += RefreshAccount;
+        RefreshAccount();
+    }
+
+    public void Account_Click(object sender, MouseButtonEventArgs e)
+    {
+        NavigationManager.Navigate(new ManageAccount(), true);
+    }
+
+    public void RefreshAccount()
+    {
+        AccountName.DataContext = AccountManager.CurrAccount;
+        AvatarEllipse.DataContext = AccountManager.CurrAccount;
+    }
+
+    public void GoBack_Click(object sender, MouseButtonEventArgs e)
+    {
+        NavigationManager.GoBack();
     }
 }

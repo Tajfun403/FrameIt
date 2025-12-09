@@ -1,6 +1,7 @@
 ﻿using FrameIt.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
 
@@ -22,6 +23,7 @@ class NavigationManager
 
     public static void Navigate(Page page, bool CanMoveBack, bool ShowNavigationPanel = true)
     {
+        Debug.WriteLine($"Navigating to {page}");
         MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
@@ -31,14 +33,16 @@ class NavigationManager
         if (!CanGoBack())
             return;
         NavigationStack.Pop();
-        MainFrame.GoBack();
+        MainFrame.Navigate( NavigationStack.Peek().Page );
+        // MainFrame.GoBack();
     }
 
     public static bool CanGoBack()
     {
         if (NavigationStack.Count == 0)
             return false;
-        return NavigationStack.Peek().CanMoveBack && MainFrame.CanGoBack;
+        // MainFrame.CanGoBack does not work
+        return NavigationStack.Peek().CanMoveBack;
     }
 
     public static void GoToHome()
