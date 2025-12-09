@@ -33,4 +33,25 @@ class AccountManager
     {
         LoadDefaultAccount();
     }
+
+    /// <summary>
+    /// Attempt to use stored login info to login immediately.
+    /// </summary>
+    /// <returns>Whether the auto login succeeded</returns>
+    public static bool TryAutoLogin()
+    {
+        return true;
+        // TODO Implement this!
+        throw new NotImplementedException();
+    }
+
+    public static bool TryLogin(string Username, string Password)
+    {
+        return true;
+    }
+
+    public static bool Register(string Username, string Password)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -21,7 +21,6 @@
                     <ImageBrush Stretch="Fill" ImageSource="{Binding Image, 
                         UpdateSourceTrigger=PropertyChanged, 
                         RelativeSource={RelativeSource AncestorType=UserControl},
-                        PresentationTraceSources.TraceLevel=High,
                         FallbackValue='Images/Liara.jpg'}"/>
                 </Border.Background>
             </Border>
@@ -35,7 +34,6 @@
            IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
            VerticalAlignment="Top"
            HorizontalAlignment="Right"
-           Background="#333"
            Foreground="White"
            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 
@@ -46,7 +44,6 @@
                Content="{Binding DisplayName, 
             UpdateSourceTrigger=PropertyChanged,
             RelativeSource={RelativeSource AncestorType=UserControl},
-            PresentationTraceSources.TraceLevel=High,
             FallbackValue='PhotoShow'}" 
                VerticalAlignment="Center"
                HorizontalAlignment="Left"

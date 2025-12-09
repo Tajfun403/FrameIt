@@ -35,7 +35,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <baseui:PhotoControl ShouldShowName="True" DisplayName="{Binding DisplayName}" Image="{Binding ImageBitmap}" />
+                    <baseui:PhotoControl ShouldShowName="True" DisplayName="{Binding DisplayName}" Image="{Binding ImageBitmap}" IsSelectable="True"/>
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

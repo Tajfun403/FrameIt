@@ -34,6 +34,8 @@ class UserAccount : INotifyPropertyChanged
         }
     }
 
+    public string Password { get; set; }
+
     /// <summary>
     /// Path to the user's profile image. <br/>
     /// We assume that it is never uploaded anywhere and stays local.
@@ -74,4 +76,5 @@ class UserAccount : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
 }

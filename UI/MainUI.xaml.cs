@@ -1,4 +1,5 @@
 ﻿using FrameIt.Account;
+using FrameIt.General;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,7 @@ public partial class MainUI : Page
         InitializeComponent();
         AccountManager.OnUserChanged += RefreshAccount;
         RefreshAccount();
+        NavigationManager.Init(this);
     }
 
     public void RefreshAccount()
