@@ -23,8 +23,8 @@
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Manage PhotoShows" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Left" Grid.Column="0" Margin="20 0 0 0"/>
-            <Button Content="Add PhotoShow" Grid.Column="1" Margin="20 0 20 0"/>
-            <Button Content="Delete PhotoShows" Grid.Column="2" Margin="20 0 20 0"/>
+            <Button Name="AddButton" Content="Add PhotoShow" Grid.Column="1" Margin="20 0 20 0"/>
+            <Button Name="DeleteButton" Content="Delete PhotoShows" Click="DeletePhotos_Click" Grid.Column="2" Margin="20 0 20 0"/>
         </Grid>
         <ItemsControl Grid.Row="1" Name="ShowsList" ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>

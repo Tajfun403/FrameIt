@@ -24,7 +24,7 @@ public partial class NavigationHeader : UserControl
     public NavigationHeader()
     {
         InitializeComponent();
-        AccountManager.OnUserChanged += RefreshAccount;
+        AccountManager.Instance.OnUserChanged += RefreshAccount;
         RefreshAccount();
     }
 
@@ -35,8 +35,9 @@ public partial class NavigationHeader : UserControl
 
     public void RefreshAccount()
     {
-        AccountName.DataContext = AccountManager.CurrAccount;
-        AvatarEllipse.DataContext = AccountManager.CurrAccount;
+        AccountName.DataContext = AccountManager.Instance.CurrAccount;
+        AvatarEllipse.DataContext = AccountManager.Instance.CurrAccount;
+        AccountBar.DataContext = AccountManager.Instance;
     }
 
     public void GoBack_Click(object sender, MouseButtonEventArgs e)

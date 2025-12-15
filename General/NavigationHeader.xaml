@@ -13,32 +13,37 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Image Source="/Images/Back.png" 
-               Name="GoBack"
-               Grid.Column="0" 
-               MouseLeftButtonDown="GoBack_Click" />
-        <Label Name="AccountName"  
-               MouseLeftButtonDown="Account_Click" 
-               Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=AccName}" 
-               Grid.Column="1" 
-               Style="{StaticResource BaseLabelStyle}" 
-               HorizontalAlignment="Right" 
-               VerticalAlignment="Center" 
-               Margin="0 0 10 0"/>
-        <!-- <Image Name="AccountImage" Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/Liara.jpg}" 
-           Grid.Column="4"/> -->
-        <Ellipse Name="AvatarEllipse" 
-                 MouseLeftButtonDown="Account_Click" 
-                 Grid.Column="2" 
-                 Width="50" 
-                 Height="50"
-                 HorizontalAlignment="Center" 
-                 VerticalAlignment="Center">
-            <Ellipse.Fill>
-                <ImageBrush x:Name="AccountImage" ImageSource="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/GrayLiara.jpg}"/>
-            </Ellipse.Fill>
-        </Ellipse>
+                   Name="GoBack"
+                   Grid.Column="0" 
+                   MouseLeftButtonDown="GoBack_Click" />
+        <Grid Grid.Column="1" Name="AccountBar" Visibility="{Binding IsAccountBarVisible, UpdateSourceTrigger=PropertyChanged}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Label Name="AccountName"  
+                   MouseLeftButtonDown="Account_Click" 
+                   Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=AccName}" 
+                   Grid.Column="0" 
+                   Style="{StaticResource BaseLabelStyle}" 
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Center" 
+                   Margin="0 0 10 0"/>
+            <!-- <Image Name="AccountImage" Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/Liara.jpg}" 
+               Grid.Column="4"/> -->
+            <Ellipse Name="AvatarEllipse" 
+                     MouseLeftButtonDown="Account_Click" 
+                     Grid.Column="1" 
+                     Width="50" 
+                     Height="50"
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center">
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="AccountImage" ImageSource="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/GrayLiara.jpg}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+        </Grid>
     </Grid>
 </UserControl>

@@ -22,6 +22,14 @@ Separate folders for each of the main features:
 - PageManager
     - To switch pages
     - Have each page provide a AskBeforeExiting, for screens that the user can edit
+    - Prop to hide the current user bar if the user's not logged in
+- StorageManager
+    - Basic serialization of user accounts, photos, shows, etc
+    - Will try to use JSON Serializer
+        - The built-in one just throws NotSupportedException without any context on what's actually unsupported
+            - Great design Microsoft, great design
+        - Will try to focus on DTO classes to try skirt its problems?
+        - Can also switch to NewtsonSoft serializer which is allegedely ~~ 10x slower, but more reliable
 
 # Guidlines
 - We will use Pages for each of the page our app will provide

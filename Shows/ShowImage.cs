@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrameIt.General;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace FrameIt.Shows;
 
-class ShowImage : INotifyPropertyChanged
+class ShowImage : INotifyPropertyChanged, ISelectable
 {
     public string ImagePath
     {
@@ -42,6 +43,15 @@ class ShowImage : INotifyPropertyChanged
     }
 
     public bool IsSelected
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsSelectable
     {
         get; set
         {

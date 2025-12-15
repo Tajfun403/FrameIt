@@ -33,5 +33,15 @@ public partial class ShowsMain : Page
             DisplayName = "Sample Photo 2"
         });
         ShowsList.DataContext = defaultShow;
+
+        ShowsList.DataContext = ShowsManager.Instance.Shows;
+        this.DataContext = ShowsManager.Instance.Shows;
+    }
+
+    private 
+
+    private void DeletePhotos_Click(object sender, RoutedEventArgs e)
+    {
+        
     }
 }
