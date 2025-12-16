@@ -23,9 +23,9 @@ class NavigationManager
     public static void Navigate(Page page, bool CanMoveBack, bool ShowNavigationPanel = true)
     {
         Debug.WriteLine($"Navigating to {page}");
-        MainFrame.Navigate(page);
         StatusVM.CanGoBack = CanMoveBack;
         StatusVM.ShowNavigation = ShowNavigationPanel;
+        MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
 
@@ -34,7 +34,10 @@ class NavigationManager
         if (!CanGoBack())
             return;
         NavigationStack.Pop();
-        MainFrame.Navigate( NavigationStack.Peek().Page );
+        var lastPage = NavigationStack.Peek();
+        MainFrame.Navigate(lastPage.Page);
+        StatusVM.CanGoBack = lastPage.CanMoveBack;
+        StatusVM.ShowNavigation = lastPage.ShowNavigationPanel;
         // MainFrame.GoBack();
     }
 
