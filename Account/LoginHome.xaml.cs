@@ -27,9 +27,16 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         DataContext = this;
     }
 
+    // TODO Convert this to a Relay command!
+
     public bool IsACorrectEmail(string email)
     {
-        return email.Contains("@") && email.Contains(".") && email[^1..^2] is not "." and not "@";
+        if (email is null)
+            return false;
+        return email.Contains("@")
+            && email.Contains(".")
+            && !email.EndsWith("@")
+            && !email.EndsWith(".");
     }
 
     public string Email
@@ -71,6 +78,7 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    // TODO Convert this to a Relay command!
     private void LogInOrRegister_Continue_Click(object sender, RoutedEventArgs e)
     {
         if (DoesAccountExist(Email))

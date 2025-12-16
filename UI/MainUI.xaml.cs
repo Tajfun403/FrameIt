@@ -24,5 +24,11 @@ public partial class MainUI : Page
     {
         InitializeComponent();
         NavigationManager.Init(this);
+        NavigationManager.Navigate(new LoginHome(), false, false);
+    }
+
+    public void PickFirstScreen()
+    {
+
     }
 }

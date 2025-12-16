@@ -34,8 +34,9 @@ public partial class ShowsMain : Page
         });
         ShowsList.DataContext = defaultShow;
 
-        ShowsList.DataContext = ShowsManager.Instance.Shows;
-        this.DataContext = ShowsManager.Instance.Shows;
+        // TODO Set the real source here!
+        // ShowsList.DataContext = ShowsManager.Instance.Shows;
+        // this.DataContext = ShowsManager.Instance.Shows;
     }
 
     private void DeletePhotos_Click(object sender, RoutedEventArgs e)

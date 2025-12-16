@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Docs\" />
-    <Folder Include="Frames\" />
   </ItemGroup>
 
   <ItemGroup>

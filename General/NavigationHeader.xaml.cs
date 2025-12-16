@@ -25,6 +25,11 @@ public partial class NavigationHeader : UserControl
     {
         InitializeComponent();
         AccountManager.Instance.OnUserChanged += RefreshAccount;
+        // TODO
+        // BIG WARNING
+        // Probs wrap all props here to a single container?
+        GoBackControl.DataContext = NavigationManager.StatusVM;
+        this.DataContext = NavigationManager.StatusVM;
         RefreshAccount();
     }
 
@@ -35,8 +40,8 @@ public partial class NavigationHeader : UserControl
 
     public void RefreshAccount()
     {
-        AccountName.DataContext = AccountManager.Instance.CurrAccount;
-        AvatarEllipse.DataContext = AccountManager.Instance.CurrAccount;
+        // AccountName.DataContext = AccountManager.Instance.CurrAccount;
+        // AvatarEllipse.DataContext = AccountManager.Instance.CurrAccount;
         AccountBar.DataContext = AccountManager.Instance;
     }
 

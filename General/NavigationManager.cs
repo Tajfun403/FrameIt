@@ -18,13 +18,14 @@ class NavigationManager
     public static void Init(MainUI mainWindow)
     {
         MainWindow = mainWindow;
-        GoToHome();
     }
 
     public static void Navigate(Page page, bool CanMoveBack, bool ShowNavigationPanel = true)
     {
         Debug.WriteLine($"Navigating to {page}");
         MainFrame.Navigate(page);
+        StatusVM.CanGoBack = CanMoveBack;
+        StatusVM.ShowNavigation = ShowNavigationPanel;
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
 
@@ -56,4 +57,6 @@ class NavigationManager
     }
 
     public record struct NavigationEntry(Page Page, bool CanMoveBack, bool ShowNavigationPanel);
+
+    public static NavigationBarStatusVM StatusVM = new();
 }
