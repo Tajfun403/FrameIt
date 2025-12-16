@@ -45,7 +45,7 @@ public partial class LoginHome : Page, INotifyPropertyChanged
     public bool IsContinueEnabled => IsACorrectEmail(Email);
 
     public bool RememberMe { get; set; }
-    public bool Password { get; set; }
+    public string Password { get; set; }
 
     public bool IsLoginOrRegisterVisible
     {
