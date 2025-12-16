@@ -5,10 +5,73 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FrameIt.Account"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      d:DataContext="{d:DesignInstance Type=local:LoginHome, IsDesignTimeCreatable=True}"
       Title="LoginHome">
 
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Vertical"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+        <Label Content="FrameIt"
+                   Style="{StaticResource HeaderStyle}"
+                   HorizontalAlignment="Center"
+                   Margin="10"/>
+        <Label Content="Manage all your frames at ease, in one place!"
+                   Style="{StaticResource BaseLabelStyle}"
+                   HorizontalAlignment="Center" 
+                   Margin="10 10 10 30"/>
+        <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=True }">
+            <Label Content="Please enter your e-mail to log-in or register:"
+                   Style="{StaticResource BaseLabelStyle}"
+                   HorizontalAlignment="Center"
+                   Margin="10 10 10 10"
+               />
+            <TextBox
+                 Width="200"
+                 Margin="10"
+                 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            />
+            <Button
+                Name="LogInOrRegister_Continue"
+                 HorizontalAlignment="Right"
+                 Content="Continue"
+                 Grid.Column="1"
+                 IsEnabled="{Binding IsContinueEnabled, UpdateSourceTrigger=PropertyChanged}"
+                Click="LogInOrRegister_Continue_Click"
+                />
+        </StackPanel>
+        <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=True }">
+            <Label Content="Please enter your password:"
+                   Style="{StaticResource BaseLabelStyle}"
+                   HorizontalAlignment="Center"
+                   Margin="10 10 10 10"
+               />
+            <TextBox
+                   Width="200"
+                   Margin="10"
+                   Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            />
+            <Grid Name="BottomPanel" Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox 
+            Content="Remember me"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+                IsChecked="{Binding RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  />
+                <Button
+                    Name="LogIn_Continue"
+            Content="Continue"
+            Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Click="LogIn_Continue_Click"
+                />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
 </Page>

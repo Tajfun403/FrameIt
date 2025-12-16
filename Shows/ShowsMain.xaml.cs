@@ -38,8 +38,6 @@ public partial class ShowsMain : Page
         this.DataContext = ShowsManager.Instance.Shows;
     }
 
-    private 
-
     private void DeletePhotos_Click(object sender, RoutedEventArgs e)
     {
         

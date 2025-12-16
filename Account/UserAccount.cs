@@ -14,7 +14,7 @@ class UserAccount : INotifyPropertyChanged
     /// <summary>
     /// User's name
     /// </summary>
-    public string Name
+    public required string Name
     {
         get; set
         {
@@ -48,7 +48,7 @@ class UserAccount : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(AvatarImage));
         }
-    }
+    } = "Images/GrayLiara.jpg";
 
     public BitmapImage AvatarImage
     {
@@ -69,6 +69,8 @@ class UserAccount : INotifyPropertyChanged
             }
         }
     }
+
+    public bool RememberMe { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
