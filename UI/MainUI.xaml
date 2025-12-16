@@ -11,8 +11,12 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       Title="MainUI">
 
-    <StackPanel Background="{DynamicResource MaterialDesignPaper}">
+    <Grid Background="{DynamicResource MaterialDesignPaper}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <general:NavigationHeader Grid.Row="0" />
         <Frame Grid.Row="1" Name="MainContentFrame" Source="/Shows/ShowsMain.xaml" NavigationUIVisibility="Hidden"/>
-    </StackPanel>
+    </Grid>
 </Page>

@@ -29,6 +29,7 @@
                    Margin="10 10 10 10"
                />
             <TextBox
+                
                  Width="200"
                  Margin="10"
                  Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
