@@ -8,7 +8,8 @@
       d:DesignHeight="530" d:DesignWidth="1000"
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}"
-      Title="ShowsMain">
+      Title="ShowsMain"
+      >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -79,7 +80,9 @@
                 <DataTemplate>
                     <baseui:PhotoControl ShouldShowName="True" DisplayName="{Binding DisplayName}"
                                          Image="{Binding ImageBitmap}"
-                                         IsSelectable="{Binding ItemsSelectable, RelativeSource={RelativeSource AncestorType=Page}, UpdateSourceTrigger=PropertyChanged}"/>
+                                         IsSelectable="{Binding ItemsSelectable, 
+                                            RelativeSource={RelativeSource AncestorType=Page},
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

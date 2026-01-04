@@ -26,6 +26,7 @@ class NavigationManager
         Debug.WriteLine($"Navigating to {page}");
         StatusVM.CanGoBack = CanMoveBack;
         StatusVM.ShowNavigation = ShowNavigationPanel;
+        onPageLeft?.Invoke((Page)MainFrame.Content!);
         MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
@@ -58,6 +59,18 @@ class NavigationManager
         }
         NavigationStack.Clear();
         Navigate(new UI.Home(), false, true);
+    }
+
+    private static Action<Page>? onPageLeft;
+
+    public static void RegisterOnPageLeft(Action<Page> onPageLeft)
+    {
+        NavigationManager.onPageLeft = onPageLeft;
+    }
+
+    public static void UnregisterOnPageLeft()
+    {
+        NavigationManager.onPageLeft = null;
     }
 
     public record struct NavigationEntry(Page Page, bool CanMoveBack, bool ShowNavigationPanel);

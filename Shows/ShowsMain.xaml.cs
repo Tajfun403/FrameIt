@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Navigation;
+using FrameIt.General;
 
 namespace FrameIt.Shows;
 
@@ -73,21 +75,31 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         {
             EnterDeleteMode();
         }
-        OnPropertyChanged(nameof(DelPhotosButtonText));
     }
 
     public string DelPhotosButtonText => IsInDeleteMode ? "Cancel Delete" : "Delete PhotoShows";
+
+    public void OnPageLeft(Page left)
+    {
+        ExitDeleteMode();
+    }
 
     public void EnterDeleteMode()
     {
         IsInDeleteMode = true;
         ItemsSelectable = true;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.RegisterOnPageLeft(OnPageLeft);
     }
 
     public void ExitDeleteMode()
     {
         IsInDeleteMode = false;
         ItemsSelectable = false;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.UnregisterOnPageLeft();
+        // TODO Selectable is on items -- clear it after exiting delete mode
+        // TODO Call this when lost focus!
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -95,4 +107,6 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+
 }
