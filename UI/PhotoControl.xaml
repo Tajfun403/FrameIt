@@ -35,10 +35,15 @@
            VerticalAlignment="Top"
            HorizontalAlignment="Right"
            Foreground="White"
-           Visibility="{Binding SelectionVisibility, 
+           Visibility="{Binding IsSelectable, 
+                UpdateSourceTrigger=PropertyChanged, 
+                RelativeSource={RelativeSource AncestorType=UserControl},
+                Converter={StaticResource BoolToVis}}"
+        />
+            <!--            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 
                 RelativeSource={RelativeSource AncestorType=UserControl}}"
-        />
+            -->
         </Grid>
         <Label Grid.Column="1" 
                Content="{Binding DisplayName, 

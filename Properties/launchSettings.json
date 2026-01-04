@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "FrameIt": {
+      "commandName": "Project"
+    },
+    "HomeScreen": {
+      "commandName": "Project",
+      "commandLineArgs": "-StartToHome"
+    },
+    "LoginScreen": {
+      "commandName": "Project",
+      "commandLineArgs": "-StartToLogin"
+    }
+  }
+}

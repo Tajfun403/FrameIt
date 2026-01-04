@@ -20,8 +20,9 @@ class NavigationManager
         MainWindow = mainWindow;
     }
 
-    public static void Navigate(Page page, bool CanMoveBack, bool ShowNavigationPanel = true)
+    public static void Navigate(Page page, bool CanMoveBack, bool ShowNavigationPanel = true, bool ShowAccountBar = true)
     {
+        // TODO Do show account bar!
         Debug.WriteLine($"Navigating to {page}");
         StatusVM.CanGoBack = CanMoveBack;
         StatusVM.ShowNavigation = ShowNavigationPanel;

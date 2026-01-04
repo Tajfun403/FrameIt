@@ -27,6 +27,9 @@
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
+            <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                <Setter Property="Background" Value="Red"/>
+            </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </Application.Resources>

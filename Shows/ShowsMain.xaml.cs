@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +19,7 @@ namespace FrameIt.Shows;
 /// <summary>
 /// Interaction logic for ShowsMain.xaml
 /// </summary>
-public partial class ShowsMain : Page
+public partial class ShowsMain : Page, INotifyPropertyChanged
 {
     private PhotoShow defaultShow = new();
     public ShowsMain()
@@ -37,10 +40,59 @@ public partial class ShowsMain : Page
         // TODO Set the real source here!
         // ShowsList.DataContext = ShowsManager.Instance.Shows;
         // this.DataContext = ShowsManager.Instance.Shows;
+
+        // TODO Add filtering shows from a given frame
+        // TODO add delete form
     }
+
+    public bool IsInDeleteMode
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+    public bool ItemsSelectable
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
 
     private void DeletePhotos_Click(object sender, RoutedEventArgs e)
     {
-        
+        if (IsInDeleteMode) 
+        {
+            ExitDeleteMode();
+        }
+        else
+        {
+            EnterDeleteMode();
+        }
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+    }
+
+    public string DelPhotosButtonText => IsInDeleteMode ? "Cancel Delete" : "Delete PhotoShows";
+
+    public void EnterDeleteMode()
+    {
+        IsInDeleteMode = true;
+        ItemsSelectable = true;
+    }
+
+    public void ExitDeleteMode()
+    {
+        IsInDeleteMode = false;
+        ItemsSelectable = false;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

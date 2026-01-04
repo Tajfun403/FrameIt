@@ -7,8 +7,8 @@ Main features that the project needs to provide:
 
 # Code structure
 Separate folders for each of the main features:
-- Account Management -- delegate to Tori
-- Frame management -- Julcia?
+- Account Management -- Julcia
+- Frame management -- Tori
 - Photo show management -- Sara
     - 
 

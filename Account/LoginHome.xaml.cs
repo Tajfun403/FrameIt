@@ -104,5 +104,8 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         // TODO TRANSFORM TO THE MAIN PAGE
         // TODO LOGIN
         NavigationManager.GoToHome();
+        // var accountManager = new ManageAccount();
+        // accountManager.ShowContinueButton = true;
+        // NavigationManager.Navigate(new ManageAccount(), false);
     }
 }

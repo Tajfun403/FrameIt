@@ -22,5 +22,10 @@ namespace FrameIt.Account
         {
             InitializeComponent();
         }
+
+        public bool IsRegisteringAccount
+        {
+            get; set;
+        } = false;
     }
 }
