@@ -1,4 +1,5 @@
-﻿using FrameIt.General;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FrameIt.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace FrameIt.Account;
 
-class AccountManager : PropChangedBase
+class AccountManager : ObservableObject
 {
     /// <summary>
     /// Currently logged-in user account.<br/>
