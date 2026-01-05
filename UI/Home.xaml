@@ -16,6 +16,6 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Frame Grid.Row="0" Name="UpperHome" Source="/Shows/ShowsMain.xaml"/>
-        <Frame Grid.Row="1" Name="LowerHome" Source="/Shows/ShowsMain.xaml"/>
+        <Frame Grid.Row="1" Name="LowerHome" Source="/Frames/FramesMain.xaml"/>
     </Grid>
 </Page>

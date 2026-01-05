@@ -1,14 +1,75 @@
 ﻿<Page x:Class="FrameIt.Frames.FramesMain"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:FrameIt.Frames"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      mc:Ignorable="d"
+      d:DesignHeight="530"
+      d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
       Title="FramesMain">
 
-    <Grid>
-        
-    </Grid>
+	<Grid>
+		<!-- LAYOUT -->
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+
+		<!-- HEADER -->
+		<Grid Height="100" Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="500"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Label Content="Connected Frames"
+                   Style="{StaticResource HeaderStyle}"
+                   Grid.Column="0"
+                   Margin="20 0 0 0"/>
+
+			<StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 20 0">
+				<Button Content="Add Frame"
+                        Width="150"
+                        Margin="0 0 20 0"/>
+				<Button Content="Delete Frame"
+                        Width="150"/>
+			</StackPanel>
+		</Grid>
+
+		<!-- FRAME LIST -->
+		<ItemsControl Grid.Row="1"
+					  ItemsSource="{Binding Frames}">
+			<ItemsControl.Template>
+				<ControlTemplate TargetType="ItemsControl">
+					<ScrollViewer VerticalScrollBarVisibility="Auto"
+								  HorizontalScrollBarVisibility="Disabled">
+						<ItemsPresenter/>
+					</ScrollViewer>
+				</ControlTemplate>
+			</ItemsControl.Template>
+
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Margin="10"/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<baseui:PhotoControl
+						DisplayName="{Binding Name}"
+						Image="{Binding ImageBitmap}"
+						ShouldShowName="True"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+	</Grid>
 </Page>
