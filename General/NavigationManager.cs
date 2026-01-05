@@ -26,7 +26,10 @@ class NavigationManager
         Debug.WriteLine($"Navigating to {page}");
         StatusVM.CanGoBack = CanMoveBack;
         StatusVM.ShowNavigation = ShowNavigationPanel;
+
         onPageLeft?.Invoke((Page)MainFrame.Content!);
+        onPageLeft = null;
+
         MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
@@ -63,11 +66,19 @@ class NavigationManager
 
     private static Action<Page>? onPageLeft;
 
+    /// <summary>
+    /// Execute an <see cref="Action{Page}"/> when the current page is left.<br/>
+    /// Remember to Unregister with <see cref="UnregisterOnPageLeft"/> when no longer needed.
+    /// </summary>
+    /// <param name="onPageLeft"></param>
     public static void RegisterOnPageLeft(Action<Page> onPageLeft)
     {
         NavigationManager.onPageLeft = onPageLeft;
     }
 
+    /// <summary>
+    /// Unregisters the current handler for the page left event, if any.
+    /// </summary>
     public static void UnregisterOnPageLeft()
     {
         NavigationManager.onPageLeft = null;

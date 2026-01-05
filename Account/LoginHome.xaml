@@ -22,7 +22,7 @@
                    Style="{StaticResource BaseLabelStyle}"
                    HorizontalAlignment="Center" 
                    Margin="10 10 10 30"/>
-        <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=True }">
+        <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible }">
             <Label Content="Please enter your e-mail to log-in or register:"
                    Style="{StaticResource BaseLabelStyle}"
                    HorizontalAlignment="Center"
@@ -39,11 +39,10 @@
                  HorizontalAlignment="Right"
                  Content="Continue"
                  Grid.Column="1"
-                 IsEnabled="{Binding IsContinueEnabled, UpdateSourceTrigger=PropertyChanged}"
-                Click="LogInOrRegister_Continue_Click"
+                Command="{Binding LogInOrRegisterCommand}"
                 />
         </StackPanel>
-        <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=True }">
+        <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible }">
             <Label Content="Please enter your password:"
                    Style="{StaticResource BaseLabelStyle}"
                    HorizontalAlignment="Center"

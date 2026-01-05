@@ -51,7 +51,7 @@
             </Label>
             <Button Name="ReallyDeleteButton" 
                     Content="Delete selected shows"
-                    Click="DeletePhotos_Click" 
+                    Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
                     Grid.Column="1" 
                     Grid.RowSpan="2"
                     VerticalAlignment="Center"

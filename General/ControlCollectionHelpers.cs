@@ -15,4 +15,17 @@ internal static class ControlCollectionHelpers
             node.IsSelectable = isVisible;
         }
     }
+
+    public static List<T> GetSelectedItems<T>(this IEnumerable<T> nodesList) where T : ISelectable
+    {
+        List<T> selectedItems = [];
+        foreach(var node in nodesList)
+        {
+            if (node.IsSelected && node is T tNode)
+            {
+                selectedItems.Add(tNode);
+            }
+        }
+        return selectedItems;
+    }
 }

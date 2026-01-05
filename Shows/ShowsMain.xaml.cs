@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using FrameIt.General;
+using CommunityToolkit.Mvvm.Input;
 
 namespace FrameIt.Shows;
 
@@ -108,5 +109,20 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    private void DoDeletePhotos()
+    {
 
+    }
+
+    private void SelectionChanged()
+    {
+        CommandDeletePhotos.NotifyCanExecuteChanged();
+    }
+
+    public bool CanDeleteSelectedPhotos
+    {
+        get => true; // TODO IMPLEMENT
+    }
+
+    public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
 }

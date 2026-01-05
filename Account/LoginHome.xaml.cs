@@ -1,4 +1,5 @@
-﻿using FrameIt.General;
+﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,7 @@ public partial class LoginHome : Page, INotifyPropertyChanged
 {
     public LoginHome()
     {
+        LogInOrRegisterCommand = new RelayCommand(LogInOrRegister_Continue_Func, () => IsContinueEnabled);
         InitializeComponent();
         DataContext = this;
     }
@@ -46,10 +48,10 @@ public partial class LoginHome : Page, INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsContinueEnabled));
+            LogInOrRegisterCommand.NotifyCanExecuteChanged();
         }
     }
 
-    public bool IsContinueEnabled => IsACorrectEmail(Email);
 
     public bool RememberMe { get; set; }
     public string Password { get; set; }
@@ -62,24 +64,10 @@ public partial class LoginHome : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = true;
-    public bool IsLoginVisible
-    {
-        get; set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = false;
 
+    public RelayCommand LogInOrRegisterCommand { get; init; }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    // TODO Convert this to a Relay command!
-    private void LogInOrRegister_Continue_Click(object sender, RoutedEventArgs e)
+    private void LogInOrRegister_Continue_Func()
     {
         if (DoesAccountExist(Email))
         {
@@ -90,6 +78,25 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         {
             // TODO NAVIGATE TO REGISTER PAGE
         }
+    }
+    public bool IsContinueEnabled => IsACorrectEmail(Email);
+
+
+    public bool IsLoginVisible
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private bool DoesAccountExist(string email)
