@@ -65,7 +65,8 @@
 				<DataTemplate>
 					<baseui:PhotoControl
 						DisplayName="{Binding Name}"
-						Image="{Binding ImagePath}"/>
+						Image="{Binding ImageBitmap}"
+						ShouldShowName="True"/>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>

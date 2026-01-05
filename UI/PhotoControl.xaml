@@ -31,7 +31,7 @@
                 Height="13"
                     />
             <CheckBox 
-           IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+           IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=False, RelativeSource={RelativeSource AncestorType=UserControl}}" 
            VerticalAlignment="Top"
            HorizontalAlignment="Right"
            Foreground="White"
