@@ -87,6 +87,23 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
     public static readonly DependencyProperty IsSelectableProperty =
        DependencyProperty.Register(nameof(IsSelectable), typeof(bool), typeof(PhotoControl));
 
+    public static readonly DependencyProperty SecondaryNameProperty =
+        DependencyProperty.Register(nameof(SecondaryName), typeof(string), typeof(PhotoControl));
+
+    public string SecondaryName
+    {
+        get => (string)GetValue(SecondaryNameProperty);
+        set
+        {
+            SetValue(SecondaryNameProperty, value);
+            OnPropertyChanged(nameof(ShouldDisplaySecondaryName));
+        }
+    }
+
+    public bool ShouldDisplaySecondaryName
+    {
+        get => !string.IsNullOrEmpty(SecondaryName);
+    }
 
     public ICommand ClickCommand
     {

@@ -31,7 +31,7 @@
                 Height="13"
                     />
             <CheckBox 
-           IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+           IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}" 
            VerticalAlignment="Top"
            HorizontalAlignment="Right"
            Foreground="White"
@@ -45,15 +45,39 @@
                 RelativeSource={RelativeSource AncestorType=UserControl}}"
             -->
         </Grid>
-        <Label Grid.Column="1" 
-               Content="{Binding DisplayName, 
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={RelativeSource AncestorType=UserControl},
-            FallbackValue='PhotoShow'}" 
+        <Grid Grid.Column="1">
+            <StackPanel 
                VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               FontSize="14"
-               FontWeight="Bold"
-               Margin="10 0 10 0"/>
+               Margin="10 0 10 0"
+             >
+                <Label
+                   Content="{Binding DisplayName, 
+                UpdateSourceTrigger=PropertyChanged,
+                RelativeSource={RelativeSource AncestorType=UserControl},
+                FallbackValue='PhotoShow'}" 
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="14"
+                   FontWeight="Bold"
+                />
+                <Label
+                   Content="{Binding SecondaryName, 
+                UpdateSourceTrigger=PropertyChanged,
+                RelativeSource={RelativeSource AncestorType=UserControl},
+                FallbackValue='PhotoShow'}" 
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="8"
+                   FontWeight="Normal"
+                   Margin="5 0 0 0"
+                   Visibility="{Binding ShouldDisplaySecondaryName, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    FallbackValue=Collapsed, 
+                    RelativeSource={RelativeSource AncestorType=UserControl},
+                    Converter={StaticResource BoolToVis}}"
+                />
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </UserControl>
