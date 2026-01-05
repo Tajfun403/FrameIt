@@ -1,4 +1,5 @@
-﻿using FrameIt.General;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FrameIt.General;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace FrameIt.Shows;
 
-class PhotoShow : PropChangedBase, ISelectable
+class PhotoShow : ObservableObject, ISelectable
 {
     public ObservableCollection<ShowImage> PhotosList { get; } = [];
     public bool IsSelected { get; set; }

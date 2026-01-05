@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FrameIt.General;
 
-class NavigationBarStatusVM : PropChangedBase
+class NavigationBarStatusVM : ObservableObject
 {
     public bool CanGoBack
     {
