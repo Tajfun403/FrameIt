@@ -144,10 +144,7 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         }
         else
         {
-            NavigationManager.Navigate(new EditShow()
-            {
-                DataContext = show
-            },
+            NavigationManager.Navigate(new EditShow(show),
             true);
         }
     }

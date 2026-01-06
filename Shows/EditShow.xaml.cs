@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -38,7 +39,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
 
     public EditShow() : this(new PhotoShow()
     {
-        DisplayName = "New PhotoShow",
+        DisplayName = "PlaceHolder PhotoShow",
     })
     {
     }
@@ -85,4 +86,66 @@ public partial class EditShow : Page, INotifyPropertyChanged
         IsRenaming = false;
         NameTextBox.Focus();
     });
+
+    private void DropOverlay_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            e.Effects = DragDropEffects.Copy;
+        }
+        else
+        {
+            e.Effects = DragDropEffects.None;
+        }
+    }
+
+    public bool IsUserDragging
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void DropOverlay_Drop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
+            Debug.WriteLine($"Dropping: {files.Length} files...");
+            AddFiles(files);
+        }
+        IsUserDragging = false;
+    }
+
+    protected void AddFiles(string[] files)
+    {
+        foreach (string file in files)
+        {
+            ShowContext.AddImageByPath(file);
+        }
+    }
+
+    private void DropOverlay_DragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            e.Effects = DragDropEffects.Copy;
+        }
+        else
+        {
+            e.Effects = DragDropEffects.None;
+        }
+    }
+
+    private void Page_DragEnter(object sender, DragEventArgs e)
+    {
+        IsUserDragging = true;
+    }
+
+    private void Page_DragLeave(object sender, DragEventArgs e)
+    {
+        IsUserDragging = false;
+    }
 }

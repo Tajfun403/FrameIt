@@ -9,6 +9,9 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}"
       Title="ShowsMain"
+      AllowDrop="True"
+      DragEnter="Page_DragEnter"
+      DragLeave="Page_DragLeave"
       >
     <Grid>
         <Grid.RowDefinitions>
@@ -64,15 +67,59 @@
                 <Button Name="DeleteButton" Content="Delete" Margin="2" Width="150"/>
             </StackPanel>
         </Grid>
+
+        <ItemsControl Grid.Row="2" 
+              Name="ShowsList" 
+              ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+              Height="Auto">
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Margin="10"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <baseui:PhotoControl ShouldShowName="False" DisplayName="{Binding DisplayName}"
+                                 Image="{Binding ImageBitmap}"
+                                 IsSelectable="False"
+                                 />
+                    <!-- <Label Content="{Binding DisplayName}"/> -->
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Name="DropOverlay" Grid.Row="2"
+              Background="#80000000"
+              DragEnter="DropOverlay_DragEnter"
+              DragOver="DropOverlay_DragOver"
+              Drop="DropOverlay_Drop"
+              AllowDrop="True"
+              Visibility="{Binding IsUserDragging, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+              >
+
+            <Label Content="Drop files here to add to the show"
+                   Style="{StaticResource HeaderStyle}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="#ffffffff"
+                   />
+        </Grid>
+
+
         <Grid Grid.Row="3">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Name="SaveButton" Content="Save Changes" Width="150" Height="40" 
+                <Button Name="BrowseButton" Content="Browse photos to add..." Width="200" Height="40" 
                     Margin="20"
-                    Click="SaveButton_Click"
-                    />
-                <Button Name="CancelButton" Content="Cancel" Width="150" Height="40" 
-                    Margin="20"
-                    Click="CancelButton_Click"
                     />
             </StackPanel>
         </Grid>

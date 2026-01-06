@@ -47,4 +47,15 @@ public class PhotoShow : ObservableObject, ISelectable
             return PhotosList[0].ImageBitmap;
         }
     }
+
+    public void AddImageByPath(string path)
+    {
+        ShowImage img = new()
+        {
+            ImagePath = path,
+            DisplayName = System.IO.Path.GetFileNameWithoutExtension(path)
+        };
+        PhotosList.Add(img);
+        OnPropertyChanged(nameof(ImageBitmap));
+    }
 }
