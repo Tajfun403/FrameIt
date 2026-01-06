@@ -48,7 +48,7 @@ public class PhotoShow : ObservableObject, ISelectable
         }
     }
 
-    public void AddImageByPath(string path)
+    public async void AddImageByPath(string path)
     {
         ShowImage img = new()
         {

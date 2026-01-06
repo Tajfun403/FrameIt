@@ -22,6 +22,8 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         }
     }
 
+    // TODO DO NOT LOAD ENTIRE PHOTOS!
+    // Create thumbnails and store them in temp!
     public ImageSource ImageBitmap
     {
         get

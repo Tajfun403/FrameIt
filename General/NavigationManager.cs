@@ -29,7 +29,7 @@ class NavigationManager
 
         onPageLeft?.Invoke((Page)MainFrame.Content!);
         onPageLeft = null;
-
+        GC.Collect();
         MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }

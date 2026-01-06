@@ -27,10 +27,23 @@ public partial class EditShow : Page, INotifyPropertyChanged
     {
         get; set
         {
+            field?.PropertyChanged -= CollectionChanged_Handler;
             field = value;
             this.DataContext = value;
+            value.PropertyChanged += CollectionChanged_Handler;
         }
     }
+
+    private void CollectionChanged_Handler(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(PhotosCountString));
+    }
+
+    ~EditShow()
+    {
+        ShowContext?.PropertyChanged -= CollectionChanged_Handler;
+    }
+
     public EditShow(PhotoShow show)
     {
         InitializeComponent();
@@ -119,7 +132,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
         IsUserDragging = false;
     }
 
-    protected void AddFiles(string[] files)
+    protected async Task AddFiles(string[] files)
     {
         foreach (string file in files)
         {
@@ -147,5 +160,21 @@ public partial class EditShow : Page, INotifyPropertyChanged
     private void Page_DragLeave(object sender, DragEventArgs e)
     {
         IsUserDragging = false;
+    }
+
+    public string PhotosCountString => $"{ShowContext.PhotosList.Count} Photos";
+
+    private void BrowseButton_Click(object sender, RoutedEventArgs e)
+    {
+        Microsoft.Win32.OpenFileDialog openFileDialog = new()
+        {
+            Multiselect = true,
+            Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tiff;*.webp|All Files|*.*"
+        };
+        bool? result = openFileDialog.ShowDialog();
+        if (result == true)
+        {
+            AddFiles(openFileDialog.FileNames);
+        }
     }
 }
