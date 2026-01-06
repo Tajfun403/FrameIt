@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using FrameIt.General;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 
 namespace FrameIt.Shows;
 
@@ -25,6 +26,9 @@ namespace FrameIt.Shows;
 public partial class ShowsMain : Page, INotifyPropertyChanged
 {
     private PhotoShow defaultShow = new();
+
+    public ObservableCollection<PhotoShow> ShowsCollection { get; private set; } = [];
+
     public ShowsMain()
     {
         InitializeComponent();
@@ -38,7 +42,12 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
             ImagePath = "Images/GrayLiara.jpg",
             DisplayName = "Sample Photo 2"
         });
-        ShowsList.DataContext = defaultShow;
+        defaultShow.DisplayName = "Sample PhotoShow";
+
+        ShowsCollection.Add(defaultShow);
+
+        // defaultShow.DisplayName = "Sample PhotoShow";
+        // ShowsList.DataContext = defaultShow;
 
         // TODO Set the real source here!
         // ShowsList.DataContext = ShowsManager.Instance.Shows;
@@ -122,6 +131,25 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
     public bool CanDeleteSelectedPhotos
     {
         get => true; // TODO IMPLEMENT
+    }
+
+    public RelayCommand<PhotoShow> ShowClickedCommand => new(OnShowClicked);
+
+    public void OnShowClicked(PhotoShow show)
+    {
+        if (IsInDeleteMode)
+        {
+            show.IsSelected = !show.IsSelected;
+            SelectionChanged();
+        }
+        else
+        {
+            NavigationManager.Navigate(new EditShow()
+            {
+                DataContext = show
+            },
+            true);
+        }
     }
 
     public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);

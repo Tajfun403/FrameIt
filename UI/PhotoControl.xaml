@@ -9,6 +9,7 @@
              Height="100" Width="{Binding DesiredWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Self}}"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
              >
     <Grid>
         <Grid.ColumnDefinitions>

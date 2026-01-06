@@ -1,0 +1,80 @@
+﻿<Page x:Class="FrameIt.Shows.EditShow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FrameIt.Shows" xmlns:baseui="clr-namespace:FrameIt.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="530" d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Title="ShowsMain"
+      >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Height="100" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <TextBox 
+                Grid.Column="2"
+                Width="500" 
+                Height="80" 
+                   Name="NameTextBox"
+                Margin="20 0 0 0" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center"
+                FontSize="40"
+                FontWeight="Bold"
+                TextAlignment="Center"
+                Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue='Show Name'}"
+                Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}" >
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding FinishRenameCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                    </TextBox.InputBindings>
+            </TextBox>
+            <Label Content="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue='Show Name'}"
+                   Style="{StaticResource HeaderStyle}"
+                   Name="NameLabel"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Column="2" 
+                   Margin="20 0 0 0"
+                   Visibility="{Binding IsNotRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+                   MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                   />
+            <StackPanel Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="RenameButton" Content="Rename" Margin="2" Width="150"  
+                    Visibility="{Binding IsNotRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+                        Click="RenameButton_Click"
+                        />
+                <Button Name="FinishRenaming" Content="Finish renaming" Margin="2" Width="150"
+                   Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+                        Click="FinishRenaming_Click"
+                        />
+                <Button Name="DeleteButton" Content="Delete" Margin="2" Width="150"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="SaveButton" Content="Save Changes" Width="150" Height="40" 
+                    Margin="20"
+                    Click="SaveButton_Click"
+                    />
+                <Button Name="CancelButton" Content="Cancel" Width="150" Height="40" 
+                    Margin="20"
+                    Click="CancelButton_Click"
+                    />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace FrameIt.Shows;
 
-class ShowImage : INotifyPropertyChanged, ISelectable
+public class ShowImage : INotifyPropertyChanged, ISelectable
 {
     public string ImagePath
     {

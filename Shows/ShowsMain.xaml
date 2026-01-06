@@ -59,7 +59,7 @@
         </Grid>
         <ItemsControl Grid.Row="2" 
                       Name="ShowsList" 
-                      ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding ShowsCollection, Mode=Default, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Page}}" 
                       Height="Auto">
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
@@ -82,7 +82,10 @@
                                          Image="{Binding ImageBitmap}"
                                          IsSelectable="{Binding ItemsSelectable, 
                                             RelativeSource={RelativeSource AncestorType=Page},
-                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                            UpdateSourceTrigger=PropertyChanged}"
+                                         ClickCommand="{Binding ShowClickedCommand, 
+                                            RelativeSource={RelativeSource AncestorType=Page}}"
+                                         />
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

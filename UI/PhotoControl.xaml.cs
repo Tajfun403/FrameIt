@@ -119,4 +119,9 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        ClickCommand?.Execute(DataContext);
+    }
 }
