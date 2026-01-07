@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.Shows.Filters;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -28,7 +30,7 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
             field = value;
             this.DataContext = value;
             OnPropertyChanged();
-            CurrImage = ImageContext.ImageBitmap;
+            // CurrImage = ImageContext.ImageBitmap;
             SetupFilters();
         }
     }
@@ -68,4 +70,11 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    protected void OnFilterChanged(FilterViewModel filter)
+    {
+        ImageContext.FiltersStack.Clear();
+        ImageContext.FiltersStack.Add(filter.Filter);
+    }
+    public RelayCommand<FilterViewModel> ChangeFilterCommand => new(OnFilterChanged);
 }

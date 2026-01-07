@@ -8,11 +8,19 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.WindowsAPICodePack.Shell;
+using FrameIt.Shows.Filters;
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace FrameIt.Shows;
 
-public class ShowImage : INotifyPropertyChanged, ISelectable
+public class ShowImage : ObservableObject, ISelectable
 {
+    public ShowImage()
+    {
+        FiltersStack.CollectionChanged += (s, e) => OnFiltersStackChanged();
+    }
+
     public string ImagePath
     {
         get; set
@@ -30,6 +38,8 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         Thumbnail = PlaceholderImage;
         await LoadMainImage();
         await RefreshThumbnail();
+        SourceThumbnail = Thumbnail;
+        SourceImageBitmap = ImageBitmap;
     }
 
     private async Task RefreshThumbnail()
@@ -83,6 +93,8 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         }
     }
 
+    protected BitmapImage SourceThumbnail;
+
     // TODO DO NOT LOAD ENTIRE PHOTOS!
     // Create thumbnails and store them in temp!
     public BitmapImage ImageBitmap
@@ -93,6 +105,8 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
             OnPropertyChanged();
         }
     }
+
+    protected BitmapImage SourceImageBitmap;
 
     public bool IsSelected
     {
@@ -121,10 +135,21 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         }
     } = "PhotoShow";
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public ObservableCollection<IFilterBase> FiltersStack { get; } = [];
 
-    private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    protected BitmapImage ApplyFilters(BitmapImage source)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        BitmapImage current = source;
+        foreach (var filter in FiltersStack)
+        {
+            current = filter.ApplyFilter(current);
+        }
+        return current;
+    }
+
+    protected void OnFiltersStackChanged()
+    {
+        ImageBitmap = ApplyFilters(SourceImageBitmap);
+        Thumbnail = ApplyFilters(SourceThumbnail);
     }
 }

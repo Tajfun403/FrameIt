@@ -30,7 +30,7 @@
                    Stretch="Uniform"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Source="{Binding CurrImage, RelativeSource={RelativeSource AncestorType=Page}}"
+                   Source="{Binding ImageContext.ImageBitmap, RelativeSource={RelativeSource AncestorType=Page}}"
                    />
             <StackPanel x:Name="ImageControls" Grid.Column="1">
                 <Label Content="Image Controls"
@@ -92,9 +92,8 @@
                         <baseui:PhotoControl
                                  Image="{Binding PreviewImage, IsAsync=False}"
                                  IsSelectable="False"
+                            ClickCommand="{Binding ChangeFilterCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                  />
-                        <!-- TODO ADD ON CLICK! -->
-                        <!-- <Label Content="{Binding DisplayName}"/> -->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
