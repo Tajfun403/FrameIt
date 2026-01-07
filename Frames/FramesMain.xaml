@@ -44,32 +44,66 @@
 		</Grid>
 
 		<!-- FRAME LIST -->
-		<ItemsControl Grid.Row="1"
-					  ItemsSource="{Binding Frames}">
-			<ItemsControl.Template>
-				<ControlTemplate TargetType="ItemsControl">
-					<ScrollViewer VerticalScrollBarVisibility="Auto"
-								  HorizontalScrollBarVisibility="Disabled">
-						<ItemsPresenter/>
-					</ScrollViewer>
-				</ControlTemplate>
-			</ItemsControl.Template>
+        <ItemsControl Grid.Row="1"
+              ItemsSource="{Binding Frames}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel Margin="10"/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
 
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<baseui:PhotoControl
-						DisplayName="{Binding Name}"
-						Image="{Binding ImageBitmap}"
-						ShouldShowName="True"/>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
+                    <Grid Margin="10"
+              HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <!-- lewa kolumna: zdjęcie + nazwa -->
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- prawa kolumna: przyciski -->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-	</Grid>
+                        <!-- ZDJĘCIE + NAZWA -->
+                        <baseui:PhotoControl
+                Grid.Column="0"
+                DisplayName="{Binding Name}"
+                Image="{Binding ImageBitmap}"
+                ShouldShowName="True"
+                Margin="0,0,24,0"/>
+
+                        <!-- PRZYCISKI -->
+                        <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+
+                            <Button Content="Manage frame photo shows"
+                        Width="220"
+                        Margin="0,0,12,0"
+                        Style="{StaticResource OutlineWhiteButton}"/>
+
+                            <Button Content="Upload photo"
+                                
+                        Width="150"
+                        Margin="0,0,12,0"
+                        Style="{StaticResource OutlineWhiteButton}"/>
+
+                            <Button Content="Manage frame"
+                                    
+                        Width="150"
+                        Style="{StaticResource OutlineWhiteButton}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+
+        </ItemsControl>
+
+
+    </Grid>
 </Page>

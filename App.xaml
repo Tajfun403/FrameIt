@@ -30,6 +30,71 @@
             <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                 <Setter Property="Background" Value="Red"/>
             </Style>
+            <Style x:Key="OutlineWhiteButton"
+               TargetType="Button"
+               BasedOn="{StaticResource MaterialDesignOutlinedButton}"> 
+
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                    Background="Transparent"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="6">
+
+                                <ContentPresenter
+                        Margin="30,6"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CancelButton"
+       TargetType="Button"
+       BasedOn="{StaticResource MaterialDesignFlatButton}">
+
+                <Setter Property="Background" Value="#6A2A2A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="6">
+
+                                <ContentPresenter
+                        Margin="30,6"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+
+
+
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </Application.Resources>
