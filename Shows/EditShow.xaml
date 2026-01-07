@@ -12,6 +12,8 @@
       AllowDrop="True"
       DragEnter="Page_DragEnter"
       DragLeave="Page_DragLeave"
+      Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded"
       >
     <Grid>
         <Grid.RowDefinitions>

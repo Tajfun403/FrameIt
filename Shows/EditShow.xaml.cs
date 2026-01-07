@@ -41,8 +41,10 @@ public partial class EditShow : Page, INotifyPropertyChanged
 
     ~EditShow()
     {
+        // Not guaranteed to work?
         ShowContext?.PropertyChanged -= CollectionChanged_Handler;
     }
+
 
     public EditShow(PhotoShow show)
     {
@@ -176,5 +178,15 @@ public partial class EditShow : Page, INotifyPropertyChanged
         {
             AddFiles(openFileDialog.FileNames);
         }
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        ShowContext?.PropertyChanged += CollectionChanged_Handler;
+    }
+
+    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        ShowContext?.PropertyChanged -= CollectionChanged_Handler;
     }
 }
