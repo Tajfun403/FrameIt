@@ -218,4 +218,15 @@ public partial class EditShow : Page, INotifyPropertyChanged
     {
         OnPropertyChanged(nameof(ItemsMargin));
     }
+
+    private void PhotoClicked(ShowImage img)
+    {
+        var viewer = new ShowImageView()
+        {
+            ImageContext = img
+        };
+        NavigationManager.Navigate(viewer, true);
+    }
+
+    public RelayCommand<ShowImage> PhotoClickedCommand => new(PhotoClicked);
 }

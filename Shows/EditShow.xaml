@@ -98,6 +98,8 @@
                                  Image="{Binding Thumbnail, IsAsync=True}"
                                  IsSelectable="False"
                                  Margin="{Binding ItemsMargin, RelativeSource={RelativeSource AncestorType=Page}}"
+                                         ClickCommand="{Binding PhotoClickedCommand, 
+                                            RelativeSource={RelativeSource AncestorType=Page}}"
                                  />
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>

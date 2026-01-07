@@ -23,7 +23,7 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         }
     }
 
-    private static ImageSource PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
+    private static BitmapImage PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
 
     public async Task RefreshImages()
     {
@@ -74,7 +74,7 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
     /// <summary>
     /// Returns a small-res thumbmnail for previews.
     /// </summary>
-    public ImageSource Thumbnail
+    public BitmapImage Thumbnail
     {
         get; private set
         {
@@ -85,7 +85,7 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
 
     // TODO DO NOT LOAD ENTIRE PHOTOS!
     // Create thumbnails and store them in temp!
-    public ImageSource ImageBitmap
+    public BitmapImage ImageBitmap
     {
         get; private set
         {

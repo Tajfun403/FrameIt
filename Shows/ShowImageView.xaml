@@ -13,9 +13,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="180"/>
         </Grid.RowDefinitions>
         <Label Content="Edit image" Grid.Row="0"
                    Style="{StaticResource HeaderStyle}"
@@ -30,6 +30,7 @@
                    Stretch="Uniform"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
+                   Source="{Binding CurrImage, RelativeSource={RelativeSource AncestorType=Page}}"
                    />
             <StackPanel x:Name="ImageControls" Grid.Column="1">
                 <Label Content="Image Controls"
@@ -65,6 +66,38 @@
                 Margin="10"
                 Content="Apply effects"
                 />
+            <ItemsControl Grid.Row="1" 
+              Name="PhotosListControl" 
+              ItemsSource="{Binding FiltersList, Mode=Default, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Page}}" 
+              Height="Auto">
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                  HorizontalScrollBarVisibility="Auto"
+                                  x:Name="ItemsScrollViewer"
+                                  >
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Margin="10" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <baseui:PhotoControl
+                                 Image="{Binding PreviewImage, IsAsync=False}"
+                                 IsSelectable="False"
+                                 />
+                        <!-- TODO ADD ON CLICK! -->
+                        <!-- <Label Content="{Binding DisplayName}"/> -->
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
     </Grid>
 </Page>
