@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.General;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -183,6 +184,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
         ShowContext?.PropertyChanged += CollectionChanged_Handler;
+        OnPropertyChanged(nameof(ItemsMargin));
     }
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -198,12 +200,18 @@ public partial class EditShow : Page, INotifyPropertyChanged
     protected Thickness GetCorrectMargin()
     {
         const double additionMargin = 30;
-        double currPageWidth = this.ActualWidth - additionMargin;
+        // double currPageWidth = this.ActualWidth - additionMargin;
+
+        var scroller = Helpers.FindVisualChild<ScrollViewer>(PhotosListControl);
+        double currPageWidth = (scroller?.ViewportWidth - 22) ?? ActualWidth - additionMargin;
+
         double itemWidth = 140; // TODO GET THIS CORRECTLY!
         int fullItems = (int)(currPageWidth / itemWidth);
         double leftOverSpace = currPageWidth - (fullItems * itemWidth);
         double remainingMargin = leftOverSpace / (fullItems + 1);
+        Debug.WriteLine($"CurrPageWidth: {ActualWidth}; ScrollerWidth: {scroller?.ViewportWidth ?? 0}; Extra space: {remainingMargin}");
         return new(remainingMargin / 2, 0, remainingMargin / 2, 0);
+        
     }
 
     private void Page_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace FrameIt.General;
@@ -21,4 +23,23 @@ internal static class Helpers
         image.EndInit();
         return image;
     }
+
+    public static T? FindVisualChild<T>(DependencyObject parent)
+    where T : DependencyObject
+    {
+        // https://stackoverflow.com/a/19097670
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+
+            if (child is T typedChild)
+                return typedChild;
+
+            var result = FindVisualChild<T>(child);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
 }

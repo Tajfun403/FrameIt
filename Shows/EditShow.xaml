@@ -72,7 +72,7 @@
         </Grid>
 
         <ItemsControl Grid.Row="2" 
-              Name="ShowsList" 
+              Name="PhotosListControl" 
               ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
               Height="Auto">
             <ItemsControl.Template>
