@@ -39,7 +39,9 @@
            Visibility="{Binding IsSelectable, 
                 UpdateSourceTrigger=PropertyChanged, 
                 RelativeSource={RelativeSource AncestorType=UserControl},
-                Converter={StaticResource BoolToVis}}"
+                Converter={StaticResource BoolToVis},
+                FallbackValue=Hidden}"
+                Background="#00000000"
         />
             <!--            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 

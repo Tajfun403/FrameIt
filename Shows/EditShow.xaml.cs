@@ -189,4 +189,25 @@ public partial class EditShow : Page, INotifyPropertyChanged
     {
         ShowContext?.PropertyChanged -= CollectionChanged_Handler;
     }
+
+    public Thickness ItemsMargin
+    {
+        get => GetCorrectMargin();
+    }
+
+    protected Thickness GetCorrectMargin()
+    {
+        const double additionMargin = 30;
+        double currPageWidth = this.ActualWidth - additionMargin;
+        double itemWidth = 140; // TODO GET THIS CORRECTLY!
+        int fullItems = (int)(currPageWidth / itemWidth);
+        double leftOverSpace = currPageWidth - (fullItems * itemWidth);
+        double remainingMargin = leftOverSpace / (fullItems + 1);
+        return new(remainingMargin / 2, 0, remainingMargin / 2, 0);
+    }
+
+    private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(ItemsMargin));
+    }
 }
