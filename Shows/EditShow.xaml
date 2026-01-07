@@ -92,7 +92,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <baseui:PhotoControl ShouldShowName="False" DisplayName="{Binding DisplayName}"
-                                 Image="{Binding ImageBitmap}"
+                                 Image="{Binding Thumbnail, IsAsync=True}"
                                  IsSelectable="False"
                                  />
                     <!-- <Label Content="{Binding DisplayName}"/> -->

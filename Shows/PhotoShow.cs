@@ -38,13 +38,14 @@ public class PhotoShow : ObservableObject, ISelectable
         }
     }
 
+    // TODO Make this refresh!
     public ImageSource ImageBitmap
     {
         get
         {
             if (PhotosList.Count == 0)
                 return new BitmapImage(new Uri("Images/GrayLiara.jpg", UriKind.Absolute));
-            return PhotosList[0].ImageBitmap;
+            return PhotosList[0].GetThumbnailSync();
         }
     }
 

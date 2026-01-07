@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace FrameIt.Shows;
 
@@ -18,7 +19,67 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
         {
             field = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(ImageBitmap));
+            RefreshImages();
+        }
+    }
+
+    private static ImageSource PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
+
+    public async Task RefreshImages()
+    {
+        Thumbnail = PlaceholderImage;
+        await LoadMainImage();
+        await RefreshThumbnail();
+    }
+
+    private async Task RefreshThumbnail()
+    {
+        var file = ShellFile.FromFilePath(ImagePath);
+        if (file.Thumbnail != null)
+        {
+            Thumbnail = file.Thumbnail.ExtraLargeBitmap.BitmapToWPF();
+        }
+        else
+        {
+            Thumbnail = PlaceholderImage;
+        }
+    }
+
+    public ImageSource GetThumbnailSync()
+    {
+        var file = ShellFile.FromFilePath(ImagePath);
+        return file?.Thumbnail.ExtraLargeBitmap.BitmapToWPF() ?? PlaceholderImage; 
+    }
+
+    private async Task LoadMainImage()
+    {
+        if (string.IsNullOrEmpty(ImagePath) || !File.Exists(ImagePath))
+        {
+            Thumbnail = PlaceholderImage;
+            ImageBitmap = PlaceholderImage;
+            return;
+        }
+        try
+        {
+            string fullPath = new FileInfo(ImagePath).FullName;
+            ImageBitmap = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
+        }
+        catch
+        {
+            Thumbnail = PlaceholderImage;
+            ImageBitmap = PlaceholderImage;
+        }
+    }
+
+    /// <summary>
+    /// Returns a small-res thumbmnail for previews.
+    /// </summary>
+    public ImageSource Thumbnail
+    {
+        get; private set
+        {
+            field = value;
+            OnPropertyChanged();
         }
     }
 
@@ -26,21 +87,10 @@ public class ShowImage : INotifyPropertyChanged, ISelectable
     // Create thumbnails and store them in temp!
     public ImageSource ImageBitmap
     {
-        get
+        get; private set
         {
-            if (string.IsNullOrEmpty(ImagePath))
-                return null;
-            if (!File.Exists(ImagePath))
-                throw new FileNotFoundException($"Image of path {ImagePath} not found!");
-            string fullPath = new FileInfo(ImagePath).FullName;
-            try
-            {
-                return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
-            }
-            catch
-            {
-                return null;
-            }
+            field = value;
+            OnPropertyChanged();
         }
     }
 
