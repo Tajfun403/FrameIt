@@ -42,8 +42,7 @@
                 UpdateSourceTrigger=PropertyChanged, 
                 RelativeSource={RelativeSource AncestorType=UserControl},
                 Converter={StaticResource BoolToVis},
-                FallbackValue=Hidden}"
-                Background="#00000000"
+                FallbackValue=Visible}"
         />
             <!--            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 
@@ -89,6 +88,8 @@
               materialDesign:RippleAssist.Feedback="#80ffffff"
             materialDesign:RippleAssist.ClipToBounds="False"
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
+            IsHitTestVisible="False"
             />
+        <!-- TODO enabling hit detection here disabled clicking on the checkbox, but disabling it disables the ripple entirely -->
     </Grid>
 </UserControl>
