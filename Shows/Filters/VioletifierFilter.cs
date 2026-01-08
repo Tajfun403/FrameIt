@@ -48,7 +48,7 @@ internal class VioletifierFilter : IFilterBase
     /// <param name="original"></param>
     /// <param name="overlay"></param>
     /// <returns></returns>
-    protected byte OverlayByte(byte original, byte overlay)
+    protected static byte OverlayByte(byte original, byte overlay)
     {
         if (original < 128)
             return (byte)(2 * original * overlay / 255);
