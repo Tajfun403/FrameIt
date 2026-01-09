@@ -31,15 +31,17 @@ public class ShowImage : ObservableObject, ISelectable
         }
     }
 
-    private static BitmapImage PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
+    public static BitmapImage PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
 
     public async Task RefreshImages()
     {
+        ImagesLoaded = false;
         Thumbnail = PlaceholderImage;
         await LoadMainImage();
         await RefreshThumbnail();
         SourceThumbnail = Thumbnail;
         SourceImageBitmap = ImageBitmap;
+        ImagesLoaded = true;
     }
 
     private async Task RefreshThumbnail()
@@ -57,8 +59,14 @@ public class ShowImage : ObservableObject, ISelectable
 
     public ImageSource GetThumbnailSync()
     {
+        if (ImagesLoaded)
+        {
+            return Thumbnail;
+        }
+        // else fetch it live
         var file = ShellFile.FromFilePath(ImagePath);
-        return file?.Thumbnail.ExtraLargeBitmap.BitmapToWPF() ?? PlaceholderImage; 
+        var bitmap = file?.Thumbnail.ExtraLargeBitmap.BitmapToWPF() ?? PlaceholderImage;
+        return ApplyFilters(bitmap);
     }
 
     private async Task LoadMainImage()
@@ -80,6 +88,8 @@ public class ShowImage : ObservableObject, ISelectable
             ImageBitmap = PlaceholderImage;
         }
     }
+
+    protected bool ImagesLoaded { get; private set; } = false;
 
     /// <summary>
     /// Returns a small-res thumbmnail for previews.

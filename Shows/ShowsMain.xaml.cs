@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using FrameIt.General;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace FrameIt.Shows;
 
@@ -176,4 +177,29 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
     #endregion DeletingItems
 
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+        var newShow = new PhotoShow()
+        {
+            DisplayName = "New photo show"
+        };
+        ShowsCollection.Add(newShow);
+        var page = new EditShow(newShow);
+        page.IsRenaming = true;
+        page.NameTextBox.Focus();
+        NavigationManager.Navigate(page, true);
+        // TODO Select all text in label, as it is non-trivial
+        // cannot set it from here. Need to either do a delay (except a simple delay doesn't work)
+        // or in the final thread
+
+        // TODO Fix this hack lol
+        new Thread(() =>
+        {
+            Thread.Sleep(50);
+            page.Dispatcher.Invoke(() =>
+            {
+                page.NameTextBox.SelectAll();
+            });
+        }).Start();
+    }
 }
