@@ -51,6 +51,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
     {
         InitializeComponent();
         ShowContext = show;
+        CommandDeletePhotos = new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
     }
 
     public EditShow() : this(new PhotoShow()
@@ -230,6 +231,8 @@ public partial class EditShow : Page, INotifyPropertyChanged
 
     public RelayCommand<ShowImage> PhotoClickedCommand => new(PhotoClicked);
 
+    #region DeletingItems
+
     public bool IsInDeleteMode
     {
         get; set
@@ -237,31 +240,103 @@ public partial class EditShow : Page, INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
+    } = false;
+
+    public bool ItemsSelectable
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+    private void DeletePhotos_Click(object sender, RoutedEventArgs e)
+    {
+        if (IsInDeleteMode)
+        {
+            ExitDeleteMode();
+        }
+        else
+        {
+            EnterDeleteMode();
+        }
+    }
+
+    public string DelPhotosButtonText => IsInDeleteMode ? "Cancel Delete" : "Delete images";
+
+    public void OnPageLeft(Page left)
+    {
+        ExitDeleteMode();
+    }
+
+    public void EnterDeleteMode()
+    {
+        IsInDeleteMode = true;
+        ItemsSelectable = true;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.RegisterOnPageLeft(OnPageLeft);
+    }
+
+    public void ExitDeleteMode()
+    {
+        IsInDeleteMode = false;
+        ItemsSelectable = false;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.UnregisterOnPageLeft();
+        foreach (var item in ShowContext.PhotosList)
+        {
+            item.IsSelected = false;
+        }
+        // TODO Selectable is on items -- clear it after exiting delete mode
+        // TODO Call this when lost focus!
     }
 
     private void DoDeletePhotos()
     {
-
+        var imgsToDel = ShowContext.PhotosList.Where(x => x.IsSelected).ToList();
+        foreach (ShowImage img in imgsToDel)
+        {
+            ShowContext.PhotosList.Remove(img);
+        }
+        ExitDeleteMode();
+        // IsInDeleteMode = false;
     }
 
     private void SelectionChanged()
     {
+        OnPropertyChanged(nameof(CanDeleteSelectedPhotos));
         CommandDeletePhotos.NotifyCanExecuteChanged();
     }
 
+    public RelayCommand SelectionChangedCommand => new(SelectionChanged);
+
     public bool CanDeleteSelectedPhotos
     {
-        get => true; // TODO IMPLEMENT
+        get => ShowContext.PhotosList.Any(x => x.IsSelected);
     }
 
-    public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+    public RelayCommand<PhotoShow> ShowClickedCommand => new(OnShowClicked);
 
-    private void ReallyDeleteButton_Click(object sender, RoutedEventArgs e)
+    public void OnShowClicked(PhotoShow show)
     {
-        var showsToDel = ShowContext.PhotosList.Where(x => x.IsSelected).ToList();
-        foreach (ShowImage img in showsToDel)
+        if (IsInDeleteMode)
         {
-            ShowContext.PhotosList.Remove(img);
+            show.IsSelected = !show.IsSelected;
+            SelectionChanged();
+        }
+        else
+        {
+            NavigationManager.Navigate(new EditShow(show),
+            true);
         }
     }
+
+
+    // This NEEDS to be set in ctor!
+    // Setting this in initializer is buggy
+    public RelayCommand CommandDeletePhotos { get; init; }
+    //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    #endregion DeletingItems
 }

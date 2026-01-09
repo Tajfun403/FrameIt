@@ -61,6 +61,14 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         CommandDeletePhotos = new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
     }
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #region DeletingItems
+
     public bool IsInDeleteMode
     {
         get; set
@@ -81,7 +89,7 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
     private void DeletePhotos_Click(object sender, RoutedEventArgs e)
     {
-        if (IsInDeleteMode) 
+        if (IsInDeleteMode)
         {
             ExitDeleteMode();
         }
@@ -118,12 +126,6 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         }
         // TODO Selectable is on items -- clear it after exiting delete mode
         // TODO Call this when lost focus!
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private void DoDeletePhotos()
@@ -171,5 +173,7 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
     // Setting this in initializer is buggy
     public RelayCommand CommandDeletePhotos { get; init; }
     //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    #endregion DeletingItems
 
 }
