@@ -43,6 +43,8 @@
                 RelativeSource={RelativeSource AncestorType=UserControl},
                 Converter={StaticResource BoolToVis},
                 FallbackValue=Visible}"
+           Checked="CheckBox_Checked"
+           Unchecked="CheckBox_Checked"
         />
             <!--            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 
@@ -88,6 +90,7 @@
               materialDesign:RippleAssist.Feedback="#80ffffff"
             materialDesign:RippleAssist.ClipToBounds="False"
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
+            Visibility="{Binding IsNotSelectable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}"
             IsHitTestVisible="False"
             />
         <!-- TODO enabling hit detection here disabled clicking on the checkbox, but disabling it disables the ripple entirely -->

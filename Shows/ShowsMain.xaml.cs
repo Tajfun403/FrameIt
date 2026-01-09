@@ -55,6 +55,10 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
         // TODO Add filtering shows from a given frame
         // TODO add delete form
+
+        // This NEEDS to be set in ctor!
+        // Setting this in initializer is buggy
+        CommandDeletePhotos = new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
     }
 
     public bool IsInDeleteMode
@@ -108,6 +112,10 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         ItemsSelectable = false;
         OnPropertyChanged(nameof(DelPhotosButtonText));
         NavigationManager.UnregisterOnPageLeft();
+        foreach (var item in ShowsCollection)
+        {
+            item.IsSelected = false;
+        }
         // TODO Selectable is on items -- clear it after exiting delete mode
         // TODO Call this when lost focus!
     }
@@ -120,17 +128,26 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
     private void DoDeletePhotos()
     {
-
+        var showsToDel = ShowsCollection.Where(x => x.IsSelected).ToList();
+        foreach (PhotoShow show in showsToDel)
+        {
+            ShowsCollection.Remove(show);
+        }
+        ExitDeleteMode();
+        // IsInDeleteMode = false;
     }
 
     private void SelectionChanged()
     {
+        OnPropertyChanged(nameof(CanDeleteSelectedPhotos));
         CommandDeletePhotos.NotifyCanExecuteChanged();
     }
 
+    public RelayCommand SelectionChangedCommand => new(SelectionChanged);
+
     public bool CanDeleteSelectedPhotos
     {
-        get => true; // TODO IMPLEMENT
+        get => ShowsCollection.Any(x => x.IsSelected);
     }
 
     public RelayCommand<PhotoShow> ShowClickedCommand => new(OnShowClicked);
@@ -149,5 +166,10 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         }
     }
 
-    public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    // This NEEDS to be set in ctor!
+    // Setting this in initializer is buggy
+    public RelayCommand CommandDeletePhotos { get; init; }
+    //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
 }

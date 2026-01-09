@@ -55,7 +55,8 @@
                     Grid.Column="1" 
                     Grid.RowSpan="2"
                     VerticalAlignment="Center"
-                    Margin="20 0 20 0"/>
+                    Margin="20 0 20 0"
+                    />
         </Grid>
         <ItemsControl Grid.Row="2" 
                       Name="ShowsList" 
@@ -85,6 +86,8 @@
                                             UpdateSourceTrigger=PropertyChanged}"
                                          ClickCommand="{Binding ShowClickedCommand, 
                                             RelativeSource={RelativeSource AncestorType=Page}}"
+                                         SelectionChanged="{Binding SelectionChangedCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                         IsSelected="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          />
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>

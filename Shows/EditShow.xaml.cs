@@ -229,4 +229,39 @@ public partial class EditShow : Page, INotifyPropertyChanged
     }
 
     public RelayCommand<ShowImage> PhotoClickedCommand => new(PhotoClicked);
+
+    public bool IsInDeleteMode
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void DoDeletePhotos()
+    {
+
+    }
+
+    private void SelectionChanged()
+    {
+        CommandDeletePhotos.NotifyCanExecuteChanged();
+    }
+
+    public bool CanDeleteSelectedPhotos
+    {
+        get => true; // TODO IMPLEMENT
+    }
+
+    public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    private void ReallyDeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+        var showsToDel = ShowContext.PhotosList.Where(x => x.IsSelected).ToList();
+        foreach (ShowImage img in showsToDel)
+        {
+            ShowContext.PhotosList.Remove(img);
+        }
+    }
 }

@@ -71,6 +71,29 @@
             </StackPanel>
         </Grid>
 
+        <Grid x:Name="DeleteUI" Height="60" Margin="20" Background="#222" Grid.Row="1"
+      Visibility="{Binding IsInDeleteMode, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Style="{StaticResource BaseLabelStyle}" VerticalAlignment="Center" Grid.Column="0" Margin="20 0 20 0">
+                Select items that you wish to remove. This action will be irreversible.
+            </Label>
+            <Button Name="ReallyDeleteButton" 
+            Content="Delete selected photos"
+            Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
+            Grid.Column="1" 
+            Grid.RowSpan="2"
+            VerticalAlignment="Center"
+            Margin="20 0 20 0"
+            Click="ReallyDeleteButton_Click"
+            />
+        </Grid>
+
         <ItemsControl Grid.Row="2" 
               Name="PhotosListControl" 
               ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 

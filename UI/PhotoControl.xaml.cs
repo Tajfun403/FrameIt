@@ -27,11 +27,18 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
         // https://stackoverflow.com/a/76192782
     }
 
-    public bool IsSelectable 
+    public bool IsSelectable
     {
         get => (bool)GetValue(IsSelectableProperty);
-        set => SetValue(IsSelectableProperty, value);
+        set
+        {
+            SetValue(IsSelectableProperty, value);
+            OnPropertyChanged(nameof(IsNotSelectable));
+        }
     }
+
+    public bool IsNotSelectable => !IsSelectable;
+
     public ImageSource Image
     {
         get => (ImageSource)GetValue(ImageProperty);
@@ -122,6 +129,22 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
 
     private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
+        if (IsSelectable)
+            return;
         ClickCommand?.Execute(DataContext);
+    }
+
+    public ICommand SelectionChanged
+    {
+        get => (ICommand)GetValue(SelectionChangedProperty);
+        set => SetValue(SelectionChangedProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectionChangedProperty =
+        DependencyProperty.Register(nameof(SelectionChanged), typeof(ICommand), typeof(PhotoControl));
+
+    private void CheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+        SelectionChanged?.Execute(DataContext);
     }
 }
