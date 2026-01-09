@@ -300,6 +300,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
             ShowContext.PhotosList.Remove(img);
         }
         ExitDeleteMode();
+        OnPropertyChanged(nameof(PhotosCountString));
         // IsInDeleteMode = false;
     }
 

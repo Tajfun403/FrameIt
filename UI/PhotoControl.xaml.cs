@@ -130,8 +130,9 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
     private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (IsSelectable)
-            return;
-        ClickCommand?.Execute(DataContext);
+            IsSelected = !IsSelected;
+        else
+            ClickCommand?.Execute(DataContext);
     }
 
     public ICommand SelectionChanged
