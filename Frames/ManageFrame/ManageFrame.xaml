@@ -26,10 +26,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0"
-                   Content="Manage frame NAME"
-                   Style="{StaticResource HeaderStyle}"
-                   Margin="20,0,0,0"/>
+            <Label Style="{StaticResource HeaderStyle}"
+       Margin="20,0,0,0">
+                <TextBlock>
+        <Run Text="Manage Frame" />
+        <Run Text="{Binding FrameName}" />
+        <Run Text="" />
+                </TextBlock>
+            </Label>
+
+
+
 
             <Border Grid.Column="1"
                     HorizontalAlignment="Right"
@@ -40,11 +47,21 @@
                     CornerRadius="8">
 
                 <StackPanel Orientation="Horizontal" Margin="14,8">
-                    <TextBlock Text="Turn off the frame"
-                               FontSize="18"
-                               Foreground="White"
-                               Margin="0,0,30,0"
-                               VerticalAlignment="Center"/>
+                    <TextBlock FontSize="18"
+           Foreground="White"
+           Margin="0,0,30,0"
+           VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="Turn on the frame"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFrameOn}" Value="True">
+                                        <Setter Property="Text" Value="Turn off the frame"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
                     <Border Width="50"
                             Height="30"
@@ -54,7 +71,7 @@
                         <ToggleButton
                         IsChecked="{Binding IsFrameOn, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                        AutomationProperties.Name="Frame power"/>
+                        />
                     </Border>
                 </StackPanel>
             </Border>
@@ -78,11 +95,14 @@
                 <Border Background="#161515"
                     CornerRadius="8"
                     Margin="0,8,0,30">
-                    <TextBox AutomationProperties.Name="Frame name"
-             Background="Transparent"
-             Foreground="LightGray"
-             BorderThickness="0"
-             Padding="10"/>
+                    <TextBox
+    Text="{Binding FrameName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+    AutomationProperties.Name="Frame name"
+    Background="Transparent"
+    Foreground="LightGray"
+    BorderThickness="0"
+    Padding="10"/>
+
                 </Border>
 
 
@@ -121,12 +141,15 @@
                             Background="#161515"
                             Padding="10,4"
                             CornerRadius="15">
-                        <ComboBox  AutomationProperties.Name="Time zone"
-                                  SelectedItem="{Binding Widgets.Time.TimeZone}"
-                                  Background="Transparent"
-                                  Foreground="White"
-                                  BorderThickness="0"
-                                  Width="250"/>
+                        <ComboBox
+                            ItemsSource="{Binding TimeZones}"
+                            IsEnabled="{Binding Widgets.Time.IsEnabled}"
+                            SelectedItem="{Binding Widgets.Time.TimeZone}"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"
+                             Padding="0,5,30,5"
+                            Width="250"/>
                     </Border>
 
                     <Border Grid.Column="2"
@@ -157,11 +180,14 @@
                             Background="#161515"
                             Padding="10,4"
                             CornerRadius="15">
-                        <DatePicker AutomationProperties.Name="Date widget date"
-                                    Background="Transparent"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Width="250"/>
+                        <DatePicker
+                            IsEnabled="{Binding Widgets.Date.IsEnabled}"
+                            SelectedDate="{Binding Widgets.Date.Date, Mode=TwoWay}"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Padding="0,5,30,5"
+                            Width="250"/>
                     </Border>
 
                     <Border Grid.Column="2"
@@ -192,13 +218,15 @@
                             Background="#161515"
                             Padding="10,4"
                             CornerRadius="15">
-                        <TextBox AutomationProperties.Name="Weather location"
+                        <TextBox 
+                         IsEnabled="{Binding Widgets.Weather.IsEnabled}"
+                         Text="{Binding Widgets.Weather.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Background="Transparent"
                          Foreground="White"
                          BorderThickness="0"
                          Width="250"
                          VerticalContentAlignment="Center"
-                         Padding="0"/>  
+                          Padding="0,5,30,5"/>  
                     </Border>
 
                     <Border Grid.Column="2"
@@ -237,7 +265,7 @@
                         <ToggleButton
     IsChecked="{Binding IsAutoScheduleEnabled, Mode=TwoWay}"
     Style="{StaticResource MaterialDesignSwitchToggleButton}"
-    AutomationProperties.Name="Automatic schedule"/>
+   />
                     </Border>
                 </Grid>
 
@@ -250,23 +278,23 @@
 
                 <Border Style="{StaticResource DarkFieldContainer}"
                         Margin="0,6,0,20">
-                    <materialDesign:TimePicker
-                    AutomationProperties.Name="Turn off time"
-                    Style="{StaticResource MaterialDesignTimePicker}"
-    Foreground="White"/>
-                </Border>
+                        <materialDesign:TimePicker
+                            SelectedTime="{Binding TurnOffTime, Mode=TwoWay}"
+                            Style="{StaticResource MaterialDesignTimePicker}"
+                            Foreground="White"/>    
+                    </Border>
 
                 <TextBlock Text="Turn on time"
                            Foreground="White"/>
 
                 <Border Style="{StaticResource DarkFieldContainer}"
                         Margin="0,6,0,30">
-                    <materialDesign:TimePicker
-     AutomationProperties.Name="Turn on time"
-    Style="{StaticResource MaterialDesignTimePicker}"
-    Foreground="White"/>
+                        <materialDesign:TimePicker
+                            SelectedTime="{Binding TurnOnTime, Mode=TwoWay}"
+                            Style="{StaticResource MaterialDesignTimePicker}"
+                            Foreground="White"/>    
 
-                </Border>
+                    </Border>
 
                 </StackPanel>
 

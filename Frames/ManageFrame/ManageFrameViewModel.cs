@@ -6,71 +6,77 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace FrameIt.Frames.ManageFrame
+public class ManageFrameViewModel : INotifyPropertyChanged
 {
-    public class ManageFrameViewModel : INotifyPropertyChanged
+    private readonly FrameItem _frame;
+
+    public ManageFrameViewModel(FrameItem frame)
     {
-        public bool ShowNavigation => true;
-        private readonly FrameItem _frame;
+        _frame = frame;
 
-        public ManageFrameViewModel(FrameItem frame)
+        _frameName = frame.Config.Name;
+
+        TimeZones = TimeZoneInfo.GetSystemTimeZones()
+                                .Select(tz => tz.Id)
+                                .ToList();
+    }
+
+    // ================= FRAME NAME =================
+
+    private string _frameName;
+    public string FrameName
+    {
+        get => _frameName;
+        set
         {
-            _frame = frame;
-
-            TimeZones = TimeZoneInfo.GetSystemTimeZones()
-                                    .Select(tz => tz.Id)
-                                    .ToList();
-        }
-
-        // =======================
-        // BASIC
-        // =======================
-
-        public string FrameName
-        {
-            get => _frame.Config.Name;
-            set
+            if (_frameName != value)
             {
+                _frameName = value;
                 _frame.Config.Name = value;
                 Save();
                 OnPropertyChanged();
             }
         }
+    }
 
-        public int Brightness
+    // ================= BASIC CONFIG =================
+
+    public int Brightness
+    {
+        get => _frame.Config.Brightness;
+        set
         {
-            get => _frame.Config.Brightness;
-            set
+            if (_frame.Config.Brightness != value)
             {
                 _frame.Config.Brightness = value;
                 Save();
                 OnPropertyChanged();
             }
         }
+    }
 
-        // =======================
-        // POWER
-        // =======================
-
-        public bool IsFrameOn
+    public bool IsFrameOn
+    {
+        get => _frame.Config.IsFrameOn;
+        set
         {
-            get => _frame.Config.IsFrameOn;
-            set
+            if (_frame.Config.IsFrameOn != value)
             {
                 _frame.Config.IsFrameOn = value;
                 Save();
                 OnPropertyChanged();
             }
         }
+    }
 
-        // =======================
-        // AUTO SCHEDULE
-        // =======================
+    // ================= SCHEDULE =================
 
-        public bool IsAutoScheduleEnabled
+    public bool IsAutoScheduleEnabled
+    {
+        get => _frame.Config.IsAutoScheduleEnabled;
+        set
         {
-            get => _frame.Config.IsAutoScheduleEnabled;
-            set
+            if (_frame.Config.IsAutoScheduleEnabled != value)
             {
                 _frame.Config.IsAutoScheduleEnabled = value;
                 Save();
@@ -78,57 +84,57 @@ namespace FrameIt.Frames.ManageFrame
                 OnPropertyChanged(nameof(IsScheduleVisible));
             }
         }
+    }
 
-        public bool IsScheduleVisible => IsAutoScheduleEnabled;
+    public bool IsScheduleVisible => IsAutoScheduleEnabled;
 
-        public DateTime? TurnOffTime
+    public DateTime? TurnOffTime
+    {
+        get => _frame.Config.TurnOffTime;
+        set
         {
-            get => _frame.Config.TurnOffTime;
-            set
+            if (_frame.Config.TurnOffTime != value)
             {
                 _frame.Config.TurnOffTime = value;
                 Save();
                 OnPropertyChanged();
             }
         }
+    }
 
-        public DateTime? TurnOnTime
+    public DateTime? TurnOnTime
+    {
+        get => _frame.Config.TurnOnTime;
+        set
         {
-            get => _frame.Config.TurnOnTime;
-            set
+            if (_frame.Config.TurnOnTime != value)
             {
                 _frame.Config.TurnOnTime = value;
                 Save();
                 OnPropertyChanged();
             }
         }
-
-        // =======================
-        // WIDGETS
-        // =======================
-
-        public WidgetsConfig Widgets => _frame.Config.Widgets;
-
-        public List<string> TimeZones { get; }
-
-        // =======================
-        // SAVE
-        // =======================
-
-        private void Save()
-        {
-            FramesManager.SaveFrame(_frame);
-        }
-
-        // =======================
-        // INotifyPropertyChanged
-        // =======================
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
     }
+
+    // ================= WIDGETS =================
+
+    public WidgetsConfig Widgets => _frame.Config.Widgets;
+
+    // ================= TIME ZONES =================
+
+    public List<string> TimeZones { get; }
+
+    // ================= SAVE =================
+
+    private void Save()
+    {
+        FramesManager.SaveFrame(_frame);
+    }
+
+    // ================= INotifyPropertyChanged =================
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }

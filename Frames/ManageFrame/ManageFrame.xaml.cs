@@ -16,5 +16,10 @@ namespace FrameIt.Frames.ManageFrame
 
             DataContext = new ManageFrameViewModel(frame);
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
