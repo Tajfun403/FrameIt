@@ -37,7 +37,8 @@
                         Margin="0 0 20 0">
 				<Button Content="Add Frame"
                         Width="150"
-                        Margin="0 0 20 0"/>
+                        Margin="0 0 20 0"
+                        Click="AddFrameClick"/>
 				<Button Content="Delete Frame"
                         Width="150"/>
 			</StackPanel>
@@ -67,7 +68,7 @@
                         <!-- ZDJĘCIE + NAZWA -->
                         <baseui:PhotoControl
                 Grid.Column="0"
-                DisplayName="{Binding Name}"
+                DisplayName="{Binding Config.Name}"
                 Image="{Binding ImageBitmap}"
                 ShouldShowName="True"
                 Margin="0,0,24,0"/>
@@ -92,7 +93,8 @@
                             <Button Content="Manage frame"
                                     
                         Width="150"
-                        Style="{StaticResource OutlineWhiteButton}"/>
+                        Style="{StaticResource OutlineWhiteButton}"
+                        Click="ManageFrameClick"/>
 
                         </StackPanel>
 

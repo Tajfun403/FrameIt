@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:FrameIt.General"
       xmlns:baseui="clr-namespace:FrameIt.UI"
       mc:Ignorable="d"
@@ -64,23 +65,17 @@
                         Foreground="White"
                         Margin="0,20,0,30"/>
 
-                        <Border
-                                Grid.Row="2"
-                                Height="44"
-                                CornerRadius="22"
-                                Background="#6B6B6B"
-                             
-                                Margin="0,15,0,20">
+                                            <TextBox
+                        Grid.Row="2"
+                        x:Name="PairingCodeTextBox"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        materialDesign:HintAssist.Hint="Enter code"
+                        materialDesign:HintAssist.IsFloating="False"
+                        FontSize="14"
+                        Foreground="White"
+                        Background="#2b2b2b"
+                        Margin="0,15,0,15"/>
 
-                            <TextBox
-                                    Text="Enter code"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Foreground="White"
-                                    FontSize="14"
-                                    VerticalContentAlignment="Center"
-                                    Padding="16,0"/>
-                        </Border>
 
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -91,16 +86,18 @@
 
                             <!-- CANCEL (left) -->
                             <Button
-        Grid.Column="0"
-        Content="Cancel"
-        Margin="5,0,12,0"
-        Style="{StaticResource CancelButton}"/>
+                                Grid.Column="0"
+                                Content="Cancel"
+                                Margin="5,0,12,0"
+                                Style="{StaticResource RedBackgroundButton}"
+                                Click="CancelClick"/>     
 
                             <!-- ACCEPT (right) -->
                             <Button
-        Grid.Column="2"
-        Content="Accept"
-        Style="{StaticResource OutlineWhiteButton}"/>
+                                Grid.Column="2"
+                                Content="Accept"
+                                Style="{StaticResource OutlineWhiteButton}"
+                                Click="AcceptClick"/>   
                         </Grid>
 
 

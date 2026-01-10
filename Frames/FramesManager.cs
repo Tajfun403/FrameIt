@@ -1,49 +1,47 @@
-﻿using System;
+﻿using FrameIt.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
-namespace FrameIt.Frames
+namespace FrameIt.Services
 {
-    public class FramesManager
+    public static class FramesManager
     {
-        private const string FramesFile = "Data/frames.json";
+        private static readonly string FilePath = "frames.json";
 
-        public ObservableCollection<FrameItem> Frames { get; private set; }
-
-        public FramesManager()
+        public static List<FrameItem> LoadFrames()
         {
-            LoadFrames();
+            if (!File.Exists(FilePath))
+                return new List<FrameItem>();
+
+            var json = File.ReadAllText(FilePath);
+            return JsonSerializer.Deserialize<List<FrameItem>>(json) ?? new();
         }
 
-        private void LoadFrames()
+        public static void SaveFrame(FrameItem frame)
         {
-            if (!File.Exists(FramesFile))
-            {
-                Frames = new ObservableCollection<FrameItem>();
-                SaveFrames();
-                return;
-            }
+            var frames = LoadFrames();
+            var index = frames.FindIndex(f => f.Id == frame.Id);
 
-            var json = File.ReadAllText(FramesFile);
-            Frames = JsonSerializer.Deserialize<ObservableCollection<FrameItem>>(json)
-                     ?? new ObservableCollection<FrameItem>();
+            if (index >= 0)
+                frames[index] = frame;
+            else
+                frames.Add(frame);
+
+            File.WriteAllText(
+                FilePath,
+                JsonSerializer.Serialize(
+                    frames,
+                    new JsonSerializerOptions { WriteIndented = true }
+                )
+            );
         }
 
-        public void SaveFrames()
+        public static int GenerateNextId()
         {
-            var json = JsonSerializer.Serialize(Frames, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-
-            File.WriteAllText(FramesFile, json);
-        }
-
-        public void AddFrame(FrameItem frame)
-        {
-            
+            var frames = LoadFrames();
+            return frames.Count == 0 ? 1 : frames.Max(f => f.Id) + 1;
         }
     }
 }

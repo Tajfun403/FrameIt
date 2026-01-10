@@ -61,9 +61,9 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="CancelButton"
-       TargetType="Button"
-       BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Style x:Key="RedBackgroundButton"
+           TargetType="Button"
+           BasedOn="{StaticResource MaterialDesignFlatButton}">
 
                 <Setter Property="Background" Value="#6A2A2A"/>
                 <Setter Property="Foreground" Value="White"/>
@@ -91,8 +91,15 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="DarkFieldContainer"
+                 TargetType="Border">
+                <Setter Property="Background" Value="#161515"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="10,8"/>
+                <Setter Property="Margin" Value="0,5,0,50"/>
+            </Style>
 
-
+        
 
 
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
