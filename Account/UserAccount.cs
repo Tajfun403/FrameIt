@@ -1,82 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Media.Imaging;
+using System.IO;
+using System;
+using System.Text.Json.Serialization;
 
 namespace FrameIt.Account;
 
-class UserAccount : INotifyPropertyChanged
+public class UserAccount : INotifyPropertyChanged
 {
-    /// <summary>
-    /// User's name
-    /// </summary>
+    private string _name;
+    private string _email;
+    private string _password;
+    private string _avatarPath = "Images/GrayLiara.jpg";
+    private bool _rememberMe;
+
     public required string Name
     {
-        get; set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
+        get => _name;
+        set { _name = value; OnPropertyChanged(); }
     }
-    /// <summary>
-    /// User's email
-    /// </summary>
-    public string Email
+
+    public required string Email
     {
-        get; set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
+        get => _email;
+        set { _email = value; OnPropertyChanged(); }
     }
 
-    public string Password { get; set; }
+    public required string Password
+    {
+        get => _password;
+        set { _password = value; OnPropertyChanged(); }
+    }
 
-    /// <summary>
-    /// Path to the user's profile image. <br/>
-    /// We assume that it is never uploaded anywhere and stays local.
-    /// </summary>
     public string AvatarPath
     {
-        get; set
+        get => _avatarPath;
+        set
         {
-            field = value;
+            _avatarPath = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(AvatarImage));
         }
-    } = "Images/GrayLiara.jpg";
+    }
 
-    public BitmapImage AvatarImage
+    public bool RememberMe
+    {
+        get => _rememberMe;
+        set { _rememberMe = value; OnPropertyChanged(); }
+    }
+
+    [JsonIgnore]
+    public BitmapImage? AvatarImage
     {
         get
         {
-            if (string.IsNullOrEmpty(AvatarPath))
-                return null;
-            if (!File.Exists(AvatarPath))
-                throw new FileNotFoundException($"Avatar of path {AvatarPath} not found!");
-            string fullPath = new FileInfo(AvatarPath).FullName;
+            if (string.IsNullOrEmpty(AvatarPath) || !File.Exists(AvatarPath)) return null;
             try
             {
-                return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(Path.GetFullPath(AvatarPath), UriKind.Absolute);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                return bitmap;
             }
-            catch
-            {
-                return null;
-            }
+            catch { return null; }
         }
     }
 
-    public bool RememberMe { get; set; }
-
     public event PropertyChangedEventHandler? PropertyChanged;
-
-    private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
+    protected void OnPropertyChanged([CallerMemberName] string p = "")
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
 }
