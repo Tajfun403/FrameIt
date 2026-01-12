@@ -37,12 +37,10 @@
                         HorizontalAlignment="Right"
                         Margin="0 0 20 0">
                 <Button Content="Add Frame"
-                        Style="{StaticResource FilledGrayOutlineButton}"
                         Width="150"
                         Margin="0 0 20 0"
                         Click="AddFrameClick"/>
                 <Button Content="{Binding DeleteButtonText}"
-                        Style="{StaticResource FilledGrayOutlineButton}"
                         Width="150"
                         Click="DeleteFrameClick"/>  
 

@@ -35,10 +35,15 @@
                 <Setter Property="Background" Value="Red"/>
             </Style>
 
+            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                <Setter Property="Background" Value="#3F51B5"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+
             <!-- White outline button -->
             <Style x:Key="OutlineWhiteButton"
                TargetType="Button"
-               BasedOn="{StaticResource MaterialDesignOutlinedButton}"> 
+               BasedOn="{StaticResource MaterialDesignOutlinedButton}">
 
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderBrush" Value="White"/>
@@ -85,65 +90,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-            <!-- Filled gray outline button -->
-            <Style x:Key="FilledGrayOutlineButton"
-       TargetType="Button"
-       BasedOn="{StaticResource MaterialDesignOutlinedButton}">
-
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderBrush" Value="White"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="FontSize" Value="12"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="MinWidth" Value="0"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-
-                            <Border x:Name="RootBorder"
-                        Background="#58585A"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="6">
-
-                                <ContentPresenter
-                        Margin="30,6"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-
-                                <!-- Hover -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="RootBorder"
-                                Property="Background"
-                                Value="#464648"/>
-                                </Trigger>
-
-                                <!-- Pressed (opcjonalnie) -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="RootBorder"
-                                Property="Background"
-                                Value="#3D3D3F"/>
-                                </Trigger>
-
-                                <!-- Disabled -->
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter TargetName="RootBorder"
-                                Property="Opacity"
-                                Value="0.4"/>
-                                </Trigger>
-
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
 
             <!-- Red background button -->
             <Style x:Key="RedBackgroundButton"
