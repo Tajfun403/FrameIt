@@ -123,7 +123,7 @@
                         Click="ManageFrameClick"/>
 
                             <!-- TODO: Upload photo -->
-                            <Button Content="Not working button"
+                            <Button Content="Upload photo"
                         Width="180"
                         Margin="0,0,12,0"
                         Style="{StaticResource OutlineWhiteButton}"/>   

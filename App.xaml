@@ -150,7 +150,7 @@
 
             <!-- Toggle button with white border -->
             <Style x:Key="WhiteBorderSwitch"
-                  TargetType="ToggleButton">
+       TargetType="ToggleButton">
 
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="30"/>
@@ -158,23 +158,47 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Border BorderBrush="White"
+
+                            <Border x:Name="Border"
                         BorderThickness="2"
-                        CornerRadius="12"
+                        CornerRadius="15"
+                        BorderBrush="white"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}">
 
-                                <!-- PRAWDZIWY MATERIAL SWITCH -->
+                                <!-- MATERIAL SWITCH -->
                                 <ToggleButton
-                        IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                        Style="{StaticResource MaterialDesignSwitchToggleButton}"/>
+                        IsChecked="{Binding IsChecked,
+                                    RelativeSource={RelativeSource TemplatedParent},
+                                    Mode=TwoWay}"
+                        Style="{StaticResource MaterialDesignSwitchToggleButton}">
+
+                                    <!-- 🔥 KLUCZ: lokalne kolory switcha -->
+                                    <ToggleButton.Resources>
+
+                                        <!-- ON -->
+                                        <SolidColorBrush x:Key="MaterialDesign.Brush.Primary"
+                                             Color="#3F51B5"/>
+
+                                        <SolidColorBrush x:Key="MaterialDesignSelection"
+                                             Color="#3F51B5"/>
+
+                                        <!-- OFF -->
+                                        <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary"
+                                             Color="#58585A"/>
+
+                                    </ToggleButton.Resources>
+
+                                </ToggleButton>
 
                             </Border>
+
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-
             </Style>
+
+
 
 
 
