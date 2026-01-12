@@ -24,12 +24,15 @@ public partial class MainUI : Page
     {
         InitializeComponent();
         NavigationManager.Init(this);
-        Startup.NavigateToStartPage();
-        // NavigationManager.Navigate(new LoginHome(), false, false);
-    }
-
-    public void PickFirstScreen()
-    {
-
+        // Moved auto-login logic from Startup/LoginHome to MainUI constructor. - Julia
+        if (AccountManager.Instance.IsLoggedIn)
+        {
+            NavigationManager.GoToHome();
+        }
+        else
+        {
+            NavigationManager.StatusVM.ShowNavigation = false;
+            NavigationManager.Navigate(new LoginHome(), false, false, false);
+        }
     }
 }

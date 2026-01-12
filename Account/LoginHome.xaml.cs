@@ -15,20 +15,6 @@ public partial class LoginHome : Page, INotifyPropertyChanged
 
         InitializeComponent();
         DataContext = this;
-
-        this.Loaded += LoginHome_Loaded;
-    }
-
-    /// <summary>
-    /// Handles automatic redirection to Home if a user session is already active (Remember Me).
-    /// </summary>
-    private void LoginHome_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (AccountManager.Instance.IsLoggedIn)
-        {
-            this.Loaded -= LoginHome_Loaded;
-            NavigationManager.GoToHome();
-        }
     }
 
     public string Email { get => field; set { field = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsContinueEnabled)); LogInOrRegisterCommand.NotifyCanExecuteChanged(); } }
@@ -73,7 +59,6 @@ public partial class LoginHome : Page, INotifyPropertyChanged
     {
         if (AccountManager.Instance.TryLogin(Email, Password, RememberMe))
         {
-            this.Loaded -= LoginHome_Loaded;
             NavigationManager.GoToHome();
         }
         else
