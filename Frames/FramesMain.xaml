@@ -16,7 +16,8 @@
 		<!-- LAYOUT -->
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 
 		<!-- HEADER -->
@@ -35,17 +36,45 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Margin="0 0 20 0">
-				<Button Content="Add Frame"
+                <Button Content="Add Frame"
+                        Style="{StaticResource FilledGrayOutlineButton}"
                         Width="150"
                         Margin="0 0 20 0"
                         Click="AddFrameClick"/>
-				<Button Content="Delete Frame"
-                        Width="150"/>
-			</StackPanel>
+                <Button Content="{Binding DeleteButtonText}"
+                        Style="{StaticResource FilledGrayOutlineButton}"
+                        Width="150"
+                        Click="DeleteFrameClick"/>  
+
+            </StackPanel>
 		</Grid>
 
-		<!-- FRAME LIST -->
-        <ItemsControl Grid.Row="1"
+        <!--DELETE MODE BANNER -->
+
+        <Grid Height="60"
+          Margin="20"
+          Background="#222"
+          Grid.Row="1"
+          Visibility="{Binding IsInDeleteMode, Converter={StaticResource BoolToVis}}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Select frames that you wish to remove. This action is irreversible."
+               VerticalAlignment="Center"
+               Margin="20 0"/>
+
+            <Button Content="Delete selected frames"
+                Grid.Column="1"
+                Margin="20 0"
+                Click="ConfirmDeleteFrames"/>
+        </Grid>
+
+
+        <!-- FRAME LIST -->
+        <ItemsControl Grid.Row="2"
               ItemsSource="{Binding Frames}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -72,6 +101,8 @@
                             Image="{Binding ImageBitmap}"
                             ShouldShowName="True"
                             SecondaryName="{Binding Config.IsFrameOn,Converter={StaticResource OnlineStatusTextConverter}}"
+                            IsSelectable="{Binding ItemsSelectable, RelativeSource={RelativeSource AncestorType=Page}}"
+                            IsSelected="{Binding IsSelected, Mode=TwoWay}"
                             ShouldDisplaySecondaryName="True"
                             Margin="0,0,24,0"/>
 
@@ -86,17 +117,18 @@
                         Margin="0,0,12,0"
                         Style="{StaticResource OutlineWhiteButton}"/>
 
-                            <Button Content="Upload photo"
-                                
-                        Width="150"
-                        Margin="0,0,12,0"
-                        Style="{StaticResource OutlineWhiteButton}"/>
-
                             <Button Content="Manage frame"
                                     
                         Width="150"
                         Style="{StaticResource OutlineWhiteButton}"
+                        Margin="0,0,12,0"
                         Click="ManageFrameClick"/>
+
+                            <!-- TODO: Upload photo -->
+                            <Button Content="Not working button"
+                        Width="180"
+                        Margin="0,0,12,0"
+                        Style="{StaticResource OutlineWhiteButton}"/>   
 
                         </StackPanel>
 
