@@ -15,16 +15,25 @@
 
             <TextBox x:Name="RegName" 
                      materialDesign:HintAssist.Hint="Username" 
+                     Foreground="White"
                      Margin="0,10" 
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
             <TextBox x:Name="RegEmail" 
                      materialDesign:HintAssist.Hint="Email Address" 
+                     Foreground="White"
                      Margin="0,10" 
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
             <PasswordBox x:Name="RegPass" 
                          materialDesign:HintAssist.Hint="Password" 
+                         Foreground="White"
+                         Margin="0,10" 
+                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+
+            <PasswordBox x:Name="RegPassConfirm" 
+                         materialDesign:HintAssist.Hint="Confirm Password" 
+                         Foreground="White"
                          Margin="0,10" 
                          Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
 

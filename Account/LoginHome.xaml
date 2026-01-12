@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FrameIt.Account"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
       Background="{DynamicResource MaterialDesignPaper}"
@@ -16,13 +17,13 @@
 
         <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}">
             <Label Content="Please enter your e-mail to log-in or register:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-            <TextBox Width="200" Margin="10" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBox Width="200" Margin="10" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="White"/>
             <Button Name="LogInOrRegister_Continue" HorizontalAlignment="Right" Content="Continue" Command="{Binding LogInOrRegisterCommand}"/>
         </StackPanel>
 
         <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}">
             <Label Content="Please enter your password:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-            <PasswordBox x:Name="LoginPassBox" Width="200" Margin="10" PasswordChanged="LoginPassBox_PasswordChanged"/>
+            <PasswordBox x:Name="LoginPassBox" Width="200" Margin="10" PasswordChanged="LoginPassBox_PasswordChanged" Foreground="White"/>
 
             <Grid Name="BottomPanel" MinWidth="220">
                 <Grid.ColumnDefinitions>
