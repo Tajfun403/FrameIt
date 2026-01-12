@@ -100,9 +100,18 @@ public partial class PhotoControl : UserControl, INotifyPropertyChanged
         }
     }
 
+    public static readonly DependencyProperty ShouldDisplaySecondaryNameProperty =
+    DependencyProperty.Register(
+        nameof(ShouldDisplaySecondaryName),
+        typeof(bool),
+        typeof(PhotoControl),
+        new PropertyMetadata(false)
+    );
+
     public bool ShouldDisplaySecondaryName
     {
-        get => !string.IsNullOrEmpty(SecondaryName);
+        get => (bool)GetValue(ShouldDisplaySecondaryNameProperty);
+        set => SetValue(ShouldDisplaySecondaryNameProperty, value);
     }
 
     public ICommand ClickCommand

@@ -49,6 +49,7 @@ namespace FrameIt.Frames.AddFrame
         private void CancelClick(object sender, RoutedEventArgs e)
         {
             NavigationManager.GoBack();
+            NavigationManager.GoBack();
         }
     }
 }

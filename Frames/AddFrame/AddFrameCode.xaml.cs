@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace FrameIt.Frames.AddFrame
 {
-    /// <summary>
-    /// Interaction logic for AddFrameCode.xaml
-    /// </summary>
     public partial class AddFrameCode : Page
     {
         public AddFrameCode()
@@ -44,10 +41,10 @@ namespace FrameIt.Frames.AddFrame
                 case PairingCodeValidationResult.Valid:
                     _pairingCodeManager.MarkAsUsed(code);
                     NavigationManager.Navigate(
-                    new AddFrameName(code),
-                    CanMoveBack: true,
-                    ShowNavigationPanel: false
-                );
+                        new AddFrameName(code),
+                        CanMoveBack: true,
+                        ShowNavigationPanel: false
+                    );
                     break;
 
                 case PairingCodeValidationResult.NotFound:
@@ -60,12 +57,9 @@ namespace FrameIt.Frames.AddFrame
             }
         }
 
-
         private void CancelClick(object sender, RoutedEventArgs e)
         {
             NavigationManager.GoBack();
         }
-
-  
     }
 }

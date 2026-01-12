@@ -1,14 +1,19 @@
-﻿using FrameIt.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.Models;
 using FrameIt.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 public class ManageFrameViewModel : INotifyPropertyChanged
 {
     private readonly FrameItem _frame;
+    public int FrameId => _frame.Id;
+
+    public ICommand DeleteFrameCommand { get; }
 
     public ManageFrameViewModel(FrameItem frame)
     {
@@ -19,6 +24,8 @@ public class ManageFrameViewModel : INotifyPropertyChanged
         TimeZones = TimeZoneInfo.GetSystemTimeZones()
                                 .Select(tz => tz.Id)
                                 .ToList();
+
+        DeleteFrameCommand = new RelayCommand(DeleteFrame);
     }
 
     // ================= FRAME NAME =================
@@ -116,22 +123,21 @@ public class ManageFrameViewModel : INotifyPropertyChanged
         }
     }
 
-    // ================= WIDGETS =================
-
     public WidgetsConfig Widgets => _frame.Config.Widgets;
 
-    // ================= TIME ZONES =================
 
     public List<string> TimeZones { get; }
-
-    // ================= SAVE =================
 
     private void Save()
     {
         FramesManager.SaveFrame(_frame);
     }
 
-    // ================= INotifyPropertyChanged =================
+    private void DeleteFrame()
+    {
+        FramesManager.DeleteFrame(_frame.Id);
+    }
+
 
     public event PropertyChangedEventHandler PropertyChanged;
 

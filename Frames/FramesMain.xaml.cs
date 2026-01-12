@@ -21,6 +21,8 @@ namespace FrameIt.Frames
             );
 
             DataContext = this;
+
+            Loaded += FramesMain_Loaded;
         }
 
         private void AddFrameClick(object sender, RoutedEventArgs e)
@@ -40,9 +42,23 @@ namespace FrameIt.Frames
                 NavigationManager.Navigate(
                     new ManageFrame.ManageFrame(frame.Id),
                     CanMoveBack: true,
-                    ShowNavigationPanel: false
+                    ShowNavigationPanel: true
                 );
             }
         }
+
+        private void ReloadFrames()
+        {
+            Frames.Clear();
+
+            foreach (var frame in FramesManager.LoadFrames())
+                Frames.Add(frame);
+        }
+
+        private void FramesMain_Loaded(object sender, RoutedEventArgs e)
+{
+        ReloadFrames();
+}
+
     }
 }

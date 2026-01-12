@@ -69,7 +69,7 @@
                    HorizontalAlignment="Left"
                    FontSize="8"
                    FontWeight="Normal"
-                   Margin="5 0 0 0"
+                   Margin="0 0 0 0"
                    Visibility="{Binding ShouldDisplaySecondaryName, 
                     UpdateSourceTrigger=PropertyChanged, 
                     FallbackValue=Collapsed, 

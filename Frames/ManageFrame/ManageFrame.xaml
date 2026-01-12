@@ -27,30 +27,28 @@
             </Grid.ColumnDefinitions>
 
             <Label Style="{StaticResource HeaderStyle}"
-       Margin="20,0,0,0">
-                <TextBlock>
-        <Run Text="Manage Frame" />
-        <Run Text="{Binding FrameName}" />
-        <Run Text="" />
-                </TextBlock>
+                   Margin="20,0,0,0"
+                   MaxWidth="450">
+                <TextBlock
+                    Text="{Binding FrameName, StringFormat=Manage Frame {0}}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap"/>
             </Label>
 
-
-
-
+            <!-- HEADER SWITCH CONTAINER -->
             <Border Grid.Column="1"
+                    Style="{StaticResource DarkFieldContainer}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="0,0,90,0"
                     Padding="30,5"
-                    Background="#161515"
                     CornerRadius="8">
 
                 <StackPanel Orientation="Horizontal" Margin="14,8">
                     <TextBlock FontSize="18"
-           Foreground="White"
-           Margin="0,0,30,0"
-           VerticalAlignment="Center">
+                               Foreground="White"
+                               Margin="0,0,30,0"
+                               VerticalAlignment="Center">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Text" Value="Turn on the frame"/>
@@ -63,16 +61,9 @@
                         </TextBlock.Style>
                     </TextBlock>
 
-                    <Border Width="50"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="2"
-                            CornerRadius="12">
-                        <ToggleButton
-                        IsChecked="{Binding IsFrameOn, Mode=TwoWay}"
-                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                        />
-                    </Border>
+                    <ToggleButton
+                        Style="{StaticResource WhiteBorderSwitch}"
+                        IsChecked="{Binding IsFrameOn, Mode=TwoWay}"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -92,26 +83,24 @@
                            FontWeight="SemiBold"
                            Foreground="White"/>
 
-                <Border Background="#161515"
-                    CornerRadius="8"
-                    Margin="0,8,0,30">
+                <!-- NAME -->
+                <Border Style="{StaticResource DarkFieldContainer}">
                     <TextBox
-    Text="{Binding FrameName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-    AutomationProperties.Name="Frame name"
-    Background="Transparent"
-    Foreground="LightGray"
-    BorderThickness="0"
-    Padding="10"/>
-
+                        Text="{Binding FrameName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        AutomationProperties.Name="Frame name"
+                        Background="Transparent"
+                        Foreground="LightGray"
+                        BorderThickness="0"
+                        Padding="0"/>
                 </Border>
-
 
                 <TextBlock Text="Change brightness"
                            FontSize="18"
                            FontWeight="SemiBold"
                            Foreground="White"/>
 
-                <Border Style="{StaticResource DarkFieldContainer}" Margin="0,8,0,30">
+                <!-- BRIGHTNESS -->
+                <Border Style="{StaticResource DarkFieldContainer}">
                     <Slider Minimum="0"
                             Maximum="100"
                             Value="{Binding Brightness}"
@@ -138,30 +127,24 @@
                                VerticalAlignment="Center"/>
 
                     <Border Grid.Column="1"
-                            Background="#161515"
-                            Padding="10,4"
-                            CornerRadius="15">
-                        <ComboBox
-                            ItemsSource="{Binding TimeZones}"
-                            IsEnabled="{Binding Widgets.Time.IsEnabled}"
-                            SelectedItem="{Binding Widgets.Time.TimeZone}"
-                            Background="Transparent"
-                            Foreground="White"
-                            BorderThickness="0"
-                             Padding="0,5,30,5"
-                            Width="250"/>
+                        Style="{StaticResource DarkFieldContainer}"
+                        Padding="10,4"
+                        Margin="0">
+
+                                        <ComboBox
+                        Style="{StaticResource DarkComboBox}"
+                        ItemsSource="{Binding TimeZones}"
+                        SelectedItem="{Binding Widgets.Time.TimeZone}"
+                        IsEnabled="{Binding Widgets.Time.IsEnabled}"
+                        Padding="0,5,4,5"
+                        HorizontalAlignment="Stretch"
+                        MinWidth="180"/>
                     </Border>
 
-                    <Border Grid.Column="2"
-                            Width="50"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="2"
-                            CornerRadius="12"
-                            Margin="20,0,0,0">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      IsChecked="{Binding Widgets.Time.IsEnabled}"/>
-                    </Border>
+                    <ToggleButton Grid.Column="2"
+                                  Margin="20,0,0,0"
+                                  Style="{StaticResource WhiteBorderSwitch}"
+                                  IsChecked="{Binding Widgets.Time.IsEnabled}"/>
                 </Grid>
 
                 <!-- DATA -->
@@ -177,29 +160,26 @@
                                VerticalAlignment="Center"/>
 
                     <Border Grid.Column="1"
-                            Background="#161515"
-                            Padding="10,4"
-                            CornerRadius="15">
-                        <DatePicker
-                            IsEnabled="{Binding Widgets.Date.IsEnabled}"
-                            SelectedDate="{Binding Widgets.Date.Date, Mode=TwoWay}"
-                            Background="Transparent"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Padding="0,5,30,5"
-                            Width="250"/>
+                        Style="{StaticResource DarkFieldContainer}"
+                        Padding="10,4"
+                        Margin="0">
+
+                                    <DatePicker
+                        IsEnabled="{Binding Widgets.Date.IsEnabled}"
+                        SelectedDate="{Binding Widgets.Date.Date, Mode=TwoWay}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="0,5,0,5"
+                        HorizontalAlignment="Stretch"
+                        MinWidth="180"/>    
                     </Border>
 
-                    <Border Grid.Column="2"
-                            Width="50"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="2"
-                            CornerRadius="12"
-                            Margin="20,0,0,0">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      IsChecked="{Binding Widgets.Date.IsEnabled}"/>
-                    </Border>
+
+                    <ToggleButton Grid.Column="2"
+                                  Margin="20,0,0,0"
+                                  Style="{StaticResource WhiteBorderSwitch}"
+                                  IsChecked="{Binding Widgets.Date.IsEnabled}"/>
                 </Grid>
 
                 <!-- POGODA -->
@@ -215,30 +195,26 @@
                                VerticalAlignment="Center"/>
 
                     <Border Grid.Column="1"
-                            Background="#161515"
-                            Padding="10,4"
-                            CornerRadius="15">
-                        <TextBox 
-                         IsEnabled="{Binding Widgets.Weather.IsEnabled}"
-                         Text="{Binding Widgets.Weather.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Background="Transparent"
-                         Foreground="White"
-                         BorderThickness="0"
-                         Width="250"
-                         VerticalContentAlignment="Center"
-                          Padding="0,5,30,5"/>  
+                        Style="{StaticResource DarkFieldContainer}"
+                        Padding="10,4"
+                        Margin="0">
+
+                                    <TextBox
+                        IsEnabled="{Binding Widgets.Weather.IsEnabled}"
+                        Text="{Binding Widgets.Weather.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Padding="0,5,0,5"
+                        HorizontalAlignment="Stretch"
+                        MinWidth="180"/>    
                     </Border>
 
-                    <Border Grid.Column="2"
-                            Width="50"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="2"
-                            CornerRadius="12"
-                            Margin="20,0,0,0">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      IsChecked="{Binding Widgets.Weather.IsEnabled}"/>
-                    </Border>
+
+                    <ToggleButton Grid.Column="2"
+                                  Margin="20,0,0,0"
+                                  Style="{StaticResource WhiteBorderSwitch}"
+                                  IsChecked="{Binding Widgets.Weather.IsEnabled}"/>
                 </Grid>
             </StackPanel>
 
@@ -256,51 +232,40 @@
                                FontWeight="SemiBold"
                                Foreground="White"/>
 
-                    <Border Grid.Column="1"
-                            Width="50"
-                            Height="30"
-                            BorderBrush="White"
-                            BorderThickness="2"
-                            CornerRadius="12">
-                        <ToggleButton
-    IsChecked="{Binding IsAutoScheduleEnabled, Mode=TwoWay}"
-    Style="{StaticResource MaterialDesignSwitchToggleButton}"
-   />
-                    </Border>
+                    <ToggleButton Grid.Column="1"
+                                  Style="{StaticResource WhiteBorderSwitch}"
+                                  IsChecked="{Binding IsAutoScheduleEnabled, Mode=TwoWay}"/>
                 </Grid>
 
-                <StackPanel
-    Visibility="{Binding IsScheduleVisible,
-                         Converter={StaticResource BoolToVis}}">
+                <StackPanel Visibility="{Binding IsScheduleVisible, Converter={StaticResource BoolToVis}}">
 
-                    <TextBlock Text="Turn off time"
-                           Foreground="White"/>
+                    <TextBlock Text="Turn off time" Foreground="White"/>
 
-                <Border Style="{StaticResource DarkFieldContainer}"
-                        Margin="0,6,0,20">
+                    <Border Style="{StaticResource DarkFieldContainer}"
+                            Margin="0,6,0,20">
                         <materialDesign:TimePicker
                             SelectedTime="{Binding TurnOffTime, Mode=TwoWay}"
                             Style="{StaticResource MaterialDesignTimePicker}"
-                            Foreground="White"/>    
+                            Foreground="White"/>
                     </Border>
 
-                <TextBlock Text="Turn on time"
-                           Foreground="White"/>
+                    <TextBlock Text="Turn on time" Foreground="White"/>
 
-                <Border Style="{StaticResource DarkFieldContainer}"
-                        Margin="0,6,0,30">
+                    <Border Style="{StaticResource DarkFieldContainer}"
+                            Margin="0,6,0,30">
                         <materialDesign:TimePicker
                             SelectedTime="{Binding TurnOnTime, Mode=TwoWay}"
                             Style="{StaticResource MaterialDesignTimePicker}"
-                            Foreground="White"/>    
-
+                            Foreground="White"/>
                     </Border>
 
                 </StackPanel>
 
                 <Button Content="Delete frame"
                         Style="{StaticResource RedBackgroundButton}"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Click="DeleteFrame_Click"
+                        Command="{Binding DeleteFrameCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

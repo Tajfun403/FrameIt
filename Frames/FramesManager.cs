@@ -43,5 +43,22 @@ namespace FrameIt.Services
             var frames = LoadFrames();
             return frames.Count == 0 ? 1 : frames.Max(f => f.Id) + 1;
         }
+
+        public static void DeleteFrame(int frameId)
+        {
+            var frames = LoadFrames();
+            var frame = frames.FirstOrDefault(f => f.Id == frameId);
+
+            if (frame != null)
+            {
+                frames.Remove(frame);
+                File.WriteAllText(FilePath,
+                    JsonSerializer.Serialize(frames, new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    }));
+            }
+
+        }
     }
 }

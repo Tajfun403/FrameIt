@@ -1,7 +1,10 @@
-﻿using FrameIt.Models;
+﻿using FrameIt.General;
+using FrameIt.Models;
 using FrameIt.Services;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using FrameIt.Frames;
 
 namespace FrameIt.Frames.ManageFrame
 {
@@ -17,9 +20,19 @@ namespace FrameIt.Frames.ManageFrame
             DataContext = new ManageFrameViewModel(frame);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DeleteFrame_Click(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show(
+                "Are you sure you want to delete this frame?",
+                "Confirm delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                ((ManageFrameViewModel)DataContext)
+                    .DeleteFrameCommand.Execute(null);
 
+                NavigationManager.GoToHome();
+            }
         }
     }
 }

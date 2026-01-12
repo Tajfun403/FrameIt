@@ -67,11 +67,13 @@
 
                         <!-- ZDJĘCIE + NAZWA -->
                         <baseui:PhotoControl
-                Grid.Column="0"
-                DisplayName="{Binding Config.Name}"
-                Image="{Binding ImageBitmap}"
-                ShouldShowName="True"
-                Margin="0,0,24,0"/>
+                            Grid.Column="0"
+                            DisplayName="{Binding Config.Name}"
+                            Image="{Binding ImageBitmap}"
+                            ShouldShowName="True"
+                            SecondaryName="{Binding Config.IsFrameOn,Converter={StaticResource OnlineStatusTextConverter}}"
+                            ShouldDisplaySecondaryName="True"
+                            Margin="0,0,24,0"/>
 
                         <!-- PRZYCISKI -->
                         <StackPanel Grid.Column="1"
