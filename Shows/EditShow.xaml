@@ -67,8 +67,36 @@
                    Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
                         Click="FinishRenaming_Click"
                         />
-                <Button Name="DeleteButton" Content="Delete" Margin="2" Width="150"/>
+                <Button Name="DeleteButton" 
+                        Content="{Binding DelPhotosButtonText, RelativeSource={RelativeSource AncestorType=Page}, FallbackValue='Delete Button'}" 
+                        Click="DeletePhotos_Click" 
+                        Grid.Column="1" 
+                        Margin="20 0 20 0"
+                        Width="150"/>
             </StackPanel>
+        </Grid>
+
+        <Grid x:Name="DeleteUI" Height="60" Margin="20" Background="#222" Grid.Row="1"
+      Visibility="{Binding IsInDeleteMode, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Style="{StaticResource BaseLabelStyle}" VerticalAlignment="Center" Grid.Column="0" Margin="20 0 20 0">
+                Select items that you wish to remove. This action will be irreversible.
+            </Label>
+            <Button Name="ReallyDeleteButton" 
+            Content="Delete selected photos"
+            Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
+            Grid.Column="1" 
+            Grid.RowSpan="2"
+            VerticalAlignment="Center"
+            Margin="20 0 20 0"
+
+            />
         </Grid>
 
         <ItemsControl Grid.Row="2" 
@@ -96,10 +124,16 @@
                 <DataTemplate>
                     <baseui:PhotoControl ShouldShowName="False" DisplayName="{Binding DisplayName}"
                                  Image="{Binding Thumbnail, IsAsync=True}"
-                                 IsSelectable="False"
                                  Margin="{Binding ItemsMargin, RelativeSource={RelativeSource AncestorType=Page}}"
-                                         ClickCommand="{Binding PhotoClickedCommand, 
-                                            RelativeSource={RelativeSource AncestorType=Page}}"
+                                 ClickCommand="{Binding PhotoClickedCommand, 
+                                    RelativeSource={RelativeSource AncestorType=Page}}"
+                                 
+                                 IsSelectable="{Binding ItemsSelectable, 
+                                    RelativeSource={RelativeSource AncestorType=Page},
+                                    UpdateSourceTrigger=PropertyChanged}"
+                                 SelectionChanged="{Binding SelectionChangedCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                 IsSelected="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         
                                  />
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>

@@ -11,39 +11,44 @@
             FontFamily="{DynamicResource MaterialDesignFont}"
             Visibility="{Binding ShowNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}"
              >
-    <Grid Grid.Row="0" Margin="20 10 20 10" Name="StatusBar">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid 
+
+    <!-- OUTER BORDER WITH BOTTOM LINE -->
+    <Border BorderBrush="#80ffffff"
+            BorderThickness="0,0,0,1">
+
+        <Grid Grid.Row="0" Margin="20 10 20 10" Name="StatusBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid 
             Grid.Column="0"
             MouseLeftButtonDown="GoBack_Click"
             Background="Transparent"
             >
-            <Image Source="/Images/Back.png" 
+                <Image Source="/Images/Back.png" 
                    Name="GoBackControl"
                    Grid.Column="0"
             Visibility="{Binding CanGoBack, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}"
                    />
-            <materialDesign:Ripple
+                <materialDesign:Ripple
             x:Name="RippleEffect"
               materialDesign:RippleAssist.IsCentered="False"
               materialDesign:RippleAssist.Feedback="#80ffffff"
             materialDesign:RippleAssist.ClipToBounds="False"
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
             />
-        </Grid>
-        <Grid Grid.Column="2" 
+            </Grid>
+            <Grid Grid.Column="2" 
               MouseLeftButtonDown="Account_Click" 
               Name="AccountBar" 
               Visibility="{Binding IsAccountBarVisible, UpdateSourceTrigger=PropertyChanged}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="50"/>
-            </Grid.ColumnDefinitions>
-            <Label Name="AccountName"  
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Label Name="AccountName"  
                    MouseLeftButtonDown="Account_Click" 
                    Content="{Binding CurrAccount.Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=AccName}" 
                    Grid.Column="0" 
@@ -51,25 +56,26 @@
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Center" 
                    Margin="0 0 10 0"/>
-            <!-- <Image Name="AccountImage" Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/Liara.jpg}" 
+                <!-- <Image Name="AccountImage" Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/Liara.jpg}" 
                Grid.Column="4"/> -->
-            <Ellipse Name="AvatarEllipse" 
+                <Ellipse Name="AvatarEllipse" 
                      Grid.Column="1" 
                      Width="50" 
                      Height="50"
                      HorizontalAlignment="Center" 
                      VerticalAlignment="Center">
-                <Ellipse.Fill>
-                    <ImageBrush x:Name="AccountImage" ImageSource="{Binding CurrAccount.AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/GrayLiara.jpg}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            <materialDesign:Ripple
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="AccountImage" ImageSource="{Binding CurrAccount.AvatarImage, UpdateSourceTrigger=PropertyChanged, FallbackValue=Images/GrayLiara.jpg}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <materialDesign:Ripple
             x:Name="RippleEffect2"
               materialDesign:RippleAssist.IsCentered="False"
               materialDesign:RippleAssist.Feedback="#80ffffff"
             materialDesign:RippleAssist.ClipToBounds="False"
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
             />
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

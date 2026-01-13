@@ -1,0 +1,103 @@
+﻿<Page x:Class="FrameIt.Frames.AddFrame.AddFrameName"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:FrameIt.General"
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      mc:Ignorable="d"
+      d:DesignHeight="530"
+      d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <local:NavigationHeader Grid.Row="0"/>
+
+        <!-- CONTENT -->
+        <Grid Grid.Row="1">
+            <Grid Width="500"
+                  Height="300"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+                <Border
+                    Background="#1d1c1c"
+                    CornerRadius="12"
+                    Padding="24"
+                    BorderBrush="White"
+                    BorderThickness="1">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- TITLE -->
+                        <TextBlock
+                            Grid.Row="0"
+                            Text="Enter frame name"
+                            FontSize="22"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Margin="0,10,0,12"/>
+
+                        <!-- DESCRIPTION -->
+                        <TextBlock
+                            Grid.Row="1"
+                            Text="Give your frame a name so you can easily recognize it later."
+                            FontSize="15"
+                            TextWrapping="Wrap"
+                            Foreground="White"
+                            Margin="0,20,0,40"/>
+
+                        <!-- INPUT -->
+                        <TextBox
+                        Grid.Row="2"
+                        x:Name="FrameNameTextBox"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        materialDesign:HintAssist.Hint="Enter name"
+                        materialDesign:HintAssist.IsFloating="False"
+                        FontSize="14"
+                        Foreground="White"
+                        Background="#2b2b2b"
+                        Margin="0,15,0,15"/>    
+
+                        <!-- BUTTONS -->
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Grid.Column="0"
+                                Content="Cancel"
+                                Margin="5,0,12,0"
+                                Style="{StaticResource RedBackgroundButton}"
+                                Click="CancelClick"/>
+
+                            <Button
+                                Grid.Column="2"
+                                Content="Accept"
+                                Style="{StaticResource OutlineWhiteButton}"
+                                Click="AcceptClick"/>
+                        </Grid>
+                    </Grid>
+
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

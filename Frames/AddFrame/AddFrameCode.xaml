@@ -1,0 +1,113 @@
+﻿<Page x:Class="FrameIt.Frames.AddFrame.AddFrameCode"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:FrameIt.General"
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      mc:Ignorable="d"
+      d:DesignHeight="530"
+      d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Title="AddFrameCode">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <local:NavigationHeader Grid.Row="0"/>
+
+        <Grid Grid.Row="1">
+            <Grid Width="500"
+              Height="300"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+                <Border
+                Background="#1d1c1c"
+                CornerRadius="12"
+                Padding="24"
+                BorderBrush="white"
+                BorderThickness="1">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <!-- title -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- description -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- input -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- buttons -->
+                        </Grid.RowDefinitions>
+
+                        <Label
+                        Grid.Row="0"
+                        Content="Enter pairing code"
+                        FontSize="22"
+                        Padding="0"
+                        FontWeight="SemiBold"
+                        Foreground="White"
+                        Margin="0,10,0,12"/>
+
+                        <TextBlock
+                        Grid.Row="1"
+                        Text="Generate a pairing code on your frame device and enter it below to connect the frame to your account."
+                        FontSize="15"
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        Margin="0,20,0,30"/>
+
+                                            <TextBox
+                        Grid.Row="2"
+                        x:Name="PairingCodeTextBox"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        materialDesign:HintAssist.Hint="Enter code"
+                        materialDesign:HintAssist.IsFloating="False"
+                        FontSize="14"
+                        Foreground="White"
+                        Background="#2b2b2b"
+                        Margin="0,15,0,15"/>
+
+
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- CANCEL (left) -->
+                            <Button
+                                Grid.Column="0"
+                                Content="Cancel"
+                                Margin="5,0,12,0"
+                                Style="{StaticResource RedBackgroundButton}"
+                                Click="CancelClick"/>     
+
+                            <!-- ACCEPT (right) -->
+                            <Button
+                                Grid.Column="2"
+                                Content="Accept"
+                                Style="{StaticResource OutlineWhiteButton}"
+                                Click="AcceptClick"/>   
+                        </Grid>
+
+
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Grid>
+
+
+    </Grid>
+</Page>

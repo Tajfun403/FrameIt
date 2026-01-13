@@ -51,6 +51,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
     {
         InitializeComponent();
         ShowContext = show;
+        CommandDeletePhotos = new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
     }
 
     public EditShow() : this(new PhotoShow()
@@ -141,6 +142,7 @@ public partial class EditShow : Page, INotifyPropertyChanged
         {
             ShowContext.AddImageByPath(file);
         }
+        PopUpManager.ShowSuccess($"{files.Length} {(files.Length == 1 ? "image" : "images")} added to the show.");
     }
 
     private void DropOverlay_DragEnter(object sender, DragEventArgs e)
@@ -229,4 +231,116 @@ public partial class EditShow : Page, INotifyPropertyChanged
     }
 
     public RelayCommand<ShowImage> PhotoClickedCommand => new(PhotoClicked);
+
+    #region DeletingItems
+
+    public bool IsInDeleteMode
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+    public bool ItemsSelectable
+    {
+        get; set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+    private void DeletePhotos_Click(object sender, RoutedEventArgs e)
+    {
+        if (IsInDeleteMode)
+        {
+            ExitDeleteMode();
+        }
+        else
+        {
+            EnterDeleteMode();
+        }
+    }
+
+    public string DelPhotosButtonText => IsInDeleteMode ? "Cancel Delete" : "Delete images";
+
+    public void OnPageLeft(Page left)
+    {
+        ExitDeleteMode();
+    }
+
+    public void EnterDeleteMode()
+    {
+        IsInDeleteMode = true;
+        ItemsSelectable = true;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.RegisterOnPageLeft(OnPageLeft);
+    }
+
+    public void ExitDeleteMode()
+    {
+        IsInDeleteMode = false;
+        ItemsSelectable = false;
+        OnPropertyChanged(nameof(DelPhotosButtonText));
+        NavigationManager.UnregisterOnPageLeft();
+        foreach (var item in ShowContext.PhotosList)
+        {
+            item.IsSelected = false;
+        }
+        // TODO Selectable is on items -- clear it after exiting delete mode
+        // TODO Call this when lost focus!
+    }
+
+    private void DoDeletePhotos()
+    {
+        var imgsToDel = ShowContext.PhotosList.Where(x => x.IsSelected).ToList();
+        foreach (ShowImage img in imgsToDel)
+        {
+            ShowContext.PhotosList.Remove(img);
+        }
+        ExitDeleteMode();
+        var count = imgsToDel.Count;
+        PopUpManager.ShowSuccess($"{count} {(count == 1 ? "photo" : "photos")} deleted.");
+        OnPropertyChanged(nameof(PhotosCountString));
+        // IsInDeleteMode = false;
+    }
+
+    private void SelectionChanged()
+    {
+        OnPropertyChanged(nameof(CanDeleteSelectedPhotos));
+        CommandDeletePhotos.NotifyCanExecuteChanged();
+    }
+
+    public RelayCommand SelectionChangedCommand => new(SelectionChanged);
+
+    public bool CanDeleteSelectedPhotos
+    {
+        get => ShowContext.PhotosList.Any(x => x.IsSelected);
+    }
+
+    public RelayCommand<PhotoShow> ShowClickedCommand => new(OnShowClicked);
+
+    public void OnShowClicked(PhotoShow show)
+    {
+        if (IsInDeleteMode)
+        {
+            show.IsSelected = !show.IsSelected;
+            SelectionChanged();
+        }
+        else
+        {
+            NavigationManager.Navigate(new EditShow(show),
+            true);
+        }
+    }
+
+
+    // This NEEDS to be set in ctor!
+    // Setting this in initializer is buggy
+    public RelayCommand CommandDeletePhotos { get; init; }
+    //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    #endregion DeletingItems
 }

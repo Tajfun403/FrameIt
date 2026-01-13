@@ -23,28 +23,28 @@ public partial class RegisterPage : Page
             string.IsNullOrWhiteSpace(RegPass.Password) ||
             string.IsNullOrWhiteSpace(RegPassConfirm.Password))
         {
-            MessageBox.Show("Please fill in all fields.", "Registration Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            PopUpManager.ShowError("Please fill in all fields.");
             return;
         }
 
         // 2. Validate email format (must contain @ and .)
         if (!RegEmail.Text.Contains("@") || !RegEmail.Text.Contains("."))
         {
-            MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButton.OK, MessageBoxImage.Warning);
+            PopUpManager.ShowError("Please enter a valid email address.");
             return;
         }
 
         // 3. Validate if passwords match
         if (RegPass.Password != RegPassConfirm.Password)
         {
-            MessageBox.Show("Passwords do not match! Please re-enter your password.", "Password Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            PopUpManager.ShowError("Passwords do not match! Please re-enter your password.");
             return;
         }
 
         // 4. Check if the account already exists in the system
         if (AccountManager.Instance.DoesAccountExist(RegEmail.Text))
         {
-            MessageBox.Show("An account with this email already exists!", "Registration Error", MessageBoxButton.OK, MessageBoxImage.Stop);
+            PopUpManager.ShowError("An account with this email already exists!");
             return;
         }
 

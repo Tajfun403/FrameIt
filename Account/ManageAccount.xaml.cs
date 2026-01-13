@@ -38,7 +38,7 @@ public partial class ManageAccount : Page
         {
             CurrUser.AvatarPath = openFileDialog.FileName;
             SaveAndNotify();
-            MessageBox.Show("Profile picture updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            PopUpManager.ShowSuccess("Profile picture updated successfully!");
         }
     }
 
@@ -60,7 +60,7 @@ public partial class ManageAccount : Page
             EditNameArea.Visibility = Visibility.Collapsed;
             DisplayNameArea.Visibility = Visibility.Visible;
             SaveAndNotify();
-            MessageBox.Show("Name updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            PopUpManager.ShowSuccess("Name updated successfully!");
         }
     }
 
@@ -88,13 +88,13 @@ public partial class ManageAccount : Page
         {
             if (string.IsNullOrWhiteSpace(EmailInput.Text) || !EmailInput.Text.Contains("@"))
             {
-                MessageBox.Show("Please enter a valid email.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                PopUpManager.ShowError("Please enter a valid email.");
                 return;
             }
             EditEmailArea.Visibility = Visibility.Collapsed;
             EmailBtn.Visibility = Visibility.Visible;
             SaveAndNotify();
-            MessageBox.Show("Email updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            PopUpManager.ShowSuccess("Email updated successfully!");
         }
     }
 
@@ -129,7 +129,7 @@ public partial class ManageAccount : Page
                 EditPassArea.Visibility = Visibility.Collapsed;
                 PassBtn.Visibility = Visibility.Visible;
                 PassInput.Password = "";
-                MessageBox.Show("Password updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                PopUpManager.ShowSuccess("Password updated successfully!");
             }
         }
     }
@@ -149,9 +149,8 @@ public partial class ManageAccount : Page
     /// </summary>
     private void Logout_Click(object sender, RoutedEventArgs e)
     {
-        if (MessageBox.Show("Are you sure you want to log out?", "Logout", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-        {
-            AccountManager.Instance.Logout();
-        }
+        AccountManager.Instance.Logout();
+        PopUpManager.ShowMessage("Logged out successfully.");
+
     }
 }

@@ -39,7 +39,7 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         }
         else
         {
-            MessageBox.Show("Email not found. Redirecting to registration.");
+            PopUpManager.ShowMessage("Email not found. Redirecting to registration...");
             NavigationManager.Navigate(new RegisterPage(), true, false, false);
         }
     }
@@ -63,7 +63,7 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         }
         else
         {
-            MessageBox.Show("Invalid password.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            PopUpManager.ShowError("Invalid password. Please try again.");
         }
     }
 

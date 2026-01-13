@@ -13,6 +13,29 @@ namespace FrameIt.Shows;
 public class PhotoShow : ObservableObject, ISelectable
 {
     public ObservableCollection<ShowImage> PhotosList { get; } = [];
+
+    public PhotoShow()
+    {
+        PhotosList.CollectionChanged += (s, e) =>
+        {
+            if (PhotosList.Count > 0)
+            {
+                var firstImg = PhotosList.First();
+                try
+                {
+                    PhotosList.First().PropertyChanged -= PhotoShow_PropertyChanged;
+                }
+                catch { }
+                PhotosList.First().PropertyChanged += PhotoShow_PropertyChanged;
+            }
+        };
+    }
+
+    private void PhotoShow_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(ImageBitmap));
+    }
+
     public bool IsSelected
     {
         get; set
@@ -44,7 +67,7 @@ public class PhotoShow : ObservableObject, ISelectable
         get
         {
             if (PhotosList.Count == 0)
-                return new BitmapImage(new Uri("Images/GrayLiara.jpg", UriKind.Absolute));
+                return ShowImage.PlaceholderImage;
             return PhotosList[0].GetThumbnailSync();
         }
     }
