@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using FrameIt.Frames.Models;
 
 namespace FrameIt.Frames
 {
