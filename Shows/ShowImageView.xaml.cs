@@ -54,10 +54,18 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
     public void SetupFilters()
     {
         FiltersList.Clear();
-        var filters = Filters.FiltersManager.GetAllFilterViewModels(ImageContext.ImageBitmap);
+        var filters = Filters.FiltersManager.GetAllFilterViewModels(ImageContext.SourceImageBitmap);
         foreach (var item in filters)
         {
             FiltersList.Add(item);
+        }
+        // Restore filter state
+        foreach (var filter in ImageContext.FiltersStack)
+        {
+            if (filter is RotateFilter rotFilter)
+            {
+                CurrRot = rotFilter.Rot;
+            }
         }
     }
 
@@ -75,6 +83,37 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
     {
         ImageContext.FiltersStack.Clear();
         ImageContext.FiltersStack.Add(filter.Filter);
+        ImageContext.FiltersStack.Add(new RotateFilter(CurrRot));
     }
     public RelayCommand<FilterViewModel> ChangeFilterCommand => new(OnFilterChanged);
+
+    protected Rotation CurrRot;
+
+    private void RotateButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrRot = CurrRot switch
+        {
+            Rotation.Rotate0 => Rotation.Rotate90,
+            Rotation.Rotate90 => Rotation.Rotate180,
+            Rotation.Rotate180 => Rotation.Rotate270,
+            Rotation.Rotate270 => Rotation.Rotate0,
+            _ => Rotation.Rotate0,
+        };
+        var collection = ImageContext.FiltersStack;
+        bool found = false;
+        for (int i = collection.Count - 1; i >= 0; i--)
+        {
+            if (collection[i] is RotateFilter rotFilter)
+            {
+                rotFilter.Rot = CurrRot;
+                ImageContext.RefreshFilters();
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            ImageContext.FiltersStack.Add(new RotateFilter(CurrRot));
+        }
+        SetupFilters();
+    }
 }

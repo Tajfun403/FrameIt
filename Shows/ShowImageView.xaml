@@ -32,14 +32,22 @@
                    VerticalAlignment="Center"
                    Source="{Binding ImageContext.ImageBitmap, RelativeSource={RelativeSource AncestorType=Page}}"
                    />
-            <StackPanel x:Name="ImageControls" Grid.Column="1">
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            <StackPanel x:Name="ImageControls" Grid.Row="0">
                 <Label Content="Image Controls"
                    Style="{StaticResource SemiHeaderStyle}"
                        HorizontalAlignment="Center"/>
                 <Button Content="Rotate"
+                        Name="RotateButton"
                         Width="150"
                         Height="30"
-                        Margin="10"/>
+                        Margin="10"
+                        Click="RotateButton_Click"
+                        />
                 <Label
                    Style="{StaticResource BaseLabelStyle}"
                        HorizontalAlignment="Center">
@@ -53,7 +61,15 @@
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
                          />
+
             </StackPanel>
+
+                <Label VerticalAlignment="Bottom" Grid.Row="1"
+                   Style="{StaticResource BaseLabelStyle}"
+                       HorizontalAlignment="Center">
+                    All changes saved automatically.
+                </Label>
+            </Grid>
 
         </Grid>
         <Grid x:Name="EffectsGrid" Grid.Row="2">

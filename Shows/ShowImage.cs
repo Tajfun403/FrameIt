@@ -116,7 +116,10 @@ public class ShowImage : ObservableObject, ISelectable
         }
     }
 
-    protected BitmapImage SourceImageBitmap;
+    public BitmapImage SourceImageBitmap
+    {
+        get; protected set;
+    }
 
     public bool IsSelected
     {
@@ -162,4 +165,11 @@ public class ShowImage : ObservableObject, ISelectable
         ImageBitmap = ApplyFilters(SourceImageBitmap);
         Thumbnail = ApplyFilters(SourceThumbnail);
     }
+
+    public void RefreshFilters()
+    {
+        OnFiltersStackChanged();
+    }
+
+    public double RotationDegrees { get; set; } = 0;
 }
