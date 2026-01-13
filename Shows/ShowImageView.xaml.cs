@@ -101,6 +101,7 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
         };
         var collection = ImageContext.FiltersStack;
         bool found = false;
+        // TODO do this correctly
         for (int i = collection.Count - 1; i >= 0; i--)
         {
             if (collection[i] is RotateFilter rotFilter)

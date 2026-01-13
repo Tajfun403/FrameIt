@@ -172,4 +172,5 @@ public class ShowImage : ObservableObject, ISelectable
     }
 
     public double RotationDegrees { get; set; } = 0;
+    public string? Description { get; set; } = "";
 }
