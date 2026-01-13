@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace FrameIt.Frames
 {
     /// <summary>
-    /// Interaction logic for AssigntPhotoShowToFrame.xaml
+    /// Interaction logic for AssignPhotoShowsToFrame.xaml
     /// </summary>
     public partial class AssignPhotoShowsToFrame : Page
     {
