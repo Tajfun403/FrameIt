@@ -23,7 +23,7 @@ namespace FrameIt.Frames.ManageFrame
         private void DeleteFrame_Click(object sender, RoutedEventArgs e)
         {
             // UPDATE THIS
-            if (MessageBox.Show(
+            if (true || MessageBox.Show(
                 "Are you sure you want to delete this frame?",
                 "Confirm delete",
                 MessageBoxButton.YesNo,
