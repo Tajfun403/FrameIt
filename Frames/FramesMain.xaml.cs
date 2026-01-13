@@ -68,26 +68,23 @@ namespace FrameIt.Frames
         // =====================
         // DELETE MODE
         // =====================
-
-        private bool _isInDeleteMode;
         public bool IsInDeleteMode
         {
-            get => _isInDeleteMode;
+            get;
             set
             {
-                _isInDeleteMode = value;
+                field = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DeleteButtonText));
             }
         }
 
-        private bool _itemsSelectable;
         public bool ItemsSelectable
         {
-            get => _itemsSelectable;
+            get;
             set
             {
-                _itemsSelectable = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
@@ -125,6 +122,9 @@ namespace FrameIt.Frames
 
             foreach (var frame in selectedFrames)
                 Frames.Remove(frame);
+
+            var count = selectedFrames.Count;
+            PopUpManager.ShowSuccess($"{count} {(count == 1 ? "frame" : "frames")} deleted.");
 
             ExitDeleteMode();
         }

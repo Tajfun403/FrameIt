@@ -12,17 +12,41 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       Title="MainUI">
 
-    <Grid Background="{DynamicResource MaterialDesignPaper}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <general:NavigationHeader Grid.Row="0" />
-        <Frame Grid.Row="1" Name="MainContentFrame" Source="/Shows/ShowsMain.xaml" NavigationUIVisibility="Hidden"/>
-        <materialDesign:Snackbar
+    <materialDesign:DialogHost
+    Identifier="RootDialog"
+    OverlayBackground="{DynamicResource MaterialDesignScrim}">
+
+        <Grid Background="{DynamicResource MaterialDesignPaper}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <general:NavigationHeader Grid.Row="0" />
+            <Frame Grid.Row="1" Name="MainContentFrame" Source="/Shows/ShowsMain.xaml" NavigationUIVisibility="Hidden"/>
+            <materialDesign:Snackbar
+             Grid.RowSpan="2"
             Background="#222"
             Foreground="#fff"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
             x:Name="MainSnackbar"
             MessageQueue="{materialDesign:MessageQueue}" />
-    </Grid>
+            <materialDesign:Snackbar
+             Grid.RowSpan="2"
+            Background="#6A2A2A"
+            Foreground="#fff"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+            x:Name="ErrorSnackbar"
+            MessageQueue="{materialDesign:MessageQueue}" />
+            <materialDesign:Snackbar
+             Grid.RowSpan="2"
+            Background="DarkGreen"
+            Foreground="#fff"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+            x:Name="SuccessSnackbar"
+            MessageQueue="{materialDesign:MessageQueue}" />
+        </Grid>
+    </materialDesign:DialogHost>
 </Page>

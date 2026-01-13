@@ -136,7 +136,8 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         {
             ShowsCollection.Remove(show);
         }
-        PopUpManager.ShowMessage($"{showsToDel.Count} {(showsToDel.Count == 1 ? "show" : "shows")} deleted.");
+        var count = showsToDel.Count;
+        PopUpManager.ShowSuccess($"{count} {(count == 1 ? "show" : "shows")} deleted.");
         ExitDeleteMode();
         // IsInDeleteMode = false;
     }
@@ -203,6 +204,6 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
             });
         }).Start();
 
-        PopUpManager.ShowMessage("New show added! You can edit it now.");
+        PopUpManager.ShowSuccess("New show added! You can edit it now.");
     }
 }
