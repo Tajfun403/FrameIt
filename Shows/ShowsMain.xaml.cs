@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using FrameIt.General;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace FrameIt.Shows;
 
@@ -25,6 +27,9 @@ namespace FrameIt.Shows;
 public partial class ShowsMain : Page, INotifyPropertyChanged
 {
     private PhotoShow defaultShow = new();
+
+    public ObservableCollection<PhotoShow> ShowsCollection { get; private set; } = [];
+
     public ShowsMain()
     {
         InitializeComponent();
@@ -38,7 +43,12 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
             ImagePath = "Images/GrayLiara.jpg",
             DisplayName = "Sample Photo 2"
         });
-        ShowsList.DataContext = defaultShow;
+        defaultShow.DisplayName = "Sample PhotoShow";
+
+        ShowsCollection.Add(defaultShow);
+
+        // defaultShow.DisplayName = "Sample PhotoShow";
+        // ShowsList.DataContext = defaultShow;
 
         // TODO Set the real source here!
         // ShowsList.DataContext = ShowsManager.Instance.Shows;
@@ -46,7 +56,19 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
         // TODO Add filtering shows from a given frame
         // TODO add delete form
+
+        // This NEEDS to be set in ctor!
+        // Setting this in initializer is buggy
+        CommandDeletePhotos = new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
     }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #region DeletingItems
 
     public bool IsInDeleteMode
     {
@@ -68,7 +90,7 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
 
     private void DeletePhotos_Click(object sender, RoutedEventArgs e)
     {
-        if (IsInDeleteMode) 
+        if (IsInDeleteMode)
         {
             ExitDeleteMode();
         }
@@ -99,30 +121,85 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         ItemsSelectable = false;
         OnPropertyChanged(nameof(DelPhotosButtonText));
         NavigationManager.UnregisterOnPageLeft();
+        foreach (var item in ShowsCollection)
+        {
+            item.IsSelected = false;
+        }
         // TODO Selectable is on items -- clear it after exiting delete mode
         // TODO Call this when lost focus!
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
     private void DoDeletePhotos()
     {
-
+        var showsToDel = ShowsCollection.Where(x => x.IsSelected).ToList();
+        foreach (PhotoShow show in showsToDel)
+        {
+            ShowsCollection.Remove(show);
+        }
+        ExitDeleteMode();
+        // IsInDeleteMode = false;
     }
 
     private void SelectionChanged()
     {
+        OnPropertyChanged(nameof(CanDeleteSelectedPhotos));
         CommandDeletePhotos.NotifyCanExecuteChanged();
     }
 
+    public RelayCommand SelectionChangedCommand => new(SelectionChanged);
+
     public bool CanDeleteSelectedPhotos
     {
-        get => true; // TODO IMPLEMENT
+        get => ShowsCollection.Any(x => x.IsSelected);
     }
 
-    public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+    public RelayCommand<PhotoShow> ShowClickedCommand => new(OnShowClicked);
+
+    public void OnShowClicked(PhotoShow show)
+    {
+        if (IsInDeleteMode)
+        {
+            show.IsSelected = !show.IsSelected;
+            SelectionChanged();
+        }
+        else
+        {
+            NavigationManager.Navigate(new EditShow(show),
+            true);
+        }
+    }
+
+
+    // This NEEDS to be set in ctor!
+    // Setting this in initializer is buggy
+    public RelayCommand CommandDeletePhotos { get; init; }
+    //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
+
+    #endregion DeletingItems
+
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+        var newShow = new PhotoShow()
+        {
+            DisplayName = "New photo show"
+        };
+        ShowsCollection.Add(newShow);
+        var page = new EditShow(newShow);
+        page.IsRenaming = true;
+        page.NameTextBox.Focus();
+        NavigationManager.Navigate(page, true);
+        // TODO Select all text in label, as it is non-trivial
+        // cannot set it from here. Need to either do a delay (except a simple delay doesn't work)
+        // or in the final thread
+
+        // TODO Fix this hack lol
+        new Thread(() =>
+        {
+            Thread.Sleep(50);
+            page.Dispatcher.Invoke(() =>
+            {
+                page.NameTextBox.SelectAll();
+            });
+        }).Start();
+    }
 }

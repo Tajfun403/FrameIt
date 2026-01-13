@@ -3,12 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:FrameIt.UI"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="300"
              Height="100" Width="{Binding DesiredWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Self}}"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
+             materialDesign:RippleAssist.IsDisabled="False"
              >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,7 +41,10 @@
            Visibility="{Binding IsSelectable, 
                 UpdateSourceTrigger=PropertyChanged, 
                 RelativeSource={RelativeSource AncestorType=UserControl},
-                Converter={StaticResource BoolToVis}}"
+                Converter={StaticResource BoolToVis},
+                FallbackValue=Visible}"
+           Checked="CheckBox_Checked"
+           Unchecked="CheckBox_Checked"
         />
             <!--            Visibility="{Binding SelectionVisibility, 
                 UpdateSourceTrigger=PropertyChanged, 
@@ -78,6 +84,15 @@
                 />
             </StackPanel>
         </Grid>
-
+        <materialDesign:Ripple
+            x:Name="RippleEffect"
+              materialDesign:RippleAssist.IsCentered="False"
+              materialDesign:RippleAssist.Feedback="#80ffffff"
+            materialDesign:RippleAssist.ClipToBounds="False"
+            materialDesign:RippleAssist.RippleSizeMultiplier=".2"
+            Visibility="{Binding IsNotSelectable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}"
+            IsHitTestVisible="False"
+            />
+        <!-- TODO enabling hit detection here disabled clicking on the checkbox, but disabling it disables the ripple entirely -->
     </Grid>
 </UserControl>

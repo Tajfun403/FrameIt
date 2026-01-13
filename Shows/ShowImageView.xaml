@@ -1,0 +1,102 @@
+﻿<Page x:Class="FrameIt.Shows.ShowImageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FrameIt.Shows" xmlns:baseui="clr-namespace:FrameIt.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="530" d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Title="EditImage"
+      >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="180"/>
+        </Grid.RowDefinitions>
+        <Label Content="Edit image" Grid.Row="0"
+                   Style="{StaticResource HeaderStyle}"
+                   HorizontalAlignment="Center"
+                   Margin="10"/>
+        <Grid x:Name="MiddleGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="CurrentImage"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Source="{Binding ImageContext.ImageBitmap, RelativeSource={RelativeSource AncestorType=Page}}"
+                   />
+            <StackPanel x:Name="ImageControls" Grid.Column="1">
+                <Label Content="Image Controls"
+                   Style="{StaticResource SemiHeaderStyle}"
+                       HorizontalAlignment="Center"/>
+                <Button Content="Rotate"
+                        Width="150"
+                        Height="30"
+                        Margin="10"/>
+                <Label
+                   Style="{StaticResource BaseLabelStyle}"
+                       HorizontalAlignment="Center">
+                    Add image description:
+                </Label>
+                <TextBox x:Name="ImageDescriptionTextBox"
+                         Width="250"
+                         Height="100"
+                         Margin="10"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         />
+            </StackPanel>
+
+        </Grid>
+        <Grid x:Name="EffectsGrid" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label 
+                Style="{StaticResource SemiHeaderStyle}"
+                Margin="10"
+                Content="Apply effects"
+                />
+            <ItemsControl Grid.Row="1" 
+              Name="PhotosListControl" 
+              ItemsSource="{Binding FiltersList, Mode=Default, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Page}}" 
+              Height="Auto">
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                  HorizontalScrollBarVisibility="Auto"
+                                  x:Name="ItemsScrollViewer"
+                                  >
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Margin="10" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <baseui:PhotoControl
+                                 Image="{Binding PreviewImage, IsAsync=False}"
+                                 IsSelectable="False"
+                            ClickCommand="{Binding ChangeFilterCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                 />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</Page>
