@@ -26,9 +26,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Assign photo shows to frame"
-                   Style="{StaticResource HeaderStyle}"
-                   Margin="20 0 0 0"/>
+            <TextBlock
+                Text="{Binding FrameName, StringFormat=Assign PhotoShows to {0}}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap"/>
         </Grid>
 
         <!-- SHOW LIST -->
@@ -69,7 +70,6 @@
                                     VerticalAlignment="Center">
 
                             <CheckBox Content="Assigned to frame"
-                                      IsChecked="{Binding IsAssigned}"
                                       Style="{StaticResource MaterialDesignCheckBox}"
                                       FontSize="14"/>
 
