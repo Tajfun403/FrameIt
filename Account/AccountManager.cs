@@ -12,32 +12,30 @@ namespace FrameIt.Account;
 /// <summary>
 /// Manages user sessions, registration, and local data persistence using JSON.
 /// </summary>
-class AccountManager : ObservableObject
+partial class AccountManager : ObservableObject
 {
     private List<UserAccount> _users = new();
     private const string DbPath = "Data/users.json";
 
-    // Data-bound property for the currently active user
-    private UserAccount? _currAccount;
+    // Data-bound property for the currently active user 
     public UserAccount? CurrAccount
     {
-        get => _currAccount;
+        get;
         set
         {
-            _currAccount = value;
+            field = value;
             OnUserChanged?.Invoke();
             OnPropertyChanged();
         }
     }
 
     // Controls whether the user is authenticated
-    private bool _isLoggedIn = false;
     public bool IsLoggedIn
     {
-        get => _isLoggedIn;
+        get;
         set
         {
-            _isLoggedIn = value;
+            field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsAccountBarVisible));
         }
@@ -67,12 +65,13 @@ class AccountManager : ObservableObject
             string json = File.ReadAllText(DbPath);
             _users = JsonSerializer.Deserialize<List<UserAccount>>(json) ?? new();
 
-            // MY CHANGE: Auto-login logic based on the 'RememberMe' flag
+            // Auto-login logic based on the 'RememberMe' flag
             var remembered = _users.FirstOrDefault(u => u.RememberMe);
             if (remembered != null)
             {
-                _currAccount = remembered;
-                _isLoggedIn = true;
+                // Set directly to the property to trigger proper state
+                CurrAccount = remembered;
+                IsLoggedIn = true;
             }
         }
         catch { _users = new(); }
@@ -99,6 +98,7 @@ class AccountManager : ObservableObject
         SaveUsers();
 
         // Return to login screen and reset navigation UI states
+        NavigationManager.StatusVM.ShowNavigation = false;
         NavigationManager.Navigate(new LoginHome(), false, false, false);
     }
 
