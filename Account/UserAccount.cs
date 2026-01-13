@@ -9,45 +9,56 @@ namespace FrameIt.Account;
 
 public class UserAccount : INotifyPropertyChanged
 {
-    private string _name;
-    private string _email;
-    private string _password;
-    private string _avatarPath = "Images/GrayLiara.jpg";
-    private bool _rememberMe;
 
     public required string Name
     {
-        get => _name;
-        set { _name = value; OnPropertyChanged(); }
+        get;
+        set
+        {
+            field = value; 
+            OnPropertyChanged();
+        }
     }
 
     public required string Email
     {
-        get => _email;
-        set { _email = value; OnPropertyChanged(); }
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
     }
 
     public required string Password
     {
-        get => _password;
-        set { _password = value; OnPropertyChanged(); }
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
     }
 
     public string AvatarPath
     {
-        get => _avatarPath;
+        get;
         set
         {
-            _avatarPath = value;
+            field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(AvatarImage));
         }
-    }
+    } = "Images/GrayLiara.jpg";
 
     public bool RememberMe
     {
-        get => _rememberMe;
-        set { _rememberMe = value; OnPropertyChanged(); }
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
     }
 
     [JsonIgnore]
