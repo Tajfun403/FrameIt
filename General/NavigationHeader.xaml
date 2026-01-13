@@ -72,5 +72,5 @@
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
             />
         </Grid>
-    </Border>
+        </Border>
 </UserControl>

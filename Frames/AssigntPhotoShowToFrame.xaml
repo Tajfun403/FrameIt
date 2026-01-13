@@ -1,0 +1,85 @@
+﻿<Page x:Class="FrameIt.Frames.AssignShowsToFrame"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:FrameIt.Frames"
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      d:DesignHeight="530"
+      d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Title="AssignShowsToFrame">
+
+    <Grid>
+        <!-- LAYOUT -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Grid Height="100" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Assign photo shows to frame"
+                   Style="{StaticResource HeaderStyle}"
+                   Margin="20 0 0 0"/>
+        </Grid>
+
+        <!-- SHOW LIST -->
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding Shows}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid Margin="10"
+                          HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <!-- lewa: miniatura + nazwa -->
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- prawa: checkbox -->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- SHOW PREVIEW -->
+                        <baseui:PhotoControl
+                            Grid.Column="0"
+                            DisplayName="{Binding Name}"
+                            Image="{Binding PreviewBitmap}"
+                            ShouldShowName="True"
+                            ShouldDisplaySecondaryName="False"
+                            IsSelectable="False"
+                            Margin="0,0,24,0"/>
+
+                        <!-- CHECKBOX -->
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+
+                            <CheckBox Content="Assigned to frame"
+                                      IsChecked="{Binding IsAssigned}"
+                                      Style="{StaticResource MaterialDesignCheckBox}"
+                                      FontSize="14"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</Page>

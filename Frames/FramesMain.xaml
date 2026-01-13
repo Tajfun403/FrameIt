@@ -125,6 +125,7 @@
                             <!-- TODO: Upload photo -->
                             <Button Content="Upload photo"
                         Width="180"
+                        Visibility="Collapsed"
                         Margin="0,0,12,0"
                         Style="{StaticResource OutlineWhiteButton}"/>   
 
