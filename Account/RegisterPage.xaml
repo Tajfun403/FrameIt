@@ -2,8 +2,63 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:FrameIt.Account"
       Title="RegisterPage"
       Background="{DynamicResource MaterialDesignPaper}">
+
+    <Page.Resources>
+        <Style x:Key="IndigoButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#3F51B5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="True"/>
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5C6BC0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#3949AB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IndigoFlatButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Foreground" Value="#3F51B5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="True"/>
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#5C6BC0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="#3949AB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Width="300">
@@ -17,34 +72,43 @@
                      materialDesign:HintAssist.Hint="Username" 
                      Foreground="White"
                      Margin="0,10" 
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                     materialDesign:HintAssist.Foreground="#3F51B5"/>
 
             <TextBox x:Name="RegEmail" 
                      materialDesign:HintAssist.Hint="Email Address" 
                      Foreground="White"
                      Margin="0,10" 
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                     materialDesign:HintAssist.Foreground="#3F51B5"/>
 
             <PasswordBox x:Name="RegPass" 
                          materialDesign:HintAssist.Hint="Password" 
                          Foreground="White"
                          Margin="0,10" 
-                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                         materialDesign:HintAssist.Foreground="#3F51B5"/>
 
             <PasswordBox x:Name="RegPassConfirm" 
                          materialDesign:HintAssist.Hint="Confirm Password" 
                          Foreground="White"
                          Margin="0,10" 
-                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                         materialDesign:HintAssist.Foreground="#3F51B5"/>
 
             <Button Content="REGISTER" 
                     Click="Register_Click" 
                     Margin="0,30,0,10" 
-                    Height="45"/>
+                    Height="45"
+                    Style="{StaticResource IndigoButtonStyle}"/>
 
             <Button Content="Back to Login" 
                     Click="Back_Click" 
-                    Style="{StaticResource MaterialDesignFlatButton}"/>
+                    Style="{StaticResource IndigoFlatButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

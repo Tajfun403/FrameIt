@@ -11,27 +11,78 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       Title="LoginHome">
 
+    <Page.Resources>
+        <Style x:Key="IndigoButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#3F51B5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="True"/>
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5C6BC0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#3949AB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="FrameIt" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="10"/>
         <Label Content="Manage all your frames at ease, in one place!" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10 10 10 30"/>
 
         <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}">
             <Label Content="Please enter your e-mail to log-in or register:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-            <TextBox Width="200" Margin="10" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="White"/>
-            <Button Name="LogInOrRegister_Continue" HorizontalAlignment="Right" Content="Continue" Command="{Binding LogInOrRegisterCommand}"/>
+            <TextBox Width="200" Margin="10" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="White" materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
+            <Button Name="LogInOrRegister_Continue" 
+                    Width="100"
+                    HorizontalAlignment="Right" 
+                    Content="Continue" 
+                    Command="{Binding LogInOrRegisterCommand}"
+                    Style="{StaticResource IndigoButtonStyle}"/>
         </StackPanel>
 
         <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}">
             <Label Content="Please enter your password:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-            <PasswordBox x:Name="LoginPassBox" Width="200" Margin="10" PasswordChanged="LoginPassBox_PasswordChanged" Foreground="White"/>
+
+            <PasswordBox x:Name="LoginPassBox" 
+                         Width="200" 
+                         Margin="10" 
+                         PasswordChanged="LoginPassBox_PasswordChanged" 
+                         Foreground="White"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
 
             <Grid Name="BottomPanel" MinWidth="220">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox Content="Remember me" IsChecked="{Binding RememberMe}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button Content="Log In" Grid.Column="1" HorizontalAlignment="Right" Click="LogIn_Continue_Click"/>
+                <CheckBox Content="Remember me" 
+                          IsChecked="{Binding RememberMe}" 
+                          VerticalAlignment="Center" 
+                          Margin="0,0,10,0"
+                          Foreground="#3F51B5"/>
+
+                <Button Content="Log In" 
+                        Width="120"
+                        Grid.Column="1" 
+                        HorizontalAlignment="Right" 
+                        Click="LogIn_Continue_Click"
+                        Style="{StaticResource IndigoButtonStyle}"/>
             </Grid>
         </StackPanel>
     </StackPanel>

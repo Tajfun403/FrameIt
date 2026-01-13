@@ -5,6 +5,70 @@
       Title="ManageAccount"
       Background="{DynamicResource MaterialDesignPaper}">
 
+    <Page.Resources>
+        <Style x:Key="OutlineWhiteButton"
+               TargetType="Button"
+               BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="RootBorder"
+                                Background="Transparent"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ContentPresenter Margin="10,6"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="#58585A"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RedBackgroundButton"
+               TargetType="Button"
+               BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Background" Value="#6A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Margin="10,6"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Width="350">
 
@@ -59,6 +123,7 @@
                     <TextBox x:Name="NameInput" 
                              Text="{Binding CurrUser.Name, UpdateSourceTrigger=PropertyChanged}" 
                              Foreground="White"
+                             materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
                              MinWidth="200" FontSize="24" materialDesign:TextFieldAssist.HasClearButton="True"/>
                     <Button Style="{StaticResource MaterialDesignIconButton}" Click="ToggleEditName_Click" Foreground="Green">
                         <materialDesign:PackIcon Kind="Check" />
@@ -69,46 +134,51 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Margin="0,0,0,10">
-                <Button x:Name="EmailBtn" Content="Change Email" 
-                        Style="{StaticResource MaterialDesignRaisedButton}" 
-                        Click="ToggleEditEmail_Click"/>
+            <StackPanel HorizontalAlignment="Center">
 
-                <StackPanel x:Name="EditEmailArea" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
-                    <TextBox x:Name="EmailInput" 
-                             Text="{Binding CurrUser.Email, UpdateSourceTrigger=PropertyChanged}" 
-                             Foreground="White"
-                             MinWidth="200" materialDesign:TextFieldAssist.HasClearButton="True" FontSize="16"/>
-                    <Button Style="{StaticResource MaterialDesignIconButton}" Click="ToggleEditEmail_Click" Foreground="Green">
-                        <materialDesign:PackIcon Kind="Check" />
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignIconButton}" Click="CancelEditEmail_Click" Foreground="Red">
-                        <materialDesign:PackIcon Kind="Close" />
-                    </Button>
-                </StackPanel>
-            </Grid>
+                <StackPanel Margin="0,0,0,10">
+                    <Button x:Name="EmailBtn" Content="Change Email" 
+                            Style="{StaticResource OutlineWhiteButton}" 
+                            Click="ToggleEditEmail_Click"/>
 
-            <Grid Margin="0,0,0,10">
-                <Button x:Name="PassBtn" Content="Change Password" 
-                        Style="{StaticResource MaterialDesignRaisedButton}" 
-                        Click="ToggleEditPass_Click"/>
-
-                <StackPanel x:Name="EditPassArea" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
-                    <PasswordBox x:Name="PassInput" 
+                    <StackPanel x:Name="EditEmailArea" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,10,0,0">
+                        <TextBox x:Name="EmailInput" 
+                                 Text="{Binding CurrUser.Email, UpdateSourceTrigger=PropertyChanged}" 
                                  Foreground="White"
-                                 MinWidth="200" FontSize="16"/>
-                    <Button Style="{StaticResource MaterialDesignIconButton}" Click="ToggleEditPass_Click" Foreground="Green">
-                        <materialDesign:PackIcon Kind="Check" />
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignIconButton}" Click="CancelEditPass_Click" Foreground="Red">
-                        <materialDesign:PackIcon Kind="Close" />
-                    </Button>
+                                 materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                                 MinWidth="200" materialDesign:TextFieldAssist.HasClearButton="True" FontSize="16"/>
+                        <Button Style="{StaticResource MaterialDesignIconButton}" Click="ToggleEditEmail_Click" Foreground="Green">
+                            <materialDesign:PackIcon Kind="Check" />
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignIconButton}" Click="CancelEditEmail_Click" Foreground="Red">
+                            <materialDesign:PackIcon Kind="Close" />
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
-            </Grid>
 
-            <Button Content="Log Out" Margin="0,40,0,0" 
-                    Background="#FFD32F2F" BorderBrush="#FFD32F2F" 
-                    Foreground="White" Click="Logout_Click"/>
+                <StackPanel Margin="0,0,0,10">
+                    <Button x:Name="PassBtn" Content="Change Password" 
+                            Style="{StaticResource OutlineWhiteButton}" 
+                            Click="ToggleEditPass_Click"/>
+
+                    <StackPanel x:Name="EditPassArea" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,10,0,0">
+                        <PasswordBox x:Name="PassInput" 
+                                     Foreground="White"
+                                     materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"
+                                     MinWidth="200" FontSize="16"/>
+                        <Button Style="{StaticResource MaterialDesignIconButton}" Click="ToggleEditPass_Click" Foreground="Green">
+                            <materialDesign:PackIcon Kind="Check" />
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignIconButton}" Click="CancelEditPass_Click" Foreground="Red">
+                            <materialDesign:PackIcon Kind="Close" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Content="Log Out" Margin="0,30,0,0" 
+                        Style="{StaticResource RedBackgroundButton}" 
+                        Click="Logout_Click"/>
+            </StackPanel>
 
         </StackPanel>
     </Grid>
