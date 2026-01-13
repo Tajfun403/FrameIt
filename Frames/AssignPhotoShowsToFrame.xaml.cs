@@ -16,9 +16,9 @@ namespace FrameIt.Frames
     /// <summary>
     /// Interaction logic for AssigntPhotoShowToFrame.xaml
     /// </summary>
-    public partial class AssigntPhotoShowToFrame : Page
+    public partial class AssignPhotoShowsToFrame : Page
     {
-        public AssigntPhotoShowToFrame()
+        public AssignPhotoShowsToFrame(int frameId)
         {
             InitializeComponent();
         }

@@ -58,10 +58,18 @@ namespace FrameIt.Frames
             }
         }
 
-        private void ManageFramePhotoShowsClick()
+        private void ManageFramePhotoShowsClick(object sender, RoutedEventArgs e)
         {
-
+            if (sender is Button { DataContext: FrameItem frame })
+            {
+                NavigationManager.Navigate(
+                    new AssignPhotoShowsToFrame(frame.Id),
+                    CanMoveBack: true,
+                    ShowNavigationPanel: true
+                );
+            }
         }
+
 
         private void ReloadFrames()
         {
