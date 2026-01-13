@@ -23,8 +23,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="3">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="3">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -33,6 +32,10 @@
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" Value="#3949AB"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                                <Setter Property="Foreground" Value="Silver"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -47,12 +50,19 @@
 
         <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}">
             <Label Content="Please enter your e-mail to log-in or register:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-            <TextBox Width="200" Margin="10" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="White" materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
+
+            <TextBox x:Name="EmailBox" Width="200" Margin="10" 
+                     Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     Foreground="White" 
+                     CaretBrush="#3F51B5"
+                     materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
+
             <Button Name="LogInOrRegister_Continue" 
                     Width="100"
                     HorizontalAlignment="Right" 
                     Content="Continue" 
                     Command="{Binding LogInOrRegisterCommand}"
+                    IsEnabled="{Binding Text.Length, ElementName=EmailBox, TargetNullValue=0}"
                     Style="{StaticResource IndigoButtonStyle}"/>
         </StackPanel>
 
@@ -64,6 +74,7 @@
                          Margin="10" 
                          PasswordChanged="LoginPassBox_PasswordChanged" 
                          Foreground="White"
+                         CaretBrush="#3F51B5"
                          materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
 
             <Grid Name="BottomPanel" MinWidth="220">
