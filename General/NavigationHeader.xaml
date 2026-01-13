@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FrameIt.General" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:FrameIt.General"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
             d:DesignHeight="70" d:DesignWidth="1000"
             Height="70"
@@ -40,12 +41,12 @@
               Name="AccountBar" 
               Visibility="{Binding IsAccountBarVisible, UpdateSourceTrigger=PropertyChanged}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="AccountName"  
-                   MouseLeftButtonDown="Account_Click" 
-                   Content="{Binding CurrAccount.Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=AccName}" 
+
+            <Image Source="/Images/Back.png" 
+                   Name="GoBackControl"
                    Grid.Column="0" 
                    Style="{StaticResource BaseLabelStyle}" 
                    HorizontalAlignment="Right" 
@@ -71,5 +72,5 @@
             materialDesign:RippleAssist.RippleSizeMultiplier=".2"
             />
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>
