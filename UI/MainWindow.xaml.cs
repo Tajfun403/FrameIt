@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using FrameIt.General;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,5 +21,18 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+    }
+
+    protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == MouseButton.XButton1)
+        {
+            Debug.WriteLine("Navigating Backward (Mouse XButton1)");
+            NavigationManager.GoBack();
+            e.Handled = true;
+            return;
+        }
+        e.Handled = false;
+        base.OnPreviewMouseDown(e);
     }
 }

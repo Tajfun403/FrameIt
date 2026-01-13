@@ -27,8 +27,8 @@
                    HorizontalAlignment="Left" 
                    Grid.Column="0" 
                    Margin="20 0 0 0"/>
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Name="AddButton" Content="Add PhotoShow" Grid.Column="0" Margin="20 0 20 0" Width="150"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="AddButton" Content="Add PhotoShow" Grid.Column="0" Margin="20 0 20 0" Width="150" Click="AddButton_Click"/>
                 <Button Name="DeleteButton" 
                         Content="{Binding DelPhotosButtonText, RelativeSource={RelativeSource AncestorType=Page}, FallbackValue='Delete Button'}" 
                         Click="DeletePhotos_Click" 
@@ -55,11 +55,12 @@
                     Grid.Column="1" 
                     Grid.RowSpan="2"
                     VerticalAlignment="Center"
-                    Margin="20 0 20 0"/>
+                    Margin="20 0 20 0"
+                    />
         </Grid>
         <ItemsControl Grid.Row="2" 
                       Name="ShowsList" 
-                      ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding ShowsCollection, Mode=Default, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Page}}" 
                       Height="Auto">
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
@@ -82,7 +83,12 @@
                                          Image="{Binding ImageBitmap}"
                                          IsSelectable="{Binding ItemsSelectable, 
                                             RelativeSource={RelativeSource AncestorType=Page},
-                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                            UpdateSourceTrigger=PropertyChanged}"
+                                         ClickCommand="{Binding ShowClickedCommand, 
+                                            RelativeSource={RelativeSource AncestorType=Page}}"
+                                         SelectionChanged="{Binding SelectionChangedCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                         IsSelected="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         />
                     <!-- <Label Content="{Binding DisplayName}"/> -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

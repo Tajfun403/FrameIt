@@ -29,13 +29,14 @@ class NavigationManager
 
         onPageLeft?.Invoke((Page)MainFrame.Content!);
         onPageLeft = null;
-
+        GC.Collect();
         MainFrame.Navigate(page);
         NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
     }
 
     public static void GoBack()
     {
+        PrintNavigationStack();
         if (!CanGoBack())
             return;
         NavigationStack.Pop();
@@ -44,6 +45,15 @@ class NavigationManager
         StatusVM.CanGoBack = lastPage.CanMoveBack;
         StatusVM.ShowNavigation = lastPage.ShowNavigationPanel;
         // MainFrame.GoBack();
+    }
+
+    public static void PrintNavigationStack()
+    {
+        Debug.WriteLine("Navigation Stack:");
+        foreach (var entry in NavigationStack)
+        {
+            Debug.WriteLine($" - {entry}");
+        }
     }
 
     public static bool CanGoBack()

@@ -8,5 +8,5 @@
         Title="FrameIt" Height="600" Width="1000"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Frame Source="MainUI.xaml" Name="MainFrame" NavigationUIVisibility="Hidden"/>
+    <Frame Source="MainUI.xaml" Name="MainFrame" NavigationUIVisibility="Hidden" JournalOwnership="OwnsJournal"/>
 </Window>
