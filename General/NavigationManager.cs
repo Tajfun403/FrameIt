@@ -27,11 +27,15 @@ class NavigationManager
         StatusVM.CanGoBack = CanMoveBack;
         StatusVM.ShowNavigation = ShowNavigationPanel;
 
+        //Update Account Bar visibility based on the navigation target - Julia
+        StatusVM.IsAccountBarVisible = ShowAccountBar ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+
         onPageLeft?.Invoke((Page)MainFrame.Content!);
         onPageLeft = null;
         GC.Collect();
         MainFrame.Navigate(page);
-        NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel));
+        //Added ShowAccountBar to the stack entry - Julia
+        NavigationStack.Push(new(page, CanMoveBack, ShowNavigationPanel, ShowAccountBar));
     }
 
     public static void GoBack()
@@ -44,6 +48,8 @@ class NavigationManager
         MainFrame.Navigate(lastPage.Page);
         StatusVM.CanGoBack = lastPage.CanMoveBack;
         StatusVM.ShowNavigation = lastPage.ShowNavigationPanel;
+        // Restoring Account Bar visibility state from the previous page - Julia
+        StatusVM.IsAccountBarVisible = lastPage.ShowAccountBar ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         // MainFrame.GoBack();
     }
 
@@ -94,7 +100,8 @@ class NavigationManager
         NavigationManager.onPageLeft = null;
     }
 
-    public record struct NavigationEntry(Page Page, bool CanMoveBack, bool ShowNavigationPanel);
+    //Added ShowAccountBar property 
+    public record struct NavigationEntry(Page Page, bool CanMoveBack, bool ShowNavigationPanel, bool ShowAccountBar);
 
     public static NavigationBarStatusVM StatusVM = new();
 }
