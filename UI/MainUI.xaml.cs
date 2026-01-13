@@ -24,6 +24,7 @@ public partial class MainUI : Page
     {
         InitializeComponent();
         NavigationManager.Init(this);
+        PopUpManager.Init(this);
         Startup.NavigateToStartPage();
         // NavigationManager.Navigate(new LoginHome(), false, false);
     }
