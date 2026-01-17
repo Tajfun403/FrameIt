@@ -92,7 +92,7 @@ partial class AccountManager : ObservableObject
     /// </summary>
     public void Logout()
     {
-        if (CurrAccount != null) CurrAccount.RememberMe = false;
+        CurrAccount?.RememberMe = false;
         IsLoggedIn = false;
         CurrAccount = null;
         SaveUsers();

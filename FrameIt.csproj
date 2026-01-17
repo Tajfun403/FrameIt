@@ -42,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Users.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Images\GrayLiara.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

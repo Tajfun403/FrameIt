@@ -70,8 +70,10 @@
                 Click="ConfirmDeleteFrames"/>
         </Grid>
 
-
-        <!-- FRAME LIST -->
+        <ScrollViewer Grid.Row="2"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
+            <!-- FRAME LIST -->
         <ItemsControl Grid.Row="2"
               ItemsSource="{Binding Frames}">
             <ItemsControl.ItemsPanel>
@@ -137,7 +139,7 @@
 
 
         </ItemsControl>
-
+            </ScrollViewer>
 
     </Grid>
 </Page>

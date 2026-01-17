@@ -45,6 +45,7 @@ namespace FrameIt.Frames.AddFrame
             };
 
             FramesManager.SaveFrame(newFrame);
+            PopUpManager.ShowSuccess("Frame added successfully!");
             NavigationManager.GoToHome();
         }
 
