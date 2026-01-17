@@ -115,6 +115,7 @@
                             <Button Content="Manage frame photo shows"
                         Width="220"
                         Margin="0,0,12,0"
+                        Click="ManageFramePhotoShowsClick"
                         Style="{StaticResource OutlineWhiteButton}"/>
 
                             <Button Content="Manage frame"
@@ -125,8 +126,9 @@
                         Click="ManageFrameClick"/>
 
                             <!-- TODO: Upload photo -->
-                            <Button Content="Not working button"
+                            <Button Content="Upload photo"
                         Width="180"
+                        Visibility="Collapsed"
                         Margin="0,0,12,0"
                         Style="{StaticResource OutlineWhiteButton}"/>   
                         

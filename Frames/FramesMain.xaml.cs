@@ -58,6 +58,19 @@ namespace FrameIt.Frames
             }
         }
 
+        private void ManageFramePhotoShowsClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: FrameItem frame })
+            {
+                NavigationManager.Navigate(
+                    new ManageFramesPhotoShows.ManageFramesPhotoShows(frame.Id),
+                    CanMoveBack: true,
+                    ShowNavigationPanel: true
+                );
+            }
+        }
+
+
         private void ReloadFrames()
         {
             Frames.Clear();
@@ -137,5 +150,12 @@ namespace FrameIt.Frames
 
         protected void OnPropertyChanged([CallerMemberName] string name = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }
