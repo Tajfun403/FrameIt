@@ -2,137 +2,84 @@
 using FrameIt.General;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
+using System.ComponentModel;
+using System.Text;
 using System.Windows;
 
 namespace FrameIt.Account;
 
-/// <summary>
-/// Manages user sessions, registration, and local data persistence using JSON.
-/// </summary>
-partial class AccountManager : ObservableObject
+class AccountManager : ObservableObject
 {
-    private List<UserAccount> _users = new();
-    private const string DbPath = "Data/users.json";
-
-    // Data-bound property for the currently active user 
-    public UserAccount? CurrAccount
-    {
-        get;
+    /// <summary>
+    /// Currently logged-in user account.<br/>
+    /// Data-bound in the navigation UI, so do *not* null it out!
+    /// </summary>
+    public UserAccount CurrAccount { get; 
         set
         {
             field = value;
             OnUserChanged?.Invoke();
-            OnPropertyChanged();
         }
     }
 
-    // Controls whether the user is authenticated
+    /// <summary>
+    /// Data-bound to the view of user state in the navigation bar.
+    /// </summary>
     public bool IsLoggedIn
     {
-        get;
-        set
+        get; set
         {
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsAccountBarVisible));
-        }
-    }
 
-    // Helper property for UI Binding to handle Account Bar visibility
+        }
+    } = false;
+
     public Visibility IsAccountBarVisible => IsLoggedIn ? Visibility.Visible : Visibility.Collapsed;
 
-    // Singleton instance for global access
     public static AccountManager Instance { get; } = new AccountManager();
 
+    public void LoadDefaultAccount()
+    {
+        CurrAccount = new()
+        {
+            Name = "Sarivian",
+            Email = "Sarivian@gmail.com",
+            AvatarPath = "Images/Liara.jpg"
+        };
+        IsLoggedIn = true;
+    }
+
+    /// <summary>
+    /// Event triggered when the currently logged in account changes
+    /// </summary>
     public event Action OnUserChanged = delegate { };
 
-    private AccountManager()
+    public AccountManager()
     {
-        LoadUsers();
+        LoadDefaultAccount();
     }
 
     /// <summary>
-    /// Loads users from local JSON file and handles the "Remember Me" auto-login.
+    /// Attempt to use stored login info to login immediately.
     /// </summary>
-    private void LoadUsers()
+    /// <returns>Whether the auto login succeeded</returns>
+    public bool TryAutoLogin()
     {
-        if (!File.Exists(DbPath)) return;
-        try
-        {
-            string json = File.ReadAllText(DbPath);
-            _users = JsonSerializer.Deserialize<List<UserAccount>>(json) ?? new();
-
-            // Auto-login logic based on the 'RememberMe' flag
-            var remembered = _users.FirstOrDefault(u => u.RememberMe);
-            if (remembered != null)
-            {
-                // Set directly to the property to trigger proper state
-                CurrAccount = remembered;
-                IsLoggedIn = true;
-            }
-        }
-        catch { _users = new(); }
+        return true;
+        // TODO Implement this!
+        throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// Synchronizes the current user list to the local JSON database.
-    /// </summary>
-    public void SaveUsers()
+    public bool TryLogin(string Username, string Password)
     {
-        if (!Directory.Exists("Data")) Directory.CreateDirectory("Data");
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        File.WriteAllText(DbPath, JsonSerializer.Serialize(_users, options));
+        return true;
     }
 
-    /// <summary>
-    /// Signs out the user, clears the "Remember Me" flag, and redirects to Login.
-    /// </summary>
-    public void Logout()
+    public bool Register(string Username, string Password)
     {
-        CurrAccount?.RememberMe = false;
-        IsLoggedIn = false;
-        CurrAccount = null;
-        SaveUsers();
-
-        // Return to login screen and reset navigation UI states
-        NavigationManager.StatusVM.ShowNavigation = false;
-        NavigationManager.Navigate(new LoginHome(), false, false, false);
+        throw new NotImplementedException();
     }
 
-    public bool DoesAccountExist(string email)
-        => _users.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-
-    /// <summary>
-    /// Validates credentials and initializes the session.
-    /// </summary>
-    public bool TryLogin(string email, string password, bool rememberMe)
-    {
-        var user = _users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.Password == password);
-        if (user != null)
-        {
-            // Reset RememberMe for all other users to ensure only one active session
-            _users.ForEach(u => u.RememberMe = false);
-
-            user.RememberMe = rememberMe;
-            CurrAccount = user;
-            IsLoggedIn = true;
-            SaveUsers();
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Adds a new user to the database and logs them in immediately.
-    /// </summary>
-    public void Register(UserAccount newUser)
-    {
-        _users.Add(newUser);
-        CurrAccount = newUser;
-        IsLoggedIn = true;
-        SaveUsers();
-    }
 }

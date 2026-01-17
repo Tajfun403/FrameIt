@@ -142,7 +142,6 @@ public partial class EditShow : Page, INotifyPropertyChanged
         {
             ShowContext.AddImageByPath(file);
         }
-        PopUpManager.ShowSuccess($"{files.Length} {(files.Length == 1 ? "image" : "images")} added to the show.");
     }
 
     private void DropOverlay_DragEnter(object sender, DragEventArgs e)
@@ -301,8 +300,6 @@ public partial class EditShow : Page, INotifyPropertyChanged
             ShowContext.PhotosList.Remove(img);
         }
         ExitDeleteMode();
-        var count = imgsToDel.Count;
-        PopUpManager.ShowSuccess($"{count} {(count == 1 ? "photo" : "photos")} deleted.");
         OnPropertyChanged(nameof(PhotosCountString));
         // IsInDeleteMode = false;
     }

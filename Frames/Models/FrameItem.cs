@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FrameIt.General;
+using FrameIt.Shows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using FrameIt.Shows;
 
 namespace FrameIt.Models;
 
@@ -17,6 +20,9 @@ public partial class FrameItem : ObservableObject
     public string PairingCode { get; set; }
 
     public FrameConfig Config { get; set; } = new();
+
+    public ObservableCollection<PhotoShow> PhotoShows { get; set; }
+    = new ObservableCollection<PhotoShow>();
 
     // =====================
     // IMAGE PATH (PERSISTED)

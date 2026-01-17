@@ -22,13 +22,11 @@ namespace FrameIt.Frames.AddFrame
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                PopUpManager.ShowError("Please enter a valid frame name.");
-                //MessageBox.Show(
-                //    "Please enter a valid frame name.",
-                //    "Invalid Name",
-                //    MessageBoxButton.OK,
-                //    MessageBoxImage.Warning);
-                //
+                MessageBox.Show(
+                    "Please enter a valid frame name.",
+                    "Invalid Name",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
                 return;
             }
 
@@ -45,7 +43,6 @@ namespace FrameIt.Frames.AddFrame
             };
 
             FramesManager.SaveFrame(newFrame);
-            PopUpManager.ShowSuccess("Frame added successfully!");
             NavigationManager.GoToHome();
         }
 
