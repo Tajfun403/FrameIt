@@ -37,7 +37,7 @@
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
                             <baseui:PhotoControl
@@ -47,13 +47,19 @@
                                 IsSelectable="False"
                                 IsHitTestVisible="False"/>
 
-                            <CheckBox Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      HorizontalAlignment="Left"
-                                      Margin="100,0,0,0"
-                                      IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                      IsEnabled="{Binding IsSelectable}"
-                                      Content="Add to frame"/>
+                            <Border Grid.Column="1"
+                                Style="{StaticResource DarkFieldContainer}"
+                                Margin="40,0,0,0"
+                                Padding="12,6"
+                                VerticalAlignment="Center">
+
+                                <CheckBox
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                IsEnabled="{Binding IsSelectable}"
+                                Content="Add to frame"/>
+                            </Border>
+
+
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
