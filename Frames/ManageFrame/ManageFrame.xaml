@@ -22,13 +22,13 @@
         <!-- ================= HEADER ================= -->
         <Grid Grid.Row="0" Height="100">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
             <Label Style="{StaticResource HeaderStyle}"
                    Margin="20,0,0,0"
-                   MaxWidth="450">
+                   >
                 <TextBlock
                     Text="{Binding FrameName, StringFormat=Manage Frame {0}}"
                     TextTrimming="CharacterEllipsis"
