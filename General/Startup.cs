@@ -1,8 +1,7 @@
 ﻿using FrameIt.UI;
-using FrameIt.Account;
 using System;
-using System.Linq;
-using FrameIt.Shows;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FrameIt.General;
 
@@ -11,23 +10,17 @@ internal static class Startup
     internal static void NavigateToStartPage()
     {
         var args = Environment.GetCommandLineArgs();
-        ShowsManager.Instance.GenerateDefaultShows();
-
         if (args.Contains("-StartToHome", StringComparer.OrdinalIgnoreCase))
         {
-            AccountManager.Instance.TryLogin("sarivian@gmail.com", "TaliIsMyGirl", false);
             NavigationManager.Navigate(new Home(), false, true);
-            return;
         }
-
-        if (AccountManager.Instance.IsLoggedIn)
+        else if (args.Contains("-StartToLogin", StringComparer.OrdinalIgnoreCase))
         {
-            NavigationManager.GoToHome();
+            NavigationManager.Navigate(new Account.LoginHome(), false, false);
         }
         else
         {
-            NavigationManager.StatusVM.ShowNavigation = false;
-            NavigationManager.Navigate(new LoginHome(), false, true);
+            NavigationManager.Navigate(new Account.LoginHome(), false, true);
         }
     }
 }

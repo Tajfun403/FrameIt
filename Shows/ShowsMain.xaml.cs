@@ -26,12 +26,36 @@ namespace FrameIt.Shows;
 /// </summary>
 public partial class ShowsMain : Page, INotifyPropertyChanged
 {
+    private PhotoShow defaultShow = new();
+
     public ObservableCollection<PhotoShow> ShowsCollection { get; private set; } = [];
 
     public ShowsMain()
     {
-        ShowsCollection = ShowsManager.Instance.Shows;
         InitializeComponent();
+        defaultShow.PhotosList.Add(new ShowImage()
+        {
+            ImagePath = "Images/Liara.jpg",
+            DisplayName = "Sample Photo 1"
+        });
+        defaultShow.PhotosList.Add(new ShowImage()
+        {
+            ImagePath = "Images/GrayLiara.jpg",
+            DisplayName = "Sample Photo 2"
+        });
+        defaultShow.DisplayName = "Sample PhotoShow";
+
+        ShowsCollection.Add(defaultShow);
+
+        // defaultShow.DisplayName = "Sample PhotoShow";
+        // ShowsList.DataContext = defaultShow;
+
+        // TODO Set the real source here!
+        // ShowsList.DataContext = ShowsManager.Instance.Shows;
+        // this.DataContext = ShowsManager.Instance.Shows;
+
+        // TODO Add filtering shows from a given frame
+        // TODO add delete form
 
         // This NEEDS to be set in ctor!
         // Setting this in initializer is buggy
@@ -112,8 +136,6 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         {
             ShowsCollection.Remove(show);
         }
-        var count = showsToDel.Count;
-        PopUpManager.ShowSuccess($"{count} {(count == 1 ? "show" : "shows")} deleted.");
         ExitDeleteMode();
         // IsInDeleteMode = false;
     }
@@ -179,7 +201,5 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
                 page.NameTextBox.SelectAll();
             });
         }).Start();
-
-        PopUpManager.ShowSuccess("New show added! You can edit it now.");
     }
 }

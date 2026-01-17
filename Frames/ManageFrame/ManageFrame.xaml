@@ -122,7 +122,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Godzina"
+                    <TextBlock Text="Time"
                                Foreground="White"
                                VerticalAlignment="Center"/>
 
@@ -190,7 +190,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Pogoda"
+                    <TextBlock Text="Weather"
                                Foreground="White"
                                VerticalAlignment="Center"/>
 
@@ -219,54 +219,81 @@
             </StackPanel>
 
             <!-- ================= RIGHT COLUMN ================= -->
-            <StackPanel Grid.Column="1">
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <Grid Margin="0,0,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                <!-- TOP: schedule -->
+                <StackPanel Grid.Row="0">
 
-                    <TextBlock Text="Automatic switching on and off"
-                               FontSize="18"
-                               FontWeight="SemiBold"
-                               Foreground="White"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <ToggleButton Grid.Column="1"
-                                  Style="{StaticResource WhiteBorderSwitch}"
-                                  IsChecked="{Binding IsAutoScheduleEnabled, Mode=TwoWay}"/>
-                </Grid>
+                        <TextBlock Text="Automatic switching on and off"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Foreground="White"/>
 
-                <StackPanel Visibility="{Binding IsScheduleVisible, Converter={StaticResource BoolToVis}}">
+                        <ToggleButton Grid.Column="1"
+                          Style="{StaticResource WhiteBorderSwitch}"
+                          IsChecked="{Binding IsAutoScheduleEnabled, Mode=TwoWay}"/>
+                    </Grid>
 
-                    <TextBlock Text="Turn off time" Foreground="White"/>
+                    <StackPanel Visibility="{Binding IsScheduleVisible, Converter={StaticResource BoolToVis}}">
 
-                    <Border Style="{StaticResource DarkFieldContainer}"
-                            Margin="0,6,0,20">
-                        <materialDesign:TimePicker
-                            SelectedTime="{Binding TurnOffTime, Mode=TwoWay}"
-                            Style="{StaticResource MaterialDesignTimePicker}"
-                            Foreground="White"/>
-                    </Border>
+                        <TextBlock Text="Turn off time" Foreground="White"/>
 
-                    <TextBlock Text="Turn on time" Foreground="White"/>
+                        <Border Style="{StaticResource DarkFieldContainer}"
+                    Margin="0,6,0,20">
+                            <materialDesign:TimePicker
+                    SelectedTime="{Binding TurnOffTime, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignTimePicker}"
+                    Foreground="White"/>
+                        </Border>
 
-                    <Border Style="{StaticResource DarkFieldContainer}"
-                            Margin="0,6,0,30">
-                        <materialDesign:TimePicker
-                            SelectedTime="{Binding TurnOnTime, Mode=TwoWay}"
-                            Style="{StaticResource MaterialDesignTimePicker}"
-                            Foreground="White"/>
-                    </Border>
+                        <TextBlock Text="Turn on time" Foreground="White"/>
 
-                </StackPanel>
+                        <Border Style="{StaticResource DarkFieldContainer}"
+                    Margin="0,6,0,30">
+                            <materialDesign:TimePicker
+                    SelectedTime="{Binding TurnOnTime, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignTimePicker}"
+                    Foreground="White"/>
+                        </Border>
 
-                <Button Content="Delete frame"
+                    </StackPanel>
+                    <Button Content="Delete frame"
                         Style="{StaticResource RedBackgroundButton}"
                         HorizontalAlignment="Right"
                         Click="DeleteFrame_Click"
-                        Command="{Binding DeleteFrameCommand}"/>
-            </StackPanel>
+                        Command="{Binding DeleteFrameCommand}"/>    
+                </StackPanel>
+
+                <!-- BOTTOM: autosave info -->
+                <StackPanel Grid.Row="2"
+                HorizontalAlignment="Right">
+
+                    <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,12">
+                        <materialDesign:PackIcon Kind="ContentSaveCheck"
+                                     Width="16"
+                                     Height="16"
+                                     Foreground="#AAAAAA"
+                                     Margin="0,0,6,0"/>
+                        <TextBlock Text="All changes are saved automatically"
+                       FontSize="12"
+                       Foreground="#AAAAAA"/>
+                    </StackPanel>
+
+
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

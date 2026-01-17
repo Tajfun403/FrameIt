@@ -1,0 +1,79 @@
+﻿<Page x:Class="FrameIt.Frames.ManageFramesPhotoShows.ManageFramesPhotoShows"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      d:DesignHeight="530"
+      d:DesignWidth="1000"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <!-- ROOT -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ================= HEADER ================= -->
+        <Grid Grid.Row="0" Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT: FRAME NAME + CONTEXT -->
+            <Label Style="{StaticResource HeaderStyle}"
+                   Margin="20,0,0,0">
+
+                <TextBlock
+                    Text="{Binding HeaderText}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap"/>
+            </Label>
+
+            <!-- RIGHT: ACTION BUTTONS -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,20,0">
+
+                <Button Content="Add photo shows"
+                        Width="180"
+                        Margin="0,0,20,0"
+                        Click="AddPhotoShowsClick"/>
+
+                <Button Content="Delete photo shows"
+                        Width="180"
+                        Click="DeletePhotoShowsClick"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ================= SHOW LIST ================= -->
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding Shows}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <baseui:PhotoControl
+                            DisplayName="{Binding DisplayName}"
+                            Image="{Binding ImageBitmap}"
+                            ShouldShowName="True"
+                            IsSelectable="False"
+                            IsHitTestVisible="False"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</Page>

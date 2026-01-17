@@ -39,7 +39,7 @@ internal class VioletifierFilter : IFilterBase
                 }
             }
         });
-        return IFilterBase.ToBitmapImage(image); 
+        return IFilterBase.ToBitmapImage(image);
     }
 
     /// <summary>
