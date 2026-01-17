@@ -30,7 +30,8 @@ namespace FrameIt.Frames.AddFrame
 
             if (string.IsNullOrEmpty(code))
             {
-                MessageBox.Show("Please enter pairing code");
+                PopUpManager.ShowError("Please enter pairing code");
+                // MessageBox.Show("Please enter pairing code");
                 return;
             }
 
@@ -48,11 +49,13 @@ namespace FrameIt.Frames.AddFrame
                     break;
 
                 case PairingCodeValidationResult.NotFound:
-                    MessageBox.Show("Invalid pairing code");
+                    PopUpManager.ShowError("Invalid pairing code");
+                    // MessageBox.Show("Invalid pairing code");
                     break;
 
                 case PairingCodeValidationResult.AlreadyUsed:
-                    MessageBox.Show("This pairing code has already been used");
+                    PopUpManager.ShowError("This pairing code has already been used");
+                    // MessageBox.Show("This pairing code has already been used");
                     break;
             }
         }

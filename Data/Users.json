@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "Julka",
+    "Email": "julia@student.com",
+    "Password": "niewiem1234",
+    "AvatarPath": "Images/Liara.jpg",
+    "RememberMe": false
+  },
+  {
+    "Name": "Hania",
+    "Email": "Hello@gmail.com",
+    "Password": "hej123",
+    "AvatarPath": "Images/GrayLiara.jpg",
+    "RememberMe": false
+  },
+  {
+    "Name": "Sarivian",
+    "Email": "sarivian@gmail.com",
+    "Password": "TaliIsMyGirl",
+    "AvatarPath": "Images/Liara.jpg",
+    "RememberMe": false
+  }
+]
