@@ -28,27 +28,25 @@ namespace FrameIt.Frames.ManageFramesPhotoShows
             foreach (var show in Shows)
             {
                 show.IsSelectable = true;
-                show.IsSelected = frame.PhotoShows.Contains(show);
+
+                show.IsSelected = frame.PhotoShowIds.Contains(show.Id);
             }
 
             DataContext = this;
         }
+
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
             var frame = FramesManager.LoadFrames()
                                      .First(f => f.Id == _frameId);
 
-            frame.PhotoShows.Clear();
-
+            frame.PhotoShowIds.Clear();
             foreach (var show in Shows.Where(s => s.IsSelected))
             {
-                frame.PhotoShows.Add(show);
+                frame.PhotoShowIds.Add(show.Id);
             }
-
             FramesManager.SaveFrame(frame);
-
-            NavigationManager.GoBack();
         }
     }
 }

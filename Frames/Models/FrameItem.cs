@@ -21,8 +21,8 @@ public partial class FrameItem : ObservableObject
 
     public FrameConfig Config { get; set; } = new();
 
-    public ObservableCollection<PhotoShow> PhotoShows { get; set; }
-    = new ObservableCollection<PhotoShow>();
+    public ObservableCollection<Guid> PhotoShowIds { get; set; }
+    = new ObservableCollection<Guid>();
 
     // =====================
     // IMAGE PATH (PERSISTED)

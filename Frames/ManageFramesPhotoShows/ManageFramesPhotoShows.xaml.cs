@@ -12,6 +12,7 @@ namespace FrameIt.Frames.ManageFramesPhotoShows
     {
         private readonly int _frameId;
 
+
         public ObservableCollection<PhotoShow> Shows { get; }
         public string HeaderText { get; }
 
@@ -21,12 +22,18 @@ namespace FrameIt.Frames.ManageFramesPhotoShows
 
             _frameId = frameId;
 
+            Loaded += OnLoaded;
+
             var frame = FramesManager.LoadFrames()
                                      .First(f => f.Id == frameId);
 
             HeaderText = $"{frame.Config.Name} – Manage PhotoShows";
 
-            Shows = frame.PhotoShows;
+            Shows = new ObservableCollection<PhotoShow>(
+                frame.PhotoShowIds
+                    .Select(id => ShowsManager.Instance.Shows.FirstOrDefault(s => s.Id == id))
+                    .Where(s => s != null)
+);
 
             DataContext = this;
         }
@@ -44,5 +51,27 @@ namespace FrameIt.Frames.ManageFramesPhotoShows
         {
             // TODO: delete mode later
         }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            RefreshShows();
+        }
+
+        private void RefreshShows()
+        {
+            var frame = FramesManager.LoadFrames()
+                                     .First(f => f.Id == _frameId);
+
+            Shows.Clear();
+
+            foreach (var show in frame.PhotoShowIds
+                .Select(id => ShowsManager.Instance.Shows.FirstOrDefault(s => s.Id == id))
+                .Where(s => s != null))
+            {
+                Shows.Add(show);
+            }
+        }
+
+
     }
 }

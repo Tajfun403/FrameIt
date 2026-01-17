@@ -41,39 +41,40 @@
                         HorizontalAlignment="Right"
                         Margin="0,0,20,0">
 
-                <Button Content="Add photo shows"
-                        Width="180"
+                <Button Content="Add / Delete"
+                        Width="120"
                         Margin="0,0,20,0"
                         Click="AddPhotoShowsClick"/>
-
-                <Button Content="Delete photo shows"
-                        Width="180"
-                        Click="DeletePhotoShowsClick"/>
             </StackPanel>
         </Grid>
 
         <!-- ================= SHOW LIST ================= -->
         <ItemsControl Grid.Row="1"
-                      ItemsSource="{Binding Shows}">
+              ItemsSource="{Binding Shows}"
+              HorizontalAlignment="Left">
+
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel/>
+                    <StackPanel HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="10">
+                    <Grid Margin="10"
+                  HorizontalAlignment="Left">
                         <baseui:PhotoControl
-                            DisplayName="{Binding DisplayName}"
-                            Image="{Binding ImageBitmap}"
-                            ShouldShowName="True"
-                            IsSelectable="False"
-                            IsHitTestVisible="False"/>
+                    DisplayName="{Binding DisplayName}"
+                    Image="{Binding ImageBitmap}"
+                    ShouldShowName="True"
+                    IsSelectable="False"
+                    IsHitTestVisible="False"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+
         </ItemsControl>
+
 
     </Grid>
 </Page>

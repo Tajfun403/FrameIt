@@ -13,6 +13,8 @@ namespace FrameIt.Shows;
 public class PhotoShow : ObservableObject, ISelectable
 {
     public ObservableCollection<ShowImage> PhotosList { get; } = [];
+    public Guid Id { get; set; } = Guid.NewGuid();
+
 
     public PhotoShow()
     {
