@@ -1,49 +1,48 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Media.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
-using System;
-using System.Text.Json.Serialization;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace FrameIt.Account;
 
-public class UserAccount : INotifyPropertyChanged
+class UserAccount : INotifyPropertyChanged
 {
-
+    /// <summary>
+    /// User's name
+    /// </summary>
     public required string Name
     {
-        get;
-        set
+        get; set
         {
-            field = value; 
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    public required string Email
+    /// <summary>
+    /// User's email
+    /// </summary>
+    public string Email
     {
-        get;
-        set
+        get; set
         {
             field = value;
             OnPropertyChanged();
         }
     }
 
-    public required string Password
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    public string Password { get; set; }
 
+    /// <summary>
+    /// Path to the user's profile image. <br/>
+    /// We assume that it is never uploaded anywhere and stays local.
+    /// </summary>
     public string AvatarPath
     {
-        get;
-        set
+        get; set
         {
             field = value;
             OnPropertyChanged();
@@ -51,36 +50,33 @@ public class UserAccount : INotifyPropertyChanged
         }
     } = "Images/GrayLiara.jpg";
 
-    public bool RememberMe
-    {
-        get;
-        set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    [JsonIgnore]
-    public BitmapImage? AvatarImage
+    public BitmapImage AvatarImage
     {
         get
         {
-            if (string.IsNullOrEmpty(AvatarPath) || !File.Exists(AvatarPath)) return null;
+            if (string.IsNullOrEmpty(AvatarPath))
+                return null;
+            if (!File.Exists(AvatarPath))
+                throw new FileNotFoundException($"Avatar of path {AvatarPath} not found!");
+            string fullPath = new FileInfo(AvatarPath).FullName;
             try
             {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(Path.GetFullPath(AvatarPath), UriKind.Absolute);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                return bitmap;
+                return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
             }
-            catch { return null; }
+            catch
+            {
+                return null;
+            }
         }
     }
 
+    public bool RememberMe { get; set; }
+
     public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string p = "")
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
+
+    private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
 }
