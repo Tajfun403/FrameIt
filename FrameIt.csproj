@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Frames\Models\ShowMock.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Data\FramePairingCodes.json" />
     <None Remove="Data\Frames.json" />
     <None Remove="Images\Back.png" />

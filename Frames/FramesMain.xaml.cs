@@ -63,7 +63,7 @@ namespace FrameIt.Frames
             if (sender is Button { DataContext: FrameItem frame })
             {
                 NavigationManager.Navigate(
-                    new AssignPhotoShowsToFrame(frame.Id),
+                    new ManageFramesPhotoShows.ManageFramesPhotoShows(frame.Id),
                     CanMoveBack: true,
                     ShowNavigationPanel: true
                 );
