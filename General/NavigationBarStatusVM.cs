@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace FrameIt.General;
 
@@ -26,4 +27,16 @@ class NavigationBarStatusVM : ObservableObject
             OnPropertyChanged();
         }
     }
+
+    
+    // added account visibility - Julia
+    public Visibility IsAccountBarVisible
+    {
+        get;
+        set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = Visibility.Visible;
 }
