@@ -70,8 +70,10 @@
                 Click="ConfirmDeleteFrames"/>
         </Grid>
 
-
-        <!-- FRAME LIST -->
+        <ScrollViewer Grid.Row="2"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
+            <!-- FRAME LIST -->
         <ItemsControl Grid.Row="2"
               ItemsSource="{Binding Frames}">
             <ItemsControl.ItemsPanel>
@@ -113,7 +115,6 @@
                             <Button Content="Manage frame photo shows"
                         Width="220"
                         Margin="0,0,12,0"
-                        Click="ManageFramePhotoShowsClick"
                         Style="{StaticResource OutlineWhiteButton}"/>
 
                             <Button Content="Manage frame"
@@ -124,12 +125,11 @@
                         Click="ManageFrameClick"/>
 
                             <!-- TODO: Upload photo -->
-                            <Button Content="Upload photo"
+                            <Button Content="Not working button"
                         Width="180"
-                        Visibility="Collapsed"
                         Margin="0,0,12,0"
                         Style="{StaticResource OutlineWhiteButton}"/>   
-
+                        
                         </StackPanel>
 
                     </Grid>
@@ -139,7 +139,7 @@
 
 
         </ItemsControl>
-
+            </ScrollViewer>
 
     </Grid>
 </Page>
