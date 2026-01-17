@@ -58,6 +58,19 @@ namespace FrameIt.Frames
             }
         }
 
+        private void ManageFramePhotoShowsClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: FrameItem frame })
+            {
+                NavigationManager.Navigate(
+                    new ManageFramesPhotoShows.ManageFramesPhotoShows(frame.Id),
+                    CanMoveBack: true,
+                    ShowNavigationPanel: true
+                );
+            }
+        }
+
+
         private void ReloadFrames()
         {
             Frames.Clear();
@@ -68,23 +81,26 @@ namespace FrameIt.Frames
         // =====================
         // DELETE MODE
         // =====================
+
+        private bool _isInDeleteMode;
         public bool IsInDeleteMode
         {
-            get;
+            get => _isInDeleteMode;
             set
             {
-                field = value;
+                _isInDeleteMode = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DeleteButtonText));
             }
         }
 
+        private bool _itemsSelectable;
         public bool ItemsSelectable
         {
-            get;
+            get => _itemsSelectable;
             set
             {
-                field = value;
+                _itemsSelectable = value;
                 OnPropertyChanged();
             }
         }
@@ -123,9 +139,6 @@ namespace FrameIt.Frames
             foreach (var frame in selectedFrames)
                 Frames.Remove(frame);
 
-            var count = selectedFrames.Count;
-            PopUpManager.ShowSuccess($"{count} {(count == 1 ? "frame" : "frames")} deleted.");
-
             ExitDeleteMode();
         }
 
@@ -137,5 +150,12 @@ namespace FrameIt.Frames
 
         protected void OnPropertyChanged([CallerMemberName] string name = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }
