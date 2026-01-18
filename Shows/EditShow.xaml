@@ -89,6 +89,7 @@
                 Select items that you wish to remove. This action will be irreversible.
             </Label>
             <Button Name="ReallyDeleteButton" 
+                Style="{StaticResource RedBackgroundButton}"
             Content="Delete selected photos"
             Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
             Grid.Column="1" 
