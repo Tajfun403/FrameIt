@@ -119,8 +119,16 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
         SetupFilters();
     }
 
-    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    private async void DeleteButton_Click(object sender, RoutedEventArgs e)
     {
+        if (!await PopUpManager.ShowYesNoDialog(
+            "Delete Image",
+            "Are you sure you want to delete this image from the show?",
+            isPositive: false))
+        {
+            return;
+        }
+
         NavigationManager.GoBack();
         var abovePage = NavigationManager.NavigationStack.Peek().Page as EditShow;
         if (abovePage == null)

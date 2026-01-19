@@ -293,9 +293,18 @@ public partial class EditShow : Page, INotifyPropertyChanged
         // TODO Call this when lost focus!
     }
 
-    private void DoDeletePhotos()
+    private async void DoDeletePhotos()
     {
         var imgsToDel = ShowContext.PhotosList.Where(x => x.IsSelected).ToList();
+        
+        if (!await PopUpManager.ShowYesNoDialog(
+            "Delete Images",
+            $"Are you sure you want to delete {imgsToDel.Count} {(imgsToDel.Count == 1 ? "photo" : "photos")}?",
+            isPositive: false))
+        {
+            return;
+        }
+
         foreach (ShowImage img in imgsToDel)
         {
             ShowContext.PhotosList.Remove(img);
@@ -304,7 +313,6 @@ public partial class EditShow : Page, INotifyPropertyChanged
         var count = imgsToDel.Count;
         PopUpManager.ShowSuccess($"{count} {(count == 1 ? "photo" : "photos")} deleted.");
         OnPropertyChanged(nameof(PhotosCountString));
-        // IsInDeleteMode = false;
     }
 
     private void SelectionChanged()
@@ -344,8 +352,16 @@ public partial class EditShow : Page, INotifyPropertyChanged
 
     #endregion DeletingItems
 
-    private void DeleteShow_Click(object sender, RoutedEventArgs e)
+    private async void DeleteShow_Click(object sender, RoutedEventArgs e)
     {
+        if (!await PopUpManager.ShowYesNoDialog(
+            "Delete Show",
+            $"Are you sure you want to delete the show \"{ShowContext.DisplayName}\"?",
+            isPositive: false))
+        {
+            return;
+        }
+
         NavigationManager.GoBack();
         ShowsManager.Instance.Shows.Remove(ShowContext);
         PopUpManager.ShowSuccess($"Show \"{ShowContext.DisplayName}\" deleted.");

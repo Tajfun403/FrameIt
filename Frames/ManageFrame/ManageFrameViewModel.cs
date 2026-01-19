@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.General;
 using FrameIt.Models;
 using FrameIt.Services;
 using System;
@@ -133,8 +134,16 @@ public class ManageFrameViewModel : INotifyPropertyChanged
         FramesManager.SaveFrame(_frame);
     }
 
-    private void DeleteFrame()
+    private async void DeleteFrame()
     {
+        if (!await PopUpManager.ShowYesNoDialog(
+            "Delete Frame",
+            $"Are you sure you want to delete the frame \"{FrameName}\"?",
+            isPositive: false))
+        {
+            return;
+        }
+
         FramesManager.DeleteFrame(_frame.Id);
     }
 

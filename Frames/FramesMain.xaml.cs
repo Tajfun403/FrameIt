@@ -114,11 +114,19 @@ namespace FrameIt.Frames
             // TODO: wyczyścić zaznaczenia
         }
 
-        private void ConfirmDeleteFrames(object sender, RoutedEventArgs e)
+        private async void ConfirmDeleteFrames(object sender, RoutedEventArgs e)
         {
             var selectedFrames = Frames
                 .Where(f => f.IsSelected)
                 .ToList();
+
+            if (!await PopUpManager.ShowYesNoDialog(
+                "Delete Frames",
+                $"Are you sure you want to delete {selectedFrames.Count} {(selectedFrames.Count == 1 ? "frame" : "frames")}?",
+                isPositive: false))
+            {
+                return;
+            }
 
             foreach (var frame in selectedFrames)
                 Frames.Remove(frame);

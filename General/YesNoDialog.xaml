@@ -67,7 +67,7 @@
                         Style="{StaticResource RedBackgroundButton}"
                         Background="DarkGreen"
                         Click="YesButton_Click"
-                        Visibility="{Binding IsYesNegative, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}"
+                        Visibility="{Binding IsYesPositive, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}"
                         />
                 </Grid>
 
