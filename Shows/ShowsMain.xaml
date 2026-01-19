@@ -50,7 +50,7 @@
                 Select items that you wish to remove. This action will be irreversible.
             </Label>
             <Button 
-                Style="{StaticResource RedBackgroundButton}"
+                Style="{StaticResource DeleteButton}"
                 Name="ReallyDeleteButton" 
                     Content="Delete selected shows"
                     Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"

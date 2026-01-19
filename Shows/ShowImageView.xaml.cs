@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using FrameIt.General;
 using FrameIt.Shows.Filters;
 using System;
 using System.Collections.Generic;
@@ -116,5 +117,18 @@ public partial class ShowImageView : Page, INotifyPropertyChanged
             ImageContext.FiltersStack.Add(new RotateFilter(CurrRot));
         }
         SetupFilters();
+    }
+
+    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationManager.GoBack();
+        var abovePage = NavigationManager.NavigationStack.Peek().Page as EditShow;
+        if (abovePage == null)
+        {
+            PopUpManager.ShowError("Could not remove image from the show.");
+            return;
+        }
+        abovePage!.ShowContext.PhotosList.Remove(ImageContext);
+        PopUpManager.ShowSuccess("Image removed from the show.");
     }
 }

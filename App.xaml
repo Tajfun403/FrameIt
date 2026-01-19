@@ -36,9 +36,6 @@
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
-            <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                <Setter Property="Background" Value="Red"/>
-            </Style>
 
             <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                 <Setter Property="Background" Value="#3F51B5"/>
@@ -126,6 +123,46 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="DeleteButton"
+       TargetType="Button"
+       BasedOn="{StaticResource RedBackgroundButton}">
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="6">
+
+                                <Grid Margin="16,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Bin icon -->
+                                    <materialDesign:PackIcon
+                            Kind="Delete"
+                            Width="16"
+                            Height="16"
+                            VerticalAlignment="Center"
+                            Foreground="{TemplateBinding Foreground}"
+                            Margin="0,0,8,0"/>
+
+                                    <!-- Button content -->
+                                    <ContentPresenter
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
+                                </Grid>
+
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
 
             <!-- Dark field container -->
             <Style x:Key="DarkFieldContainer"

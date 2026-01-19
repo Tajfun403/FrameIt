@@ -42,14 +42,25 @@
                 <Label Content="Image Controls"
                    Style="{StaticResource SemiHeaderStyle}"
                        HorizontalAlignment="Center"/>
-                <Button Content="Rotate"
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 10 0 10">
+                        <Button Style="{StaticResource DeleteButton}"
+                        HorizontalAlignment="Center"
+                    Content="Delete image"
+                        Name="DeleteButton"
+                        Width="150"
+                        Height="30"
+                        Margin="10"
+                                Click="DeleteButton_Click"
+                        />
+                        <Button Content="Rotate"
                         Name="RotateButton"
                         Width="150"
                         Height="30"
-                        Margin="10 30 10 30"
+                        Margin="10"
                         Click="RotateButton_Click"
                         />
-                <Label
+                    </StackPanel>
+                    <Label
                    Style="{StaticResource BaseLabelStyle}"
                        HorizontalAlignment="Center">
                     Add image description:

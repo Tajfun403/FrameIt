@@ -27,7 +27,7 @@ internal static class Startup
         else
         {
             NavigationManager.StatusVM.ShowNavigation = false;
-            NavigationManager.Navigate(new LoginHome(), false, true);
+            NavigationManager.Navigate(new LoginHome(), false, false);
         }
     }
 }

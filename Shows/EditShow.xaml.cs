@@ -343,4 +343,11 @@ public partial class EditShow : Page, INotifyPropertyChanged
     //public RelayCommand CommandDeletePhotos => new(DoDeletePhotos, () => CanDeleteSelectedPhotos);
 
     #endregion DeletingItems
+
+    private void DeleteShow_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationManager.GoBack();
+        ShowsManager.Instance.Shows.Remove(ShowContext);
+        PopUpManager.ShowSuccess($"Show \"{ShowContext.DisplayName}\" deleted.");
+    }
 }

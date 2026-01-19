@@ -73,6 +73,15 @@
                         Grid.Column="1" 
                         Margin="20 0 20 0"
                         Width="150"/>
+                <Button Name="DeleteShow" 
+                        Style="{StaticResource DeleteButton}"
+                        Content="Delete show" 
+                        Grid.Column="1" 
+                        Margin="20 0 20 0"
+                        Width="150"
+                        Click="DeleteShow_Click"
+                        
+                        />
             </StackPanel>
         </Grid>
 
@@ -89,7 +98,7 @@
                 Select items that you wish to remove. This action will be irreversible.
             </Label>
             <Button Name="ReallyDeleteButton" 
-                Style="{StaticResource RedBackgroundButton}"
+                Style="{StaticResource DeleteButton}"
             Content="Delete selected photos"
             Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
             Grid.Column="1" 
@@ -103,6 +112,9 @@
         <ItemsControl Grid.Row="2" 
               Name="PhotosListControl" 
               ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+    ScrollViewer.IsDeferredScrollingEnabled="True"
               Height="Auto">
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
