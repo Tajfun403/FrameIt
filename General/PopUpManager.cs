@@ -31,5 +31,20 @@ internal class PopUpManager
         mainUI.ErrorSnackbar.MessageQueue?.Enqueue(message);
     }
 
+    public static void ReturnDialogResult(bool result)
+    {
+        DialogHost.CloseDialogCommand.Execute(result, null);
+    }
 
+    public static async Task<bool> ShowYesNoDialog(string title, string mainText, bool isPositive = false)
+    {
+        YesNoDialog dialog = new()
+        {
+            Title = title,
+            MainText = mainText,
+            IsYesPositive = isPositive
+        };
+        var result = await DialogHost.Show(dialog, "RootDialog");
+        return result is true;
+    }
 }

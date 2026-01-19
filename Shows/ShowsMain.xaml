@@ -49,7 +49,9 @@
             <Label Style="{StaticResource BaseLabelStyle}" VerticalAlignment="Center" Grid.Column="0" Margin="20 0 20 0">
                 Select items that you wish to remove. This action will be irreversible.
             </Label>
-            <Button Name="ReallyDeleteButton" 
+            <Button 
+                Style="{StaticResource DeleteButton}"
+                Name="ReallyDeleteButton" 
                     Content="Delete selected shows"
                     Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
                     Grid.Column="1" 
