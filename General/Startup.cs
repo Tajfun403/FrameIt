@@ -1,8 +1,13 @@
-﻿using FrameIt.UI;
-using FrameIt.Account;
-using System;
-using System.Linq;
+﻿using FrameIt.Account;
 using FrameIt.Shows;
+using FrameIt.UI;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace FrameIt.General;
 
@@ -10,6 +15,15 @@ internal static class Startup
 {
     internal static void NavigateToStartPage()
     {
+        var window = Application.Current.MainWindow;
+        window.Loaded += (_, _) =>
+        {
+            IntPtr windowHandle =
+            new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            bool result = UseImmersiveDarkMode(windowHandle, true);
+            Debug.WriteLine($"Managed to toggle dark mode: {result}");
+        };
+
         var args = Environment.GetCommandLineArgs();
         ShowsManager.Instance.GenerateDefaultShows();
 
@@ -30,4 +44,34 @@ internal static class Startup
             NavigationManager.Navigate(new LoginHome(), false, false);
         }
     }
+
+    // https://stackoverflow.com/a/62811758
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+    private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+    private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+
+    private static bool UseImmersiveDarkMode(IntPtr handle, bool enabled)
+    {
+        if (IsWindows10OrGreater(17763))
+        {
+            var attribute = DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
+            if (IsWindows10OrGreater(18985))
+            {
+                attribute = DWMWA_USE_IMMERSIVE_DARK_MODE;
+            }
+
+            int useImmersiveDarkMode = enabled ? 1 : 0;
+            return DwmSetWindowAttribute(handle, (int)attribute, ref useImmersiveDarkMode, sizeof(int)) == 0;
+        }
+
+        return false;
+    }
+
+    private static bool IsWindows10OrGreater(int build = -1)
+    {
+        return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= build;
+    }
+
 }
