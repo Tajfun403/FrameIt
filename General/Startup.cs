@@ -16,6 +16,8 @@ internal static class Startup
     internal static void NavigateToStartPage()
     {
         var window = Application.Current.MainWindow;
+        // need to wait before the windows shows up
+        // as it doesn't have a hwid before
         window.Loaded += (_, _) =>
         {
             IntPtr windowHandle =
