@@ -72,6 +72,7 @@
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
+                         Text="{Binding Description, Mode=TwoWay}"
                          />
 
             </StackPanel>
