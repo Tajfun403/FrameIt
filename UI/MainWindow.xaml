@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FrameIt"
         mc:Ignorable="d"
-        Title="FrameIt" Height="600" Width="1000"
+        Title="FrameIt" Height="720" Width="1200"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Frame Source="MainUI.xaml" Name="MainFrame" NavigationUIVisibility="Hidden" JournalOwnership="OwnsJournal"/>
