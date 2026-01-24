@@ -54,7 +54,7 @@ public partial class RegisterPage : Page
             Name = RegName.Text,
             Email = RegEmail.Text,
             Password = RegPass.Password,
-            AvatarPath = "Images/GrayLiara.jpg", // Default avatar
+            AvatarPath = "Images/UserAvatarDefault.png", // Default avatar
             RememberMe = false
         };
 

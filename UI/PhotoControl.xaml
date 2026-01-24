@@ -24,7 +24,7 @@
                     <ImageBrush Stretch="Fill" ImageSource="{Binding Image, 
                         UpdateSourceTrigger=PropertyChanged, 
                         RelativeSource={RelativeSource AncestorType=UserControl},
-                        FallbackValue='Images/Liara.jpg'}"/>
+                        FallbackValue='Images/PlaceholderLogo.png'}"/>
                 </Border.Background>
             </Border>
             <Border Background="#333" CornerRadius="1 1 1 1" Margin="7 8 8 8"

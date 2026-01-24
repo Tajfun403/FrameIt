@@ -49,7 +49,7 @@ public class UserAccount : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(AvatarImage));
         }
-    } = "Images/GrayLiara.jpg";
+    } = "Images/UserAvatarDefault.png";
 
     public bool RememberMe
     {

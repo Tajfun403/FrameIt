@@ -31,7 +31,7 @@ public class ShowImage : ObservableObject, ISelectable
         }
     }
 
-    public static BitmapImage PlaceholderImage = new BitmapImage(new Uri("Images/GrayLiara.jpg", uriKind: UriKind.RelativeOrAbsolute));
+    public static BitmapImage PlaceholderImage = new BitmapImage(new Uri("Images/PlaceholderLogo.png", uriKind: UriKind.RelativeOrAbsolute));
 
     public async Task RefreshImages()
     {

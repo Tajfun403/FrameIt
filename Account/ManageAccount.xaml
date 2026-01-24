@@ -75,7 +75,7 @@
             <Grid Width="150" Height="150" Margin="0,0,0,10">
                 <Ellipse x:Name="AvatarCircle" Stroke="{DynamicResource PrimaryHueMidBrush}" StrokeThickness="2">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding CurrUser.AvatarImage, FallbackValue='Images/GrayLiara.jpg'}" Stretch="UniformToFill"/>
+                        <ImageBrush ImageSource="{Binding CurrUser.AvatarImage, FallbackValue='Images/UserAvatarDefault.png'}" Stretch="UniformToFill"/>
                     </Ellipse.Fill>
                 </Ellipse>
 
