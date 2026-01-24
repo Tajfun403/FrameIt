@@ -31,7 +31,6 @@ namespace FrameIt.Frames.AddFrame
             if (string.IsNullOrEmpty(code))
             {
                 PopUpManager.ShowError("Please enter pairing code");
-                // MessageBox.Show("Please enter pairing code");
                 return;
             }
 
@@ -50,12 +49,10 @@ namespace FrameIt.Frames.AddFrame
 
                 case PairingCodeValidationResult.NotFound:
                     PopUpManager.ShowError("Invalid pairing code");
-                    // MessageBox.Show("Invalid pairing code");
                     break;
 
                 case PairingCodeValidationResult.AlreadyUsed:
                     PopUpManager.ShowError("This pairing code has already been used");
-                    // MessageBox.Show("This pairing code has already been used");
                     break;
             }
         }

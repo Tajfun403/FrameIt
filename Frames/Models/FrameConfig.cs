@@ -1,4 +1,5 @@
 ﻿using System;
+using FrameIt;
 
 namespace FrameIt.Models
 {
@@ -13,31 +14,7 @@ namespace FrameIt.Models
         public DateTime? TurnOffTime { get; set; }
         public DateTime? TurnOnTime { get; set; }
 
+        // Use the single WidgetsConfig implementation that implements INotifyPropertyChanged
         public WidgetsConfig Widgets { get; set; } = new();
-    }
-
-    public class WidgetsConfig
-    {
-        public TimeWidget Time { get; set; } = new();
-        public DateWidget Date { get; set; } = new();
-        public WeatherWidget Weather { get; set; } = new();
-    }
-
-    public class TimeWidget
-    {
-        public bool IsEnabled { get; set; }
-        public string TimeZone { get; set; } = "Europe/Warsaw";
-    }
-
-    public class DateWidget
-    {
-        public bool IsEnabled { get; set; }
-        public DateTime Date { get; set; } = DateTime.Today;
-    }
-
-    public class WeatherWidget
-    {
-        public bool IsEnabled { get; set; }
-        public string Location { get; set; } = "Kraków";
     }
 }

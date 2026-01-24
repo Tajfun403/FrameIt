@@ -23,12 +23,6 @@ namespace FrameIt.Frames.AddFrame
             if (string.IsNullOrWhiteSpace(name))
             {
                 PopUpManager.ShowError("Please enter a valid frame name.");
-                //MessageBox.Show(
-                //    "Please enter a valid frame name.",
-                //    "Invalid Name",
-                //    MessageBoxButton.OK,
-                //    MessageBoxImage.Warning);
-                //
                 return;
             }
 

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using FrameIt;
 
 public class ManageFrameViewModel : INotifyPropertyChanged
 {
@@ -21,6 +22,8 @@ public class ManageFrameViewModel : INotifyPropertyChanged
         _frame = frame;
 
         _frameName = frame.Config.Name;
+
+        _frame.Config.Widgets.PropertyChanged += (_, __) => Save();
 
         TimeZones = TimeZoneInfo.GetSystemTimeZones()
                                 .Select(tz => tz.Id)

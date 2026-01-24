@@ -58,6 +58,19 @@ namespace FrameIt.Frames
             }
         }
 
+        private void ManageFramePhotoShowsClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: FrameItem frame })
+            {
+                NavigationManager.Navigate(
+                    new ManageFramesPhotoShows.ManageFramesPhotoShows(frame.Id),
+                    CanMoveBack: true,
+                    ShowNavigationPanel: true
+                );
+            }
+        }
+
+
         private void ReloadFrames()
         {
             Frames.Clear();
@@ -68,29 +81,45 @@ namespace FrameIt.Frames
         // =====================
         // DELETE MODE
         // =====================
+
+        private bool _isInDeleteMode;
         public bool IsInDeleteMode
         {
-            get;
+            get
+            {
+                return _isInDeleteMode;
+            }
             set
             {
-                field = value;
+                if (_isInDeleteMode == value) return;
+                _isInDeleteMode = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DeleteButtonText));
             }
         }
 
+        private bool _itemsSelectable;
         public bool ItemsSelectable
         {
-            get;
+            get
+            {
+                return _itemsSelectable;
+            }
             set
             {
-                field = value;
+                if (_itemsSelectable == value) return;
+                _itemsSelectable = value;
                 OnPropertyChanged();
             }
         }
 
-        public string DeleteButtonText =>
-            IsInDeleteMode ? "Cancel Delete" : "Delete Frame";
+        public string DeleteButtonText
+        {
+            get
+            {
+                return IsInDeleteMode ? "Cancel Delete" : "Delete Frame";
+            }
+        }
 
         private void DeleteFrameClick(object sender, RoutedEventArgs e)
         {
@@ -111,7 +140,9 @@ namespace FrameIt.Frames
             IsInDeleteMode = false;
             ItemsSelectable = false;
 
-            // TODO: wyczyścić zaznaczenia
+            // clear selections
+            foreach (var f in Frames)
+                f.IsSelected = false;
         }
 
         private async void ConfirmDeleteFrames(object sender, RoutedEventArgs e)
@@ -131,9 +162,6 @@ namespace FrameIt.Frames
             foreach (var frame in selectedFrames)
                 Frames.Remove(frame);
 
-            var count = selectedFrames.Count;
-            PopUpManager.ShowSuccess($"{count} {(count == 1 ? "frame" : "frames")} deleted.");
-
             ExitDeleteMode();
         }
 
@@ -143,7 +171,11 @@ namespace FrameIt.Frames
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name ?? string.Empty));
+        }
+
+
     }
 }

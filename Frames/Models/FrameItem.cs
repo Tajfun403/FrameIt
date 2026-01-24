@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FrameIt.General;
+using FrameIt.Shows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using FrameIt.Shows;
 
 namespace FrameIt.Models;
 
@@ -18,13 +21,19 @@ public partial class FrameItem : ObservableObject
 
     public FrameConfig Config { get; set; } = new();
 
+    public ObservableCollection<Guid> PhotoShowIds { get; set; }
+    = new ObservableCollection<Guid>();
+
     // =====================
     // IMAGE PATH (PERSISTED)
     // =====================
     private string _imagePath;
     public string ImagePath
     {
-        get => _imagePath;
+        get
+        {
+            return _imagePath;
+        }
         set
         {
             SetProperty(ref _imagePath, value);
@@ -62,7 +71,10 @@ public partial class FrameItem : ObservableObject
     private bool _isSelected;
     public bool IsSelected
     {
-        get => _isSelected;
+        get
+        {
+            return _isSelected;
+        }
         set
         {
             if (_isSelected != value)
