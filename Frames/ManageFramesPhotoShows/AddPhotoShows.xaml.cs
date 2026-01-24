@@ -47,6 +47,7 @@ namespace FrameIt.Frames.ManageFramesPhotoShows
                 frame.PhotoShowIds.Add(show.Id);
             }
             FramesManager.SaveFrame(frame);
+            PopUpManager.ShowSuccess("Photo shows updated successfully.");
         }
     }
 }
