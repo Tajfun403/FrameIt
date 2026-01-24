@@ -16,12 +16,12 @@ class ShowsManager
         PhotoShow defaultShow = new();
         defaultShow.PhotosList.Add(new ShowImage()
         {
-            ImagePath = "Images/Liara.jpg",
+            ImagePath = "Images/PlaceholderLogo.png",
             DisplayName = "Sample Photo 1"
         });
         defaultShow.PhotosList.Add(new ShowImage()
         {
-            ImagePath = "Images/GrayLiara.jpg",
+            ImagePath = "Images/PlaceholderLogo.png",
             DisplayName = "Sample Photo 2"
         });
         defaultShow.DisplayName = "Sample PhotoShow";

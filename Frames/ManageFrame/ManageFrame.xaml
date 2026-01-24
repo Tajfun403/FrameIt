@@ -269,7 +269,7 @@
 
                     </StackPanel>
                     <Button Content="Delete frame"
-                        Style="{StaticResource RedBackgroundButton}"
+                        Style="{StaticResource DeleteButton}"
                         HorizontalAlignment="Right"
                         Click="DeleteFrame_Click"
                         Command="{Binding DeleteFrameCommand}"/>    

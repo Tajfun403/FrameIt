@@ -3,21 +3,21 @@
     "Name": "Julka",
     "Email": "julia@student.com",
     "Password": "niewiem1234",
-    "AvatarPath": "Images/Liara.jpg",
+    "AvatarPath": "Images/UserAvatarDefault.png",
     "RememberMe": false
   },
   {
     "Name": "Hania",
     "Email": "Hello@gmail.com",
     "Password": "hej123",
-    "AvatarPath": "Images/GrayLiara.jpg",
+    "AvatarPath": "Images/UserAvatarDefault.png",
     "RememberMe": false
   },
   {
     "Name": "Sarivian",
     "Email": "sarivian@gmail.com",
     "Password": "TaliIsMyGirl",
-    "AvatarPath": "Images/Liara.jpg",
+    "AvatarPath": "Images/UserAvatarDefault.png",
     "RememberMe": false
   }
 ]

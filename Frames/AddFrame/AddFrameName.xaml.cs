@@ -30,7 +30,7 @@ namespace FrameIt.Frames.AddFrame
             {
                 Id = FramesManager.GenerateNextId(),
                 PairingCode = _pairingCode,
-                ImagePath = "Images/Liara.jpg",
+                ImagePath = "Images/PlaceholderLogo.jpg",
                 Config = new FrameConfig
                 {
                     Name = name,
