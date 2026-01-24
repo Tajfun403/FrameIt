@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="FrameIt" Height="720" Width="1200"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Images/FrameItLogoPng.png"   
+        >
     <Frame Source="MainUI.xaml" Name="MainFrame" NavigationUIVisibility="Hidden" JournalOwnership="OwnsJournal"/>
 </Window>
