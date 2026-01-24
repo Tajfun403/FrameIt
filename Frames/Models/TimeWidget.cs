@@ -1,29 +1,38 @@
-﻿using FrameIt.Models;
-
-public class TimeWidget : WidgetBase
+﻿namespace FrameIt.Models
 {
-    public bool IsEnabled
+    public class TimeWidget : WidgetBase
     {
-        get => field;
-        set
+        private bool _isEnabled;
+        public bool IsEnabled
         {
-            if (field != value)
+            get
             {
-                field = value;
-                OnPropertyChanged();
+                return _isEnabled;
+            }
+            set
+            {
+                if (_isEnabled != value)
+                {
+                    _isEnabled = value;
+                    OnPropertyChanged();
+                }
             }
         }
-    }
 
-    public string TimeZone
-    {
-        get => field;
-        set
+        private string _timeZone = string.Empty;
+        public string TimeZone
         {
-            if (field != value)
+            get
             {
-                field = value;
-                OnPropertyChanged();
+                return _timeZone;
+            }
+            set
+            {
+                if (_timeZone != value)
+                {
+                    _timeZone = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }

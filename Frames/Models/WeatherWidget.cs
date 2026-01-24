@@ -1,31 +1,40 @@
-﻿using FrameIt.Models;
+﻿using System;
 
-public class WeatherWidget : WidgetBase
+namespace FrameIt.Models
 {
-    private bool _isEnabled;
-    public bool IsEnabled
+    public class WeatherWidget : WidgetBase
     {
-        get => _isEnabled;
-        set
+        private bool _isEnabled;
+        public bool IsEnabled
         {
-            if (_isEnabled != value)
+            get
             {
-                _isEnabled = value;
-                OnPropertyChanged();
+                return _isEnabled;
+            }
+            set
+            {
+                if (_isEnabled != value)
+                {
+                    _isEnabled = value;
+                    OnPropertyChanged();
+                }
             }
         }
-    }
 
-    private string _location;
-    public string Location
-    {
-        get => _location;
-        set
+        private string _location = string.Empty;
+        public string Location
         {
-            if (_location != value)
+            get
             {
-                _location = value;
-                OnPropertyChanged();
+                return _location;
+            }
+            set
+            {
+                if (_location != value)
+                {
+                    _location = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }

@@ -1,32 +1,40 @@
-﻿using FrameIt.Models;
-using System;
+﻿using System;
 
-public class DateWidget : WidgetBase
+namespace FrameIt.Models
 {
-    private bool _isEnabled;
-    public bool IsEnabled
+    public class DateWidget : WidgetBase
     {
-        get => _isEnabled;
-        set
+        private bool _isEnabled;
+        public bool IsEnabled
         {
-            if (_isEnabled != value)
+            get
             {
-                _isEnabled = value;
-                OnPropertyChanged();
+                return _isEnabled;
+            }
+            set
+            {
+                if (_isEnabled != value)
+                {
+                    _isEnabled = value;
+                    OnPropertyChanged();
+                }
             }
         }
-    }
 
-    private DateTime? _date;
-    public DateTime? Date
-    {
-        get => _date;
-        set
+        private DateTime? _date;
+        public DateTime? Date
         {
-            if (_date != value)
+            get
             {
-                _date = value;
-                OnPropertyChanged();
+                return _date;
+            }
+            set
+            {
+                if (_date != value)
+                {
+                    _date = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }

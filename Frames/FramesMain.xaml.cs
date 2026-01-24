@@ -85,7 +85,10 @@ namespace FrameIt.Frames
         private bool _isInDeleteMode;
         public bool IsInDeleteMode
         {
-            get => _isInDeleteMode;
+            get
+            {
+                return _isInDeleteMode;
+            }
             set
             {
                 if (_isInDeleteMode == value) return;
@@ -98,7 +101,10 @@ namespace FrameIt.Frames
         private bool _itemsSelectable;
         public bool ItemsSelectable
         {
-            get => _itemsSelectable;
+            get
+            {
+                return _itemsSelectable;
+            }
             set
             {
                 if (_itemsSelectable == value) return;
@@ -107,8 +113,13 @@ namespace FrameIt.Frames
             }
         }
 
-        public string DeleteButtonText =>
-            IsInDeleteMode ? "Cancel Delete" : "Delete Frame";
+        public string DeleteButtonText
+        {
+            get
+            {
+                return IsInDeleteMode ? "Cancel Delete" : "Delete Frame";
+            }
+        }
 
         private void DeleteFrameClick(object sender, RoutedEventArgs e)
         {
@@ -152,8 +163,10 @@ namespace FrameIt.Frames
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name ?? string.Empty));
+        }
 
 
     }

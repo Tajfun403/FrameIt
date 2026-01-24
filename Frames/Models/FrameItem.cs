@@ -30,7 +30,10 @@ public partial class FrameItem : ObservableObject
     private string _imagePath;
     public string ImagePath
     {
-        get => _imagePath;
+        get
+        {
+            return _imagePath;
+        }
         set
         {
             SetProperty(ref _imagePath, value);
@@ -68,7 +71,10 @@ public partial class FrameItem : ObservableObject
     private bool _isSelected;
     public bool IsSelected
     {
-        get => _isSelected;
+        get
+        {
+            return _isSelected;
+        }
         set
         {
             if (_isSelected != value)
