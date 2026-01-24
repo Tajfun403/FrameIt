@@ -72,28 +72,32 @@
 
 
         <!-- FRAME LIST -->
-        <ItemsControl Grid.Row="2"
+        <ScrollViewer Grid.Row="2"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
+
+            <ItemsControl Grid.Row="2"
               ItemsSource="{Binding Frames}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
 
-                    <Grid Margin="10"
+                        <Grid Margin="10"
               HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <!-- lewa kolumna: zdjęcie + nazwa -->
-                            <ColumnDefinition Width="Auto"/>
-                            <!-- prawa kolumna: przyciski -->
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <!-- lewa kolumna: zdjęcie + nazwa -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- prawa kolumna: przyciski -->
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <!-- ZDJĘCIE + NAZWA -->
-                        <baseui:PhotoControl
+                            <!-- ZDJĘCIE + NAZWA -->
+                            <baseui:PhotoControl
                             Grid.Column="0"
                             DisplayName="{Binding Config.Name}"
                             Image="{Binding ImageBitmap}"
@@ -104,42 +108,42 @@
                             ShouldDisplaySecondaryName="True"
                             Margin="0,0,24,0"/>
 
-                        <!-- PRZYCISKI -->
-                        <StackPanel Grid.Column="1"
+                            <!-- PRZYCISKI -->
+                            <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center">
 
-                            <Button Content="Manage frame photo shows"
+                                <Button Content="Manage frame photo shows"
                         Width="220"
                         Margin="0,0,12,0"
                         Click="ManageFramePhotoShowsClick"
                         Style="{StaticResource OutlineWhiteButton}"/>
 
-                            <Button Content="Manage frame"
+                                <Button Content="Manage frame"
                                     
                         Width="150"
                         Style="{StaticResource OutlineWhiteButton}"
                         Margin="0,0,12,0"
                         Click="ManageFrameClick"/>
 
-                            <!-- TODO: Upload photo -->
-                            <Button Content="Upload photo"
+                                <!-- TODO: Upload photo -->
+                                <Button Content="Upload photo"
                         Width="180"
                         Visibility="Collapsed"
                         Margin="0,0,12,0"
-                        Style="{StaticResource OutlineWhiteButton}"/>   
+                        Style="{StaticResource OutlineWhiteButton}"/>
 
-                        </StackPanel>
+                            </StackPanel>
 
-                    </Grid>
+                        </Grid>
 
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
 
-        </ItemsControl>
-
+            </ItemsControl>
+        </ScrollViewer>
 
     </Grid>
 </Page>
