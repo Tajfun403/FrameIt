@@ -13,7 +13,12 @@ internal static class FiltersManager
         return [
             new NothingFilter(),
             new GrayscaleFilter(),
-            new VioletifierFilter()
+            new VioletifierFilter(),
+            new SepiaFilter(),
+            new BlackWhiteFilter(),
+            new LomographFilter(),
+            // new BlueVioletFilter(),
+            new OilPaint(),
         ];
     }
 

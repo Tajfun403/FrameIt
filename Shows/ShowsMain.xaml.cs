@@ -105,9 +105,18 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         // TODO Call this when lost focus!
     }
 
-    private void DoDeletePhotos()
+    private async void DoDeletePhotos()
     {
         var showsToDel = ShowsCollection.Where(x => x.IsSelected).ToList();
+        
+        if (!await PopUpManager.ShowYesNoDialog(
+            "Delete Photo Shows",
+            $"Are you sure you want to delete {showsToDel.Count} {(showsToDel.Count == 1 ? "show" : "shows")}?",
+            isPositive: false))
+        {
+            return;
+        }
+
         foreach (PhotoShow show in showsToDel)
         {
             ShowsCollection.Remove(show);
@@ -115,7 +124,6 @@ public partial class ShowsMain : Page, INotifyPropertyChanged
         var count = showsToDel.Count;
         PopUpManager.ShowSuccess($"{count} {(count == 1 ? "show" : "shows")} deleted.");
         ExitDeleteMode();
-        // IsInDeleteMode = false;
     }
 
     private void SelectionChanged()

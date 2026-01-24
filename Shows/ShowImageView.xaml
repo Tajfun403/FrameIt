@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FrameIt.Shows" xmlns:baseui="clr-namespace:FrameIt.UI"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="530" d:DesignWidth="1000"
       Background="{DynamicResource MaterialDesignPaper}"
@@ -37,18 +38,33 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-            <StackPanel x:Name="ImageControls" Grid.Row="0">
+            <StackPanel x:Name="ImageControls" Grid.Row="0" Margin="10">
                 <Label Content="Image Controls"
                    Style="{StaticResource SemiHeaderStyle}"
                        HorizontalAlignment="Center"/>
-                <Button Content="Rotate"
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 10 0 10">
+                        <Button Style="{StaticResource DeleteButton}"
+                        HorizontalAlignment="Center"
+                    Content="Delete image"
+                        Name="DeleteButton"
+                        Width="150"
+                        Height="30"
+                        Margin="10"
+                                Click="DeleteButton_Click"
+                        />
+                        <Button
                         Name="RotateButton"
                         Width="150"
                         Height="30"
-                        Margin="10 30 10 30"
-                        Click="RotateButton_Click"
-                        />
-                <Label
+                        Margin="10"
+                        Click="RotateButton_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="RotateRight" VerticalAlignment="Center" Margin="0 0 8 0"/>
+                                <TextBlock Text="Rotate" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <Label
                    Style="{StaticResource BaseLabelStyle}"
                        HorizontalAlignment="Center">
                     Add image description:
@@ -60,12 +76,14 @@
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
+                         Text="{Binding Description, Mode=TwoWay}"
                          />
 
             </StackPanel>
 
                 <Label VerticalAlignment="Bottom" Grid.Row="1"
                    Style="{StaticResource BaseLabelStyle}"
+                       Visibility="Collapsed"
                        HorizontalAlignment="Center">
                     All changes saved automatically.
                 </Label>
@@ -82,6 +100,20 @@
                 Margin="10"
                 Content="Apply effects"
                 />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Center"
+                Margin="0,0,20,0">
+                <materialDesign:PackIcon Kind="ContentSaveCheck"
+                 Width="16"
+                 Height="16"
+                 Foreground="#AAAAAA"
+                 Margin="0,0,6,0"/>
+                <TextBlock Text="All changes are saved automatically"
+                         FontSize="12"
+                         Foreground="#AAAAAA"/>
+            </StackPanel>
+            
+            
             <ItemsControl Grid.Row="1" 
               Name="PhotosListControl" 
               ItemsSource="{Binding FiltersList, Mode=Default, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Page}}" 

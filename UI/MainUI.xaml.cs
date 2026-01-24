@@ -28,9 +28,4 @@ public partial class MainUI : Page
         Startup.NavigateToStartPage();
         // NavigationManager.Navigate(new LoginHome(), false, false);
     }
-
-    public void PickFirstScreen()
-    {
-
-    }
 }

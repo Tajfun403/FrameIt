@@ -3,7 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FrameIt.Shows" xmlns:baseui="clr-namespace:FrameIt.UI"
+      xmlns:local="clr-namespace:FrameIt.Shows" 
+      xmlns:baseui="clr-namespace:FrameIt.UI"
+      xmlns:md="http://materialdesigninxaml.com/winfx" xmlns:md1="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="530" d:DesignWidth="1000"
       Background="{DynamicResource MaterialDesignPaper}"
@@ -28,6 +30,7 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
@@ -58,21 +61,69 @@
                    Visibility="{Binding IsNotRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
                    MouseLeftButtonDown="Label_MouseLeftButtonDown"
                    />
-            <StackPanel Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Name="RenameButton" Content="Rename" Margin="2" Width="150"  
+            <Button 
+                Grid.Column="3"
+                Name="RenameIconButton" 
+                    Margin="8" 
+                    Padding="8"
+                    Width="60"
+                    Height="60"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ToolTip="Rename"
                     Visibility="{Binding IsNotRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+                    Click="RenameButton_Click">
+                <md1:PackIcon Kind="Pencil" Width="24" Height="24"/>
+            </Button>
+            <Button 
+                Grid.Column="3"
+                Name="FinishRenamingIcon" 
+                    Margin="8" 
+                    Padding="8"
+                    Width="60"
+                    Height="60"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ToolTip="Rename"
+                    Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
+                    Click="FinishRenaming_Click">
+                <md1:PackIcon Kind="Check" Width="24" Height="24"/>
+            </Button>
+
+            <StackPanel Grid.Column="4" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="RenameButton" Margin="2" Width="150"  
+                    Visibility="Collapsed"
                         Click="RenameButton_Click"
-                        />
+                        
+                        
+                        >
+                    <!--  Visibility="{Binding IsNotRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"-->
+                     
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <md1:PackIcon Kind="Pencil" VerticalAlignment="Center" Margin="0 0 8 0"/>
+                        <TextBlock Text="Rename" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
                 <Button Name="FinishRenaming" Content="Finish renaming" Margin="2" Width="150"
-                   Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"
-                        Click="FinishRenaming_Click"
+                   Visibility="Collapsed"
+                    Click="FinishRenaming_Click"
                         />
+                <!--  Visibility="{Binding IsRenaming, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BoolToVis}}"-->
                 <Button Name="DeleteButton" 
                         Content="{Binding DelPhotosButtonText, RelativeSource={RelativeSource AncestorType=Page}, FallbackValue='Delete Button'}" 
                         Click="DeletePhotos_Click" 
                         Grid.Column="1" 
-                        Margin="20 0 20 0"
+                        Margin="5"
                         Width="150"/>
+                <Button Name="DeleteShow" 
+                        Style="{StaticResource DeleteButton}"
+                        Content="Delete show" 
+                        Grid.Column="1" 
+                        Margin="5"
+                        Width="150"
+                        Click="DeleteShow_Click"
+                        
+                        />
             </StackPanel>
         </Grid>
 
@@ -89,6 +140,7 @@
                 Select items that you wish to remove. This action will be irreversible.
             </Label>
             <Button Name="ReallyDeleteButton" 
+                Style="{StaticResource DeleteButton}"
             Content="Delete selected photos"
             Command="{Binding CommandDeletePhotos, RelativeSource={RelativeSource AncestorType=Page}}"
             Grid.Column="1" 
@@ -102,6 +154,9 @@
         <ItemsControl Grid.Row="2" 
               Name="PhotosListControl" 
               ItemsSource="{Binding PhotosList, Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+    ScrollViewer.IsDeferredScrollingEnabled="True"
               Height="Auto">
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">

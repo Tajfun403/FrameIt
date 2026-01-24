@@ -6,12 +6,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\FrameItLogoIco.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Data\FramePairingCodes.json" />
     <None Remove="Data\Frames.json" />
     <None Remove="Images\Back.png" />
+    <None Remove="Images\FrameItLogo.svg" />
+    <None Remove="Images\FrameItLogoPng.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +24,7 @@
     <Content Include="Data\Frames.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\FrameItLogoIco.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +43,8 @@
     <Resource Include="Images\Back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\FrameItLogo.svg" />
+    <Resource Include="Images\FrameItLogoPng.png" />
   </ItemGroup>
 
   <ItemGroup>
