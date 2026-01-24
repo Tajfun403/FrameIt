@@ -52,13 +52,17 @@
                         Margin="10"
                                 Click="DeleteButton_Click"
                         />
-                        <Button Content="Rotate"
+                        <Button
                         Name="RotateButton"
                         Width="150"
                         Height="30"
                         Margin="10"
-                        Click="RotateButton_Click"
-                        />
+                        Click="RotateButton_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="RotateRight" VerticalAlignment="Center" Margin="0 0 8 0"/>
+                                <TextBlock Text="Rotate" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                     <Label
                    Style="{StaticResource BaseLabelStyle}"
@@ -72,6 +76,7 @@
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
+                         Text="{Binding Description, Mode=TwoWay}"
                          />
 
             </StackPanel>
