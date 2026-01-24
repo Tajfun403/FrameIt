@@ -88,6 +88,7 @@ namespace FrameIt.Frames
             get => _isInDeleteMode;
             set
             {
+                if (_isInDeleteMode == value) return;
                 _isInDeleteMode = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DeleteButtonText));
@@ -100,6 +101,7 @@ namespace FrameIt.Frames
             get => _itemsSelectable;
             set
             {
+                if (_itemsSelectable == value) return;
                 _itemsSelectable = value;
                 OnPropertyChanged();
             }
@@ -127,7 +129,9 @@ namespace FrameIt.Frames
             IsInDeleteMode = false;
             ItemsSelectable = false;
 
-            // TODO: wyczyścić zaznaczenia
+            // clear selections
+            foreach (var f in Frames)
+                f.IsSelected = false;
         }
 
         private void ConfirmDeleteFrames(object sender, RoutedEventArgs e)
@@ -150,11 +154,6 @@ namespace FrameIt.Frames
 
         protected void OnPropertyChanged([CallerMemberName] string name = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
 
     }

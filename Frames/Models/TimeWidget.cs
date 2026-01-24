@@ -2,31 +2,30 @@
 
 public class TimeWidget : WidgetBase
 {
-    private bool _isEnabled;
     public bool IsEnabled
     {
-        get => _isEnabled;
+        get => field;
         set
         {
-            if (_isEnabled != value)
+            if (field != value)
             {
-                _isEnabled = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
     }
 
-    private string _timeZone;
     public string TimeZone
     {
-        get => _timeZone;
+        get => field;
         set
         {
-            if (_timeZone != value)
+            if (field != value)
             {
-                _timeZone = value;
+                field = value;
                 OnPropertyChanged();
             }
         }
     }
 }
+
