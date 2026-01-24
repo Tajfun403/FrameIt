@@ -32,6 +32,11 @@
                 HorizontalAlignment="Right"
                 Width="13"
                 Height="13"
+                Visibility="{Binding IsSelectable, 
+                    UpdateSourceTrigger=PropertyChanged, 
+                    RelativeSource={RelativeSource AncestorType=UserControl},
+                    Converter={StaticResource BoolToVis},
+                    FallbackValue=Visible}"
                     />
             <CheckBox 
            IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=False, RelativeSource={RelativeSource AncestorType=UserControl}}" 
