@@ -7,7 +7,6 @@ namespace FrameIt.Account;
 
 public partial class ManageAccount : Page
 {
-    // Shortcut to the currently logged-in account
     public UserAccount? CurrUser => AccountManager.Instance.CurrAccount;
 
     public ManageAccount()
@@ -16,20 +15,18 @@ public partial class ManageAccount : Page
         DataContext = this;
     }
 
-    /// <summary>
-    /// Saves current user data to the JSON database and triggers a UI refresh 
-    /// for the navigation bar (avatar and display name).
-    /// </summary>
     private void SaveAndNotify()
     {
         AccountManager.Instance.SaveUsers();
-        // Re-assigning triggers the property change notification for the UI
         AccountManager.Instance.CurrAccount = CurrUser;
     }
 
-    /// <summary>
-    /// Opens a file dialog to select a new profile picture and updates the user's avatar path.
-    /// </summary>
+    private void PasswordInput_Changed(object sender, RoutedEventArgs e)
+    {
+        ConfirmPassBtn.IsEnabled = !string.IsNullOrWhiteSpace(PassInput.Password) &&
+                                   !string.IsNullOrWhiteSpace(ConfirmPassInput.Password);
+    }
+
     private void ChangePicture_Click(object sender, RoutedEventArgs e)
     {
         if (CurrUser == null) return;
@@ -42,10 +39,6 @@ public partial class ManageAccount : Page
         }
     }
 
-    /// <summary>
-    /// Toggles between displaying the user's name and the input field to edit it.
-    /// Saves changes when switching back to display mode.
-    /// </summary>
     private void ToggleEditName_Click(object sender, RoutedEventArgs e)
     {
         if (DisplayNameArea.Visibility == Visibility.Visible)
@@ -64,18 +57,12 @@ public partial class ManageAccount : Page
         }
     }
 
-    /// <summary>
-    /// Cancels the name editing process and restores the original display view.
-    /// </summary>
     private void CancelEditName_Click(object sender, RoutedEventArgs e)
     {
         EditNameArea.Visibility = Visibility.Collapsed;
         DisplayNameArea.Visibility = Visibility.Visible;
     }
 
-    /// <summary>
-    /// Toggles the email editing interface. Validates the email format before saving.
-    /// </summary>
     private async void ToggleEditEmail_Click(object sender, RoutedEventArgs e)
     {
         if (EmailBtn.Visibility == Visibility.Visible)
@@ -108,18 +95,12 @@ public partial class ManageAccount : Page
         }
     }
 
-    /// <summary>
-    /// Cancels the email editing process and returns to the standard display view.
-    /// </summary>
     private void CancelEditEmail_Click(object sender, RoutedEventArgs e)
     {
         EditEmailArea.Visibility = Visibility.Collapsed;
         EmailBtn.Visibility = Visibility.Visible;
     }
 
-    /// <summary>
-    /// Toggles the password editing interface and handles password update logic.
-    /// </summary>
     private async void ToggleEditPass_Click(object sender, RoutedEventArgs e)
     {
         if (PassBtn.Visibility == Visibility.Visible)
@@ -127,10 +108,24 @@ public partial class ManageAccount : Page
             PassBtn.Visibility = Visibility.Collapsed;
             EditPassArea.Visibility = Visibility.Visible;
             PassInput.Focus();
+            ConfirmPassBtn.IsEnabled = false;
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(PassInput.Password)) return;
+            string newPass = PassInput.Password;
+            string confirmPass = ConfirmPassInput.Password;
+
+            if (newPass != confirmPass)
+            {
+                PopUpManager.ShowError("Passwords do not match!");
+                return;
+            }
+
+            if (CurrUser != null && newPass == CurrUser.Password)
+            {
+                PopUpManager.ShowError("New password must be different from the current one!");
+                return;
+            }
 
             bool confirm = await PopUpManager.ShowYesNoDialog(
                 "Confirm Password Change",
@@ -142,29 +137,25 @@ public partial class ManageAccount : Page
 
             if (CurrUser != null)
             {
-                CurrUser.Password = PassInput.Password;
+                CurrUser.Password = newPass;
                 SaveAndNotify();
                 EditPassArea.Visibility = Visibility.Collapsed;
                 PassBtn.Visibility = Visibility.Visible;
                 PassInput.Password = "";
+                ConfirmPassInput.Password = "";
                 PopUpManager.ShowSuccess("Password updated successfully!");
             }
         }
     }
 
-    /// <summary>
-    /// Cancels the password change process and clears the password input field.
-    /// </summary>
     private void CancelEditPass_Click(object sender, RoutedEventArgs e)
     {
         PassInput.Password = "";
+        ConfirmPassInput.Password = "";
         EditPassArea.Visibility = Visibility.Collapsed;
         PassBtn.Visibility = Visibility.Visible;
     }
 
-    /// <summary>
-    /// Prompts the user for confirmation and logs out of the current session if confirmed.
-    /// </summary>
     private async void Logout_Click(object sender, RoutedEventArgs e)
     {
         bool confirm = await PopUpManager.ShowYesNoDialog(
