@@ -76,7 +76,7 @@ public partial class ManageAccount : Page
     /// <summary>
     /// Toggles the email editing interface. Validates the email format before saving.
     /// </summary>
-    private void ToggleEditEmail_Click(object sender, RoutedEventArgs e)
+    private async void ToggleEditEmail_Click(object sender, RoutedEventArgs e)
     {
         if (EmailBtn.Visibility == Visibility.Visible)
         {
@@ -91,8 +91,18 @@ public partial class ManageAccount : Page
                 PopUpManager.ShowError("Please enter a valid email.");
                 return;
             }
+
+            bool confirm = await PopUpManager.ShowYesNoDialog(
+                "Confirm Email Change",
+                $"Are you sure you want to change your email to '{EmailInput.Text}'?",
+                true
+            );
+
+            if (!confirm) return;
+
             EditEmailArea.Visibility = Visibility.Collapsed;
             EmailBtn.Visibility = Visibility.Visible;
+            CurrUser.Email = EmailInput.Text;
             SaveAndNotify();
             PopUpManager.ShowSuccess("Email updated successfully!");
         }
@@ -110,7 +120,7 @@ public partial class ManageAccount : Page
     /// <summary>
     /// Toggles the password editing interface and handles password update logic.
     /// </summary>
-    private void ToggleEditPass_Click(object sender, RoutedEventArgs e)
+    private async void ToggleEditPass_Click(object sender, RoutedEventArgs e)
     {
         if (PassBtn.Visibility == Visibility.Visible)
         {
@@ -121,6 +131,14 @@ public partial class ManageAccount : Page
         else
         {
             if (string.IsNullOrWhiteSpace(PassInput.Password)) return;
+
+            bool confirm = await PopUpManager.ShowYesNoDialog(
+                "Confirm Password Change",
+                "Are you sure you want to change your password?",
+                true
+            );
+
+            if (!confirm) return;
 
             if (CurrUser != null)
             {
@@ -147,10 +165,17 @@ public partial class ManageAccount : Page
     /// <summary>
     /// Prompts the user for confirmation and logs out of the current session if confirmed.
     /// </summary>
-    private void Logout_Click(object sender, RoutedEventArgs e)
+    private async void Logout_Click(object sender, RoutedEventArgs e)
     {
+        bool confirm = await PopUpManager.ShowYesNoDialog(
+            "Confirm Log Out",
+            "Are you sure you want to log out?",
+            false
+        );
+
+        if (!confirm) return;
+
         AccountManager.Instance.Logout();
         PopUpManager.ShowMessage("Logged out successfully.");
-
     }
 }
