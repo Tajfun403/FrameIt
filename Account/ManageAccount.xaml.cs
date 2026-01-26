@@ -7,6 +7,9 @@ namespace FrameIt.Account;
 
 public partial class ManageAccount : Page
 {
+    private string? _originalEmail;
+    private string? _originalName;
+
     public UserAccount? CurrUser => AccountManager.Instance.CurrAccount;
 
     public ManageAccount()
@@ -43,17 +46,31 @@ public partial class ManageAccount : Page
     {
         if (DisplayNameArea.Visibility == Visibility.Visible)
         {
+            _originalName = CurrUser?.Name?.Trim() ?? "";
             DisplayNameArea.Visibility = Visibility.Collapsed;
             EditNameArea.Visibility = Visibility.Visible;
             NameInput.Focus();
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(NameInput.Text)) return;
+            string newName = NameInput.Text?.Trim() ?? "";
+            string oldName = _originalName ?? "";
+
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                EditNameArea.Visibility = Visibility.Collapsed;
+                DisplayNameArea.Visibility = Visibility.Visible;
+                return;
+            }
+
             EditNameArea.Visibility = Visibility.Collapsed;
             DisplayNameArea.Visibility = Visibility.Visible;
-            SaveAndNotify();
-            PopUpManager.ShowSuccess("Name updated successfully!");
+
+            if (!newName.Equals(oldName, StringComparison.Ordinal))
+            {
+                SaveAndNotify();
+                PopUpManager.ShowSuccess("Name updated successfully!");
+            }
         }
     }
 
@@ -67,30 +84,45 @@ public partial class ManageAccount : Page
     {
         if (EmailBtn.Visibility == Visibility.Visible)
         {
+            _originalEmail = CurrUser?.Email?.Trim() ?? "";
             EmailBtn.Visibility = Visibility.Collapsed;
             EditEmailArea.Visibility = Visibility.Visible;
             EmailInput.Focus();
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(EmailInput.Text) || !EmailInput.Text.Contains("@"))
+            string newEmail = EmailInput.Text?.Trim() ?? "";
+            string oldEmail = _originalEmail ?? "";
+
+            if (string.IsNullOrWhiteSpace(newEmail) || !newEmail.Contains("@") || !newEmail.Contains("."))
             {
                 PopUpManager.ShowError("Please enter a valid email.");
                 return;
             }
 
+            if (newEmail.Equals(oldEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                EditEmailArea.Visibility = Visibility.Collapsed;
+                EmailBtn.Visibility = Visibility.Visible;
+                return;
+            }
+
             bool confirm = await PopUpManager.ShowYesNoDialog(
                 "Confirm Email Change",
-                $"Are you sure you want to change your email to '{EmailInput.Text}'?",
-                true
+                $"Are you sure you want to change your email to '{newEmail}'?",
+                false
             );
 
             if (!confirm) return;
 
+            if (CurrUser != null)
+            {
+                CurrUser.Email = newEmail;
+                SaveAndNotify();
+            }
+
             EditEmailArea.Visibility = Visibility.Collapsed;
             EmailBtn.Visibility = Visibility.Visible;
-            CurrUser.Email = EmailInput.Text;
-            SaveAndNotify();
             PopUpManager.ShowSuccess("Email updated successfully!");
         }
     }
@@ -99,6 +131,11 @@ public partial class ManageAccount : Page
     {
         EditEmailArea.Visibility = Visibility.Collapsed;
         EmailBtn.Visibility = Visibility.Visible;
+        if (CurrUser != null && _originalEmail != null)
+        {
+            CurrUser.Email = _originalEmail;
+            SaveAndNotify();
+        }
     }
 
     private async void ToggleEditPass_Click(object sender, RoutedEventArgs e)
@@ -130,7 +167,7 @@ public partial class ManageAccount : Page
             bool confirm = await PopUpManager.ShowYesNoDialog(
                 "Confirm Password Change",
                 "Are you sure you want to change your password?",
-                true
+                false
             );
 
             if (!confirm) return;
