@@ -13,7 +13,17 @@
     <Page.Resources>
         <Style x:Key="IndigoFlatButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
             <Setter Property="Foreground" Value="#3F51B5"/>
+            <Setter Property="Background" Value="#663F51B5"/>
+            <Setter Property="Opacity" Value="0.95"/>
             <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="True"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Background" Value="#803F51B5"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="LoginInputStyle" TargetType="Control">
@@ -40,7 +50,7 @@
         <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}">
             <TextBlock Text="Please enter your e-mail to log-in or register:" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="10"/>
 
-            <Grid Width="300" Margin="0,10">
+            <Grid Width="300" Margin="0,25,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -90,7 +100,7 @@
                          CaretBrush="#3F51B5"
                          FontSize="16"
                          Height="45"
-                         Margin="0,10,0,20"
+                         Margin="0,25,0,20"
                          VerticalAlignment="Bottom">
                 <PasswordBox.Foreground>
                     <SolidColorBrush Color="White"/>
@@ -128,7 +138,7 @@
             <Button Content="Back to email" 
                     Click="BackToEmail_Click" 
                     FontSize="15"
-                    Margin="0,30,0,0"
+                    Margin="0,35,0,0"
                     Style="{StaticResource IndigoFlatButtonStyle}"/>
         </StackPanel>
     </StackPanel>
