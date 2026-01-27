@@ -8,93 +8,138 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
       Background="{DynamicResource MaterialDesignPaper}"
-      FontFamily="{DynamicResource MaterialDesignFont}"
       Title="LoginHome">
 
     <Page.Resources>
-        <Style x:Key="IndigoButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Background" Value="#3F51B5"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Padding" Value="8,4"/>
+        <Style x:Key="IndigoFlatButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Foreground" Value="#3F51B5"/>
+            <Setter Property="Background" Value="#663F51B5"/>
+            <Setter Property="Opacity" Value="0.95"/>
             <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="True"/>
-            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="3">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#5C6BC0"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#3949AB"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
-                                <Setter Property="Foreground" Value="Silver"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Background" Value="#803F51B5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LoginInputStyle" TargetType="Control">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="#3F51B5"/>
+            <Setter Property="materialDesign:HintAssist.Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="materialDesign:HintAssist.Foreground" Value="#3F51B5"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Page.Resources>
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Label Content="FrameIt" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="10"/>
-        <Label Content="Manage all your frames at ease, in one place!" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10 10 10 30"/>
+        <Image Source="/Images/FrameItLogoPng.png" 
+               Width="160" Height="160" Margin="0,0,0,20"
+               RenderOptions.BitmapScalingMode="HighQuality"/>
+
+        <TextBlock Text="FrameIt" FontSize="32" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="10"/>
+        <TextBlock Text="Manage all your frames at ease, in one place!" FontSize="24" Foreground="White" HorizontalAlignment="Center" Margin="10,0,10,30"/>
 
         <StackPanel Name="LoginOrRegister" Visibility="{Binding IsLoginOrRegisterVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}">
-            <Label Content="Please enter your e-mail to log-in or register:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
+            <TextBlock Text="Please enter your e-mail to log-in or register:" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="10"/>
 
-            <TextBox x:Name="EmailBox" Width="200" Margin="10" 
-                     Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                     Foreground="White" 
-                     CaretBrush="#3F51B5"
-                     materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
-
-            <Button Name="LogInOrRegister_Continue" 
-                    Width="100"
-                    HorizontalAlignment="Right" 
-                    Content="Continue" 
-                    Command="{Binding LogInOrRegisterCommand}"
-                    IsEnabled="{Binding Text.Length, ElementName=EmailBox, TargetNullValue=0}"
-                    Style="{StaticResource IndigoButtonStyle}"/>
-        </StackPanel>
-
-        <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}">
-            <Label Content="Please enter your password:" Style="{StaticResource BaseLabelStyle}" HorizontalAlignment="Center" Margin="10"/>
-
-            <PasswordBox x:Name="LoginPassBox" 
-                         Width="200" 
-                         Margin="10" 
-                         PasswordChanged="LoginPassBox_PasswordChanged" 
-                         Foreground="White"
-                         CaretBrush="#3F51B5"
-                         materialDesign:TextFieldAssist.UnderlineBrush="#3F51B5"/>
-
-            <Grid Name="BottomPanel" MinWidth="220">
+            <Grid Width="300" Margin="0,25,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="EmailBox" 
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
+                         materialDesign:HintAssist.Hint="Email Address"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         CaretBrush="#3F51B5"
+                         FontSize="16"
+                         Height="45"
+                         Margin="0,0,10,0"
+                         VerticalAlignment="Bottom">
+                    <TextBox.Foreground>
+                        <SolidColorBrush Color="White"/>
+                    </TextBox.Foreground>
+                    <TextBox.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="materialDesign:HintAssist.Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="materialDesign:HintAssist.Foreground" Value="#3F51B5"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <Button Name="LogInOrRegister_Continue" 
+                        Grid.Column="1"
+                        Content="Continue" 
+                        Command="{Binding LogInOrRegisterCommand}"
+                        Width="85" Height="34" FontSize="14"
+                        VerticalAlignment="Bottom"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Name="LogIn" Visibility="{Binding IsLoginVisible, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed}" Width="300">
+            <TextBlock Text="Please enter your password:" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="10"/>
+
+            <PasswordBox x:Name="LoginPassBox" 
+                         PasswordChanged="LoginPassBox_PasswordChanged" 
+                         materialDesign:HintAssist.Hint="Password"
+                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                         CaretBrush="#3F51B5"
+                         FontSize="16"
+                         Height="45"
+                         Margin="0,25,0,20"
+                         VerticalAlignment="Bottom">
+                <PasswordBox.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </PasswordBox.Foreground>
+                <PasswordBox.Resources>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="materialDesign:HintAssist.Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="materialDesign:HintAssist.Foreground" Value="#3F51B5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </PasswordBox.Resources>
+            </PasswordBox>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <CheckBox Content="Remember me" 
                           IsChecked="{Binding RememberMe}" 
-                          VerticalAlignment="Center" 
-                          Margin="0,0,10,0"
-                          Foreground="#3F51B5"/>
+                          Style="{StaticResource MaterialDesignCheckBox}"
+                          FontSize="15"
+                          Padding="3"
+                          Foreground="#3F51B5"
+                          VerticalAlignment="Center"/>
 
-                <Button Content="Log In" 
-                        Width="120"
-                        Grid.Column="1" 
-                        HorizontalAlignment="Right" 
-                        Click="LogIn_Continue_Click"
-                        Style="{StaticResource IndigoButtonStyle}"/>
+                <Button Content="Log In" Grid.Column="1" Width="85" Height="34" FontSize="14" Click="LogIn_Continue_Click"/>
             </Grid>
+
+            <Button Content="Back to email" 
+                    Click="BackToEmail_Click" 
+                    FontSize="15"
+                    Margin="0,35,0,0"
+                    Style="{StaticResource IndigoFlatButtonStyle}"/>
         </StackPanel>
     </StackPanel>
 </Page>

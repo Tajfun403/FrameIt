@@ -40,8 +40,16 @@ public partial class LoginHome : Page, INotifyPropertyChanged
         else
         {
             PopUpManager.ShowMessage("Email not found. Redirecting to registration...");
-            NavigationManager.Navigate(new RegisterPage(), true, false, false);
+            NavigationManager.Navigate(new RegisterPage(Email), true, false, false);
         }
+    }
+
+    private void BackToEmail_Click(object sender, RoutedEventArgs e)
+    {
+        IsLoginVisible = false;
+        IsLoginOrRegisterVisible = true;
+        LoginPassBox.Password = string.Empty;
+        Password = string.Empty;
     }
 
     /// <summary>

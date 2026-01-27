@@ -7,7 +7,9 @@ namespace FrameIt.Account;
 
 public partial class ManageAccount : Page
 {
-    // Shortcut to the currently logged-in account
+    private string? _originalEmail;
+    private string? _originalName;
+
     public UserAccount? CurrUser => AccountManager.Instance.CurrAccount;
 
     public ManageAccount()
@@ -16,20 +18,18 @@ public partial class ManageAccount : Page
         DataContext = this;
     }
 
-    /// <summary>
-    /// Saves current user data to the JSON database and triggers a UI refresh 
-    /// for the navigation bar (avatar and display name).
-    /// </summary>
     private void SaveAndNotify()
     {
         AccountManager.Instance.SaveUsers();
-        // Re-assigning triggers the property change notification for the UI
         AccountManager.Instance.CurrAccount = CurrUser;
     }
 
-    /// <summary>
-    /// Opens a file dialog to select a new profile picture and updates the user's avatar path.
-    /// </summary>
+    private void PasswordInput_Changed(object sender, RoutedEventArgs e)
+    {
+        ConfirmPassBtn.IsEnabled = !string.IsNullOrWhiteSpace(PassInput.Password) &&
+                                   !string.IsNullOrWhiteSpace(ConfirmPassInput.Password);
+    }
+
     private void ChangePicture_Click(object sender, RoutedEventArgs e)
     {
         if (CurrUser == null) return;
@@ -42,115 +42,168 @@ public partial class ManageAccount : Page
         }
     }
 
-    /// <summary>
-    /// Toggles between displaying the user's name and the input field to edit it.
-    /// Saves changes when switching back to display mode.
-    /// </summary>
     private void ToggleEditName_Click(object sender, RoutedEventArgs e)
     {
         if (DisplayNameArea.Visibility == Visibility.Visible)
         {
+            _originalName = CurrUser?.Name?.Trim() ?? "";
             DisplayNameArea.Visibility = Visibility.Collapsed;
             EditNameArea.Visibility = Visibility.Visible;
             NameInput.Focus();
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(NameInput.Text)) return;
+            string newName = NameInput.Text?.Trim() ?? "";
+            string oldName = _originalName ?? "";
+
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                EditNameArea.Visibility = Visibility.Collapsed;
+                DisplayNameArea.Visibility = Visibility.Visible;
+                return;
+            }
+
             EditNameArea.Visibility = Visibility.Collapsed;
             DisplayNameArea.Visibility = Visibility.Visible;
-            SaveAndNotify();
-            PopUpManager.ShowSuccess("Name updated successfully!");
+
+            if (!newName.Equals(oldName, StringComparison.Ordinal))
+            {
+                SaveAndNotify();
+                PopUpManager.ShowSuccess("Name updated successfully!");
+            }
         }
     }
 
-    /// <summary>
-    /// Cancels the name editing process and restores the original display view.
-    /// </summary>
     private void CancelEditName_Click(object sender, RoutedEventArgs e)
     {
         EditNameArea.Visibility = Visibility.Collapsed;
         DisplayNameArea.Visibility = Visibility.Visible;
     }
 
-    /// <summary>
-    /// Toggles the email editing interface. Validates the email format before saving.
-    /// </summary>
-    private void ToggleEditEmail_Click(object sender, RoutedEventArgs e)
+    private async void ToggleEditEmail_Click(object sender, RoutedEventArgs e)
     {
         if (EmailBtn.Visibility == Visibility.Visible)
         {
+            _originalEmail = CurrUser?.Email?.Trim() ?? "";
             EmailBtn.Visibility = Visibility.Collapsed;
             EditEmailArea.Visibility = Visibility.Visible;
             EmailInput.Focus();
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(EmailInput.Text) || !EmailInput.Text.Contains("@"))
+            string newEmail = EmailInput.Text?.Trim() ?? "";
+            string oldEmail = _originalEmail ?? "";
+
+            if (string.IsNullOrWhiteSpace(newEmail) || !newEmail.Contains("@") || !newEmail.Contains("."))
             {
                 PopUpManager.ShowError("Please enter a valid email.");
                 return;
             }
+
+            if (newEmail.Equals(oldEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                EditEmailArea.Visibility = Visibility.Collapsed;
+                EmailBtn.Visibility = Visibility.Visible;
+                return;
+            }
+
+            bool confirm = await PopUpManager.ShowYesNoDialog(
+                "Confirm Email Change",
+                $"Are you sure you want to change your email to '{newEmail}'?",
+                false
+            );
+
+            if (!confirm) return;
+
+            if (CurrUser != null)
+            {
+                CurrUser.Email = newEmail;
+                SaveAndNotify();
+            }
+
             EditEmailArea.Visibility = Visibility.Collapsed;
             EmailBtn.Visibility = Visibility.Visible;
-            SaveAndNotify();
             PopUpManager.ShowSuccess("Email updated successfully!");
         }
     }
 
-    /// <summary>
-    /// Cancels the email editing process and returns to the standard display view.
-    /// </summary>
     private void CancelEditEmail_Click(object sender, RoutedEventArgs e)
     {
         EditEmailArea.Visibility = Visibility.Collapsed;
         EmailBtn.Visibility = Visibility.Visible;
+        if (CurrUser != null && _originalEmail != null)
+        {
+            CurrUser.Email = _originalEmail;
+            SaveAndNotify();
+        }
     }
 
-    /// <summary>
-    /// Toggles the password editing interface and handles password update logic.
-    /// </summary>
-    private void ToggleEditPass_Click(object sender, RoutedEventArgs e)
+    private async void ToggleEditPass_Click(object sender, RoutedEventArgs e)
     {
         if (PassBtn.Visibility == Visibility.Visible)
         {
             PassBtn.Visibility = Visibility.Collapsed;
             EditPassArea.Visibility = Visibility.Visible;
             PassInput.Focus();
+            ConfirmPassBtn.IsEnabled = false;
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(PassInput.Password)) return;
+            string newPass = PassInput.Password;
+            string confirmPass = ConfirmPassInput.Password;
+
+            if (newPass != confirmPass)
+            {
+                PopUpManager.ShowError("Passwords do not match!");
+                return;
+            }
+
+            if (CurrUser != null && newPass == CurrUser.Password)
+            {
+                PopUpManager.ShowError("New password must be different from the current one!");
+                return;
+            }
+
+            bool confirm = await PopUpManager.ShowYesNoDialog(
+                "Confirm Password Change",
+                "Are you sure you want to change your password?",
+                false
+            );
+
+            if (!confirm) return;
 
             if (CurrUser != null)
             {
-                CurrUser.Password = PassInput.Password;
+                CurrUser.Password = newPass;
                 SaveAndNotify();
                 EditPassArea.Visibility = Visibility.Collapsed;
                 PassBtn.Visibility = Visibility.Visible;
                 PassInput.Password = "";
+                ConfirmPassInput.Password = "";
                 PopUpManager.ShowSuccess("Password updated successfully!");
             }
         }
     }
 
-    /// <summary>
-    /// Cancels the password change process and clears the password input field.
-    /// </summary>
     private void CancelEditPass_Click(object sender, RoutedEventArgs e)
     {
         PassInput.Password = "";
+        ConfirmPassInput.Password = "";
         EditPassArea.Visibility = Visibility.Collapsed;
         PassBtn.Visibility = Visibility.Visible;
     }
 
-    /// <summary>
-    /// Prompts the user for confirmation and logs out of the current session if confirmed.
-    /// </summary>
-    private void Logout_Click(object sender, RoutedEventArgs e)
+    private async void Logout_Click(object sender, RoutedEventArgs e)
     {
+        bool confirm = await PopUpManager.ShowYesNoDialog(
+            "Confirm Log Out",
+            "Are you sure you want to log out?",
+            false
+        );
+
+        if (!confirm) return;
+
         AccountManager.Instance.Logout();
         PopUpManager.ShowMessage("Logged out successfully.");
-
     }
 }

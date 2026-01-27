@@ -7,9 +7,28 @@ namespace FrameIt.Account;
 
 public partial class RegisterPage : Page
 {
-    public RegisterPage()
+    public RegisterPage() : this(string.Empty) { }
+
+    public RegisterPage(string initialEmail)
     {
         InitializeComponent();
+
+        RegEmail.Text = initialEmail;
+
+        RegName.TextChanged += (s, e) => UpdateRegisterButtonState();
+        RegEmail.TextChanged += (s, e) => UpdateRegisterButtonState();
+        RegPass.PasswordChanged += (s, e) => UpdateRegisterButtonState();
+        RegPassConfirm.PasswordChanged += (s, e) => UpdateRegisterButtonState();
+
+        UpdateRegisterButtonState();
+    }
+
+    private void UpdateRegisterButtonState()
+    {
+        RegisterButton.IsEnabled = !string.IsNullOrWhiteSpace(RegName.Text) &&
+                                   !string.IsNullOrWhiteSpace(RegEmail.Text) &&
+                                   !string.IsNullOrWhiteSpace(RegPass.Password) &&
+                                   !string.IsNullOrWhiteSpace(RegPassConfirm.Password);
     }
 
     /// <summary>
@@ -17,16 +36,6 @@ public partial class RegisterPage : Page
     /// </summary>
     private void Register_Click(object sender, RoutedEventArgs e)
     {
-        // 1. Check if any fields are empty
-        if (string.IsNullOrWhiteSpace(RegName.Text) ||
-            string.IsNullOrWhiteSpace(RegEmail.Text) ||
-            string.IsNullOrWhiteSpace(RegPass.Password) ||
-            string.IsNullOrWhiteSpace(RegPassConfirm.Password))
-        {
-            PopUpManager.ShowError("Please fill in all fields.");
-            return;
-        }
-
         // 2. Validate email format (must contain @ and .)
         if (!RegEmail.Text.Contains("@") || !RegEmail.Text.Contains("."))
         {
