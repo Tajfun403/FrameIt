@@ -1,6 +1,6 @@
-FrameIt 
-LOGO!!!
-Manage all your frames at ease, in one place!
+<center><img src="Images/PlaceholderLogo.png" style="width: 400px"></center>
+
+<center>Manage all your frames at ease, in one place!</center>
 
 # About
 FrameIt is a group **front-end only** project for an app that lets you manage your digital frames through flexible photo shows mechanic.
