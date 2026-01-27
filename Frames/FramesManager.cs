@@ -8,7 +8,7 @@ namespace FrameIt.Services
 {
     public static class FramesManager
     {
-        private static readonly string FilePath = "frames.json";
+        private static readonly string FilePath = "Frames.json";
 
         public static List<FrameItem> LoadFrames()
         {
